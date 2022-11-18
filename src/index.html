@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.4.4/math.min.js"></script>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <!-- <input id="input" type="text" name="fname" style="width: 200px" /><br /> -->
+    <span
+      class="input"
+      id="input"
+      style="
+        width: 200px;
+        border: solid;
+        padding-left: 5px;
+        padding-right: 5px;
+        display: inline-block;
+      "
+      role="textbox"
+      contenteditable
+    >
+    </span>
+    <input type="button" onclick="generateTruthTable()" value="Generate" />
+    <div id="result"></div>
+    <p id="demo"></p>
+  </body>
+</html>
