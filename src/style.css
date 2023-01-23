@@ -8,3 +8,24 @@ td {
   text-align: center;
   padding: 2px 5px;
 }
+.flex-container-hor {
+  display: flex;
+  /* align-content: flex-start; */
+  /* flex-flow: row nowrap; */
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.flex-container-vert {
+  display: flex;
+  /* align-content: flex-start; */
+  /* flex-flow: row nowrap; */
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.flex-container-vert > div {
+  margin: 10px;
+}
