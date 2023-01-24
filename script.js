@@ -1,5 +1,17 @@
 window.onload = (event) => {
-  // document.getElementById("result").innerHTML = ;
+  const original = [
+    [1, 3]
+  ];
+
+  // The don't-care terms: AB'C'D and ABCD'
+  const dcSet = [
+
+  ];
+
+  number = 1
+
+  console.log(window.espresso(original, dcSet))
+  console.log(number.toString(2))
 };
 
 function generateTruthTable() {
