@@ -5,7 +5,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.4.4/math.min.js"></script>
 		<script src="https://unpkg.com/gojs@2.2.18/release/go.js"></script>
 		<script src="./espresso.js"></script>
-		<script src="script.js"></script>
+		
 		<link rel="stylesheet" href="style.css" />
 	</head>
 
@@ -563,13 +563,20 @@
 					</span>
 					<input type="button" onclick="generateTruthTable()" value="Generate" />
 				</div>
-				<div>
-					Truth Table:
-					<div id="result"></div>
+				<div class="flex-container-hor">
+					<div>
+						Truth Table:
+						<div id="result"></div>
+					</div>
+					<div>
+						Minimised conditions:
+						<div id="minCond"></div>
+					</div>
 				</div>
 			</div>
 		</div>
 
 		<!-- <input id="input" type="text" name="fname" style="width: 200px" /><br /> -->
 	</body>
+	<script src="script.js"></script>
 </html>
