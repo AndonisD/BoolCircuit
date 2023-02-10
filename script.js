@@ -172,8 +172,6 @@ function feedToEspresso(truthConditions, numVars) {
 
 function generateCircuit(binaryMinTerms, varNames){
 
-  console.log(binaryMinTerms)
-
   // const numOR = binaryMinTerms.length-1
 
   // const numAND = binaryMinTerms.reduce((sum, arrayItem) => arrayItem.length > 1 ? sum + 1 : sum)
@@ -193,7 +191,7 @@ function generateCircuit(binaryMinTerms, varNames){
 
       varName = varNames[varIndex];
 
-      obj[varName] = truthValue
+      obj[varName] = parseInt(truthValue)
 
       return obj;
     
@@ -201,11 +199,43 @@ function generateCircuit(binaryMinTerms, varNames){
 
     }
 
-    console.log(output)
+    // var minExpression = "";
 
-    var htmlOutput = JSON.stringify(output)
+    var arrayStrings = [];
 
-    document.getElementById("minCond").innerHTML = htmlOutput;
+    arrayStrings.push()
+
+    output.forEach((minTerm)=>{
+      var stringMinTerm = []
+      
+      Object.keys(minTerm).forEach((varName)=>{
+        value = minTerm[varName]
+        console.log(value)
+        var varValue =""
+        value? varValue = varName : varValue = "not " + varName
+
+        stringMinTerm.push(varValue)
+      })
+
+      arrayStrings.push(stringMinTerm)
+
+    }) 
+
+    console.log(arrayStrings)
+
+    const interleave = (arr, thing) => [].concat(...arr.map(n => [n, thing])).slice(0, -1)
+
+    var andClauses = []
+    var stringTest = arrayStrings.forEach((mintermArray) => {
+      var arrayAndClause = interleave(mintermArray, "and")
+      andClauses.push(arrayAndClause.join(' '))
+    })
+
+    var stringExpression = interleave(andClauses, "or")
+
+    stringExpression = stringExpression.join(' ')
+
+    document.getElementById("minCond").innerHTML = stringExpression;
 
 
 
