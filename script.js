@@ -20,7 +20,7 @@ function generateTruthTable() {
   var expressions = expr.split(",");
 
   if (expressions.length == 0) {
-    console.log("detected");
+    console.log("no epxressions");
     return;
   }
 
@@ -124,7 +124,7 @@ function generateTruthTable() {
 
   var binaryMinTerms = feedToEspresso(truthConditions, numVars);
 
-  generateCircuit(binaryMinTerms, vars)
+  generateMinimisedExpression(binaryMinTerms, vars)
 
 }
 
@@ -170,7 +170,7 @@ function feedToEspresso(truthConditions, numVars) {
 }
 
 
-function generateCircuit(binaryMinTerms, varNames){
+function generateMinimisedExpression(binaryMinTerms, varNames){
 
   // const numOR = binaryMinTerms.length-1
 
@@ -237,9 +237,10 @@ function generateCircuit(binaryMinTerms, varNames){
 
     document.getElementById("minCond").innerHTML = stringExpression;
 
+    
 
-
-
+    generateCircuit(stringExpression);
+  
 
   // var defaulCircuitObj = { "class": "GraphLinksModel",
   // "linkFromPortIdProperty": "fromPort",
@@ -261,6 +262,41 @@ function generateCircuit(binaryMinTerms, varNames){
 
   // document.getElementById("mySavedModel").innerHTML = circuitJsonStr;
 
-  load()
+  // load()
+
+}
+
+function generateCircuit(expression){
+
+  const expressionTree = math.parse(expression);
+
+  var nodeDataArray = []
+
+  
+
+  var linkDataArray = []
+
+  var linkData = {}
+
+  expressionTree.traverse(function (node, path, parent) {
+    switch (node.type) {
+      case 'OperatorNode':
+        console.log(node.type, node.op)
+        break
+      case 'SymbolNode':
+        console.log(node.type, node.name)
+        break
+      default:
+        console.log(node.type)
+    }
+  })
+
+
+}
+
+function nodeData(category, key){
+  this.category = category;
+  this.key = key
+  this.loc = ""
 
 }
