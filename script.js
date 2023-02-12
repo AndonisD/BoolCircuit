@@ -242,15 +242,11 @@ function generateMinimisedExpression(binaryMinTerms, varNames){
     generateCircuit(stringExpression);
   
 
-  // var defaulCircuitObj = { "class": "GraphLinksModel",
-  // "linkFromPortIdProperty": "fromPort",
-  // "linkToPortIdProperty": "toPort",
-  // "nodeDataArray": [],
-  // "linkDataArray": []}
-
-  // var nodeDataArray = [{"category":"input","key":1,"loc":"100 100"},
-  // {"category":"input","key":2,"loc":"100 100"},
-  // {"category":"and","key":3,"loc":"100 100"}]
+  var defaultCircuitModel= { "class": "GraphLinksModel",
+  "linkFromPortIdProperty": "fromPort",
+  "linkToPortIdProperty": "toPort",
+  "nodeDataArray": [],
+  "linkDataArray": []}
 
 
 
@@ -266,37 +262,181 @@ function generateMinimisedExpression(binaryMinTerms, varNames){
 
 }
 
+function NodeData(category, key){
+  this.category = category;
+  this.key = key;
+  this.loc = "";
+
+}
+
+//toPort only required for AND and OR
+function LinkData(fromKey, toKey, toPort = ""){
+  this.from = fromKey;
+  this.to = toKey;
+  this.fromPort = "";
+  this.toPort = toPort;
+
+}
+
 function generateCircuit(expression){
 
-  const expressionTree = math.parse(expression);
+  var circuitModel= { "class": "GraphLinksModel",
+  "linkFromPortIdProperty": "fromPort",
+  "linkToPortIdProperty": "toPort",
+  "nodeDataArray": [],
+  "linkDataArray": []}
 
   var nodeDataArray = []
 
-  
-
   var linkDataArray = []
 
-  var linkData = {}
+  const expressionTree = math.parse(expression);
 
-  expressionTree.traverse(function (node, path, parent) {
+
+
+  var inputNum = 0;
+
+  var isFirst = true;
+
+  var keyID = 0;
+
+  var outputNode = new NodeData("output", "o")
+
+  nodeDataArray.push(outputNode)
+
+  var preOrderTraversal = []
+
+  //when just 1 symbol is passed...need to generate without espresso
+
+  expressionTree.traverse(function (node) {
+    preOrderTraversal.push(node)
+  })
+
+  operandStack = []
+  // operatorStack = []
+
+  console.log(preOrderTraversal.length);
+
+  preOrderTraversal.reverse();
+
+  for(let i = 0; i < preOrderTraversal.length; i++){
+    var node = preOrderTraversal[i];
+    console.log()
     switch (node.type) {
       case 'OperatorNode':
         console.log(node.type, node.op)
+
+        nodeKey = ++keyID
+
+        var nodeData = new NodeData(node.op, nodeKey);
+
+        console.log(node.op)
+        if (node.op == "and" || node.op == "or"){
+          console.log('dafuq')
+
+          var input1 = operandStack.pop()
+          var input2 = operandStack.pop()
+          //reversed on purpose
+
+          var link1 = new LinkData(input1.key, nodeKey, "in1")
+          var link2 = new LinkData(input2.key, nodeKey, "in2")
+
+          linkDataArray.push(link1, link2)
+
+          
+        }else if (node.op == "not"){
+          var input = operandStack.pop()
+
+          var link = new LinkData(input.key, nodeKey)
+
+          linkDataArray.push(link)
+
+        }
+
+        nodeDataArray.push(nodeData)
+
+        if (i == preOrderTraversal.length-1){
+          var finalLink = new LinkData(nodeKey, outputNode.key);
+          linkDataArray.push(finalLink)
+        }
+
+        operandStack.push(nodeData)
+
         break
       case 'SymbolNode':
-        console.log(node.type, node.name)
+        console.log(node.type, node.name);
+
+        
+
+        var nodeData = new NodeData("input", node.name);
+
+        var alreadyExists = false;
+
+        nodeDataArray.forEach((existingNode) => {
+          if (existingNode.key == node.name){
+            alreadyExists = true;
+            return
+          }
+        })
+
+        if(!alreadyExists){
+          nodeDataArray.push(nodeData)
+        }
+
+        if (i == preOrderTraversal.length-1){
+          var finalLink = new LinkData(node.name, outputNode.key);
+          linkDataArray.push(finalLink)
+        }
+
+        operandStack.push(nodeData);
+
         break
       default:
         console.log(node.type)
     }
-  })
+  }
+
+  // if (node.op == "and" || "or"){
+  //   inputNum = 2;
+  // }else if (node.op == "not"){
+  //   inputNum = 1;
+  // }else{
+  //   console.log("UNSUPORTED OPERATOR")
+  //   return
+  // }
+
+  // nodeDataArray.push(new nodeData(node.op, ++keyID))
+
+  // if (isFirst){
+    
+  //   linkDataArray.push(new linkData(keyID, "o"))
+  //   isFirst = false;
+  // }
+
+  // if (isFirst){
+  //   nodeDataArray.push(new nodeData("input", node.name))
+  //   linkDataArray.push(new linkData(keyID, "o"))
+  //   isFirst = false;
+  // }
+
+  // nodeDataArray.push(new nodeData("input", "a"))
+  // nodeDataArray.push(new nodeData("output", "o1"))
+
+  // linkDataArray.push(new linkData("a", "o1"))
+
+  
+
+  circuitModel.nodeDataArray = nodeDataArray.reverse();
+  circuitModel.linkDataArray = linkDataArray;
+
+  var circuitJsonStr = JSON.stringify(circuitModel)
+
+  document.getElementById("mySavedModel").innerHTML = circuitJsonStr;
+
+  load()
+
+  arrange()
 
 
 }
 
-function nodeData(category, key){
-  this.category = category;
-  this.key = key
-  this.loc = ""
-
-}
