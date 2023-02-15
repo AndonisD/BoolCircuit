@@ -29,3 +29,10 @@ td {
 .flex-container-vert > div {
   margin: 10px;
 }
+
+span.input:empty::before {
+    content: "e.g. a and not b and (b or c)";
+    color: gray;
+    display: inline-block;
+}
+
