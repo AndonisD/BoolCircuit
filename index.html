@@ -5,7 +5,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.4.4/math.min.js"></script>
 		<script src="https://unpkg.com/gojs@2.2.18/release/go.js"></script>
 		<script src="./espresso.js"></script>
-		
+		<script type="module" src="./script.js"></script>
 		<link rel="stylesheet" href="style.css" />
 	</head>
 
@@ -503,8 +503,8 @@
 
 					// save a model to and load a model from JSON text, displayed below the Diagram
 					function save() {
-						document.getElementById("mySavedModel").value =
-							myDiagram.model.toJson();
+						document.getElementById("mySavedModel").setHTML(myDiagram.model.toJson()); //MODIFIED
+						console.log(myDiagram.model)
 						myDiagram.isModified = false;
 					}
 					function load() {
@@ -522,7 +522,6 @@
 							myDiagram.isModified = false;
 							await new Promise(resolve => setTimeout(resolve, 1000));
 							myDiagram.layout = go.GraphObject.make(go.Layout);
-							
 						
 					}
 					window.addEventListener("DOMContentLoaded", init);
@@ -612,8 +611,10 @@
 						<button id="saveModel" onclick="save()">Save</button>
 						<button onclick="load()">Load</button>
 						<button onclick="arrange()">Arrange</button>
-						Diagram Model saved in JSON format:
+						<button id="submit_circuit">Submit</button>
+						
 					</div>
+					Diagram Model saved in JSON format:
 					<textarea id="mySavedModel" style="width: 100%; height: 200px">
 { "class": "GraphLinksModel",
   "linkFromPortIdProperty": "fromPort",
@@ -629,34 +630,47 @@
 					Boolean Expression:
 					<span
 						class="input"
-						id="input"
-						style="
-							width: 200px;
-							border: solid;
-							padding-left: 5px;
-							padding-right: 5px;
-							display: inline-block;
-						"
+						id="expression_input"
 						role="textbox"
 						contenteditable
-						
 					></span>
-					<input type="button" onclick="generateTruthTable()" value="Generate" />
+					<input class="submit_button" type="button" id="submit_expression" value="Submit" />
 				</div>
 				<div class="flex-container-hor">
-					<div>
+					<div class="flex-container-vert">
+						
 						Truth Table:
-						<div id="result"></div>
+						<div class="flex-container-vert">
+							Variable names:
+							<span
+								class="input"
+								id="vars_input"
+								role="textbox"
+								contenteditable
+							></span>
+							Minterms:
+							<span
+								class="input"
+								id="minterms_input"
+								role="textbox"
+								contenteditable
+							></span>
+							Don't care terms:
+							<span
+								class="input"
+								id="dontcare_input"
+								role="textbox"
+								contenteditable
+							></span>
+						</div>
+						<input class="submit_button" type="button" id="submit_table" value="Submit" />
 					</div>
-					<div>
-						Minimal DNF expression:
-						<div id="minCond"></div>
-					</div>
+					<div id="table"></div>
 				</div>
 			</div>
 		</div>
 
 		<!-- <input id="input" type="text" name="fname" style="width: 200px" /><br /> -->
 	</body>
-	<script src="script.js"></script>
+	
 </html>

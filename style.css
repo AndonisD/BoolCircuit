@@ -1,38 +1,73 @@
 table {
-  border-collapse: collapse;
+	border-collapse: collapse;
 }
 
 th,
 td {
-  border: 1px solid black;
-  text-align: center;
-  padding: 2px 5px;
+	border: 1px solid black;
+	text-align: center;
+	padding: 2px 5px;
 }
 .flex-container-hor {
-  display: flex;
-  /* align-content: flex-start; */
-  /* flex-flow: row nowrap; */
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
+	display: flex;
+	/* align-content: flex-start; */
+	/* flex-flow: row nowrap; */
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
 }
 
 .flex-container-vert {
-  display: flex;
-  /* align-content: flex-start; */
-  /* flex-flow: row nowrap; */
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: flex-start;
+	display: flex;
+	/* align-content: flex-start; */
+	/* flex-flow: row nowrap; */
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: flex-start;
 }
 
 .flex-container-vert > div {
-  margin: 10px;
+	margin: 10px;
 }
 
-span.input:empty::before {
-    content: "e.g. a and not b and (b or c)";
-    color: gray;
-    display: inline-block;
+.input {
+	width: 200px;
+	border: solid;
+	padding-left: 5px;
+	padding-right: 5px;
+	display: inline-block;
 }
 
+#expression_input:empty::before {
+	content: "a and (not b or c)";
+	color: gray;
+	display: inline-block;
+}
+
+#vars_input:empty::before {
+	content: "a,b,c";
+	color: gray;
+	display: inline-block;
+}
+
+#minterms_input:empty::before {
+	content: "3,6,7";
+	color: gray;
+	display: inline-block;
+}
+
+#dontcare_input:empty::before {
+	content: "1,4";
+	color: gray;
+	display: inline-block;
+}
+
+.submit_button {
+	width: 60px;
+	height: 20px;
+}
+
+.termColumn {
+	color: gray;
+	border-width: 0px;
+}

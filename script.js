@@ -1,442 +1,511 @@
-window.onload = (event) => {
-  // const original = [
-  //   [1, 3]
-  // ];
+import QuineMcCluskey from "./quinemccluskey.js";
 
-  // // The don't-care terms: AB'C'D and ABCD'
-  // const dcSet = [
+window.onload = (event) => {};
 
-  // ];
+document
+	.getElementById("submit_circuit")
+	.addEventListener("click", submitCircuit);
 
-  // number = 1
+document
+	.getElementById("submit_expression")
+	.addEventListener("click", submitExpression);
 
-  // console.log(window.espresso(original, dcSet))
-  // console.log(number.toString(2))
-};
+document
+	.getElementById("submit_table")
+	.addEventListener("click", submitMinterms);
 
-function generateTruthTable() {
-  var expr = document.getElementById("input").innerHTML;
+// document.getElementById("minimise_button").addEventListener("click", minimise);
 
-  var expressions = expr.split(",");
-
-  if (expressions.length == 0) {
-    console.log("no epxressions");
-    return;
-  }
-
-  const nodes = [];
-
-  expressions.forEach((e) => {
-    node = [];
-    node = math.parse(e).filter((node) => node.isSymbolNode);
-    nodes.push(...node);
-  });
-
-  var vars = [...new Set(nodes.map((item) => item.name))];
-
-  const parser = math.parser();
-
-  var table = "<table>";
-
-  table += "<thead><tr>";
-  vars.forEach((v) => {
-    table += "<th>";
-    table += v;
-    table += "</th>";
-  });
-  expressions.forEach((v) => {
-    table += "<th>";
-    table += v;
-    table += "</th>";
-  });
-  table += "</tr></thead>";
-
-  var output = [];
-
-  var numVars = vars.length;
-
-  var truthConditions = []
-
-  for (var i = 0; i < Math.pow(2, numVars); i++) {
-    var binary = i.toString(2);
-    binary = "0".repeat(numVars - binary.length) + binary;
-    output.push(
-      vars.reduce(function (obj, variable, index) {
-        obj[variable] = +binary.charAt(index);
-        return obj;
-      }, {})
-    );
-
-  
-    table += "<tr>";
-
-    var varCounter = 0
-
-    for (const [variable, value] of Object.entries(output[i])) {
-      table += "<td>";
-      table += value;
-      table += "</td>";
-
-      // console.log(varCounter, variable, value)
-
-    //convert var positions (0,1,2...) into binary string
-    //append value (0/1)
-    //convert to int
-      // bin = varCounter.toString(2) + value
-      // console.log(parseInt(bin, 2), i)
-
-      // console.log(Math.pow(2, varCounter) + value) /
-
-      // varCounter++;
-      
-    }
-
-    expressions.forEach((e) => {
-      table += "<td>";
-
-      try {
-        eval = +math.evaluate(e, output[i]);
-        table += eval;
-
-        if (eval == 1){
-          truthConditions.push(output[i])
-        }
-
-      } catch (err) {
-        document.getElementById("demo").innerHTML = err.message;
-        return;
-      }
-
-      table += "</td>";
-    });
-
-    table += "</tr>";
-  }
-
-  // console.log(truthConditions)
-  // console.log(numVars)
-
-  
-
-  table += "</table>";
-
-  document.getElementById("result").innerHTML = table;
-
-  var binaryMinTerms = feedToEspresso(truthConditions, numVars);
-
-  generateMinimisedExpression(binaryMinTerms, vars)
-
+function submitExpression() {
+	var expr = document.getElementById("expression_input").innerHTML;
+	generateTruthTable(expr);
+	generateCircuit(expr);
 }
 
+function submitMinterms() {}
+
+function generateTruthTable(expression) {
+	var varNodes = math.parse(expression).filter((node) => node.isSymbolNode);
+
+	var vars = [...new Set(varNodes.map((item) => item.name))];
+
+	const parser = math.parser();
+
+	var table = "<table>";
+
+	table += "<thead><tr>";
+
+	table += "<th class='termColumn'></th>"; //column above the term numbers
+
+	vars.forEach((v) => {
+		table += "<th>";
+		table += v;
+		table += "</th>";
+	});
+
+	table += "<th>";
+	table += "output";
+	table += "</th>";
+
+	table += "</tr></thead>";
+
+	var output = [];
+
+	var numVars = vars.length;
+
+	var truthConditions = [];
+
+	var termCount = 0;
+
+	for (var i = 0; i < Math.pow(2, numVars); i++) {
+		var binary = i.toString(2);
+		binary = "0".repeat(numVars - binary.length) + binary;
+		output.push(
+			vars.reduce(function (obj, variable, index) {
+				obj[variable] = +binary.charAt(index);
+				return obj;
+			}, {})
+		);
+
+		table += "<tr>";
+
+		table += "<td class='termColumn'>";
+		table += termCount;
+		table += "</td>";
+
+		termCount++;
+
+		for (const [variable, value] of Object.entries(output[i])) {
+			table += "<td>";
+			table += value;
+			table += "</td>";
+		}
+
+		table += "<td>";
+
+		try {
+			var evaluation = +math.evaluate(expression, output[i]);
+			table += evaluation;
+
+			if (evaluation == 1) {
+				truthConditions.push(output[i]);
+			}
+		} catch (err) {
+			document.getElementById("demo").innerHTML = err.message; //SET TO ERROR MESSAGE ELEMENT
+			return;
+		}
+
+		table += "</td>";
+
+		table += "</tr>";
+	}
+
+	table += "</table>";
+
+	document.getElementById("table").innerHTML = table;
+}
 
 function feedToEspresso(truthConditions, numVars) {
+	var espressoTable = [];
 
-  var espressoTable = [];
+	for (var i = 0; i < truthConditions.length; i++) {
+		var assignmentRow = [];
 
-  for (var i = 0; i < truthConditions.length; i++) {
+		var varCounter = 0;
 
-    var assignmentRow = []
+		for (const [variable, value] of Object.entries(truthConditions[i])) {
+			// console.log(varCounter, variable, value)
 
-    var varCounter = 0;
+			//convert var positions (0,1,2...) into signed binary string
+			//append truth value (0/1) to the string
+			var bin = varCounter.toString(2) + value;
+			//convert the resulting string to int
+			var int = parseInt(bin, 2);
 
-    for (const [variable, value] of Object.entries(truthConditions[i])) {
-      // console.log(varCounter, variable, value)
+			assignmentRow.push(int);
 
-      //convert var positions (0,1,2...) into signed binary string
-      //append truth value (0/1) to the string 
-      var bin = varCounter.toString(2) + value
-      //convert the resulting string to int
-      var int = parseInt(bin, 2)
-      
-      assignmentRow.push(int)
+			// console.log(Math.pow(2, varCounter) + value) /
 
+			varCounter++;
+		}
 
+		espressoTable.push(assignmentRow);
+	}
 
-      // console.log(Math.pow(2, varCounter) + value) /
+	const dcSet = [];
 
-      varCounter++;
-      
-    }
-
-    espressoTable.push(assignmentRow)
-
-  }
-
-  const dcSet = []
-
-  return window.espresso(espressoTable, dcSet)
-
-
+	return window.espresso(espressoTable, dcSet);
 }
 
+function generateMinimisedExpression(binaryMinTerms, varNames) {
+	// const numOR = binaryMinTerms.length-1
 
-function generateMinimisedExpression(binaryMinTerms, varNames){
+	// const numAND = binaryMinTerms.reduce((sum, arrayItem) => arrayItem.length > 1 ? sum + 1 : sum)
 
-  // const numOR = binaryMinTerms.length-1
+	//^ INCORRECT becuase
 
-  // const numAND = binaryMinTerms.reduce((sum, arrayItem) => arrayItem.length > 1 ? sum + 1 : sum)
+	var output = [];
 
-  //^ INCORRECT becuase 
+	for (var i = binaryMinTerms.length - 1; i >= 0; i--) {
+		output.push(
+			binaryMinTerms[i].reduce(function (obj, variable, index) {
+				//var = 10
+				var bin = "0" + variable.toString(2);
+				var binVarIndex = bin.substr(0, bin.length - 1);
+				var truthValue = bin.slice(-1);
 
-  var output = []
-  
-  for (var i = binaryMinTerms.length-1; i >= 0; i--) {
-    output.push(binaryMinTerms[i].reduce(function (obj, variable, index) {
-      //var = 10
-      bin = "0" + variable.toString(2);
-      binVarIndex = bin.substr(0,bin.length-1);
-      truthValue = bin.slice(-1);
+				var varIndex = parseInt(binVarIndex, 2);
 
-      varIndex = parseInt(binVarIndex, 2);
+				var varName = varNames[varIndex];
 
-      varName = varNames[varIndex];
+				obj[varName] = parseInt(truthValue);
 
-      obj[varName] = parseInt(truthValue)
+				return obj;
+			}, {})
+		);
+	}
 
-      return obj;
-    
-      }, {}))
+	// var minExpression = "";
 
-    }
+	var arrayStrings = [];
 
-    // var minExpression = "";
+	arrayStrings.push();
 
-    var arrayStrings = [];
+	output.forEach((minTerm) => {
+		var stringMinTerm = [];
 
-    arrayStrings.push()
+		Object.keys(minTerm).forEach((varName) => {
+			var value = minTerm[varName];
+			console.log(value);
+			var varValue = "";
+			value ? (varValue = varName) : (varValue = "not " + varName);
 
-    output.forEach((minTerm)=>{
-      var stringMinTerm = []
-      
-      Object.keys(minTerm).forEach((varName)=>{
-        value = minTerm[varName]
-        console.log(value)
-        var varValue =""
-        value? varValue = varName : varValue = "not " + varName
+			stringMinTerm.push(varValue);
+		});
 
-        stringMinTerm.push(varValue)
-      })
+		arrayStrings.push(stringMinTerm);
+	});
 
-      arrayStrings.push(stringMinTerm)
+	console.log(arrayStrings);
 
-    }) 
+	const interleave = (arr, thing) =>
+		[].concat(...arr.map((n) => [n, thing])).slice(0, -1);
 
-    console.log(arrayStrings)
+	var andClauses = [];
+	var stringTest = arrayStrings.forEach((mintermArray) => {
+		var arrayAndClause = interleave(mintermArray, "and");
+		andClauses.push(arrayAndClause.join(" "));
+	});
 
-    const interleave = (arr, thing) => [].concat(...arr.map(n => [n, thing])).slice(0, -1)
+	var stringExpression = interleave(andClauses, "or");
 
-    var andClauses = []
-    var stringTest = arrayStrings.forEach((mintermArray) => {
-      var arrayAndClause = interleave(mintermArray, "and")
-      andClauses.push(arrayAndClause.join(' '))
-    })
+	stringExpression = stringExpression.join(" ");
 
-    var stringExpression = interleave(andClauses, "or")
+	document.getElementById("minCond").innerHTML = stringExpression;
 
-    stringExpression = stringExpression.join(' ')
+	generateCircuit(stringExpression);
 
-    document.getElementById("minCond").innerHTML = stringExpression;
+	var defaultCircuitModel = {
+		class: "GraphLinksModel",
+		linkFromPortIdProperty: "fromPort",
+		linkToPortIdProperty: "toPort",
+		nodeDataArray: [],
+		linkDataArray: [],
+	};
 
-    
+	// defaulCircuitObj.nodeDataArray = nodeDataArray;
 
-    generateCircuit(stringExpression);
-  
+	// var circuitJsonStr = JSON.stringify(defaulCircuitObj)
 
-  var defaultCircuitModel= { "class": "GraphLinksModel",
-  "linkFromPortIdProperty": "fromPort",
-  "linkToPortIdProperty": "toPort",
-  "nodeDataArray": [],
-  "linkDataArray": []}
+	// document.getElementById("mySavedModel").innerHTML = circuitJsonStr;
 
-
-
-  // defaulCircuitObj.nodeDataArray = nodeDataArray;
-
-
-
-  // var circuitJsonStr = JSON.stringify(defaulCircuitObj)
-
-  // document.getElementById("mySavedModel").innerHTML = circuitJsonStr;
-
-  // load()
-
+	// load()
 }
 
-function NodeData(category, key){
-  this.category = category;
-  this.key = key;
-  this.loc = "";
-
+function NodeData(category, key) {
+	this.category = category;
+	this.key = key;
+	this.loc = "";
 }
 
 //toPort only required for AND and OR
-function LinkData(fromKey, toKey, toPort = ""){
-  this.from = fromKey;
-  this.to = toKey;
-  this.fromPort = "";
-  this.toPort = toPort;
-
+function LinkData(fromKey, toKey, toPort = "") {
+	this.from = fromKey;
+	this.to = toKey;
+	this.fromPort = "";
+	this.toPort = toPort;
 }
 
-function generateCircuit(expression){
+function generateCircuit(expression) {
+	var circuitModel = {
+		class: "GraphLinksModel",
+		linkFromPortIdProperty: "fromPort",
+		linkToPortIdProperty: "toPort",
+		nodeDataArray: [],
+		linkDataArray: [],
+	};
 
-  var circuitModel= { "class": "GraphLinksModel",
-  "linkFromPortIdProperty": "fromPort",
-  "linkToPortIdProperty": "toPort",
-  "nodeDataArray": [],
-  "linkDataArray": []}
+	var nodeDataArray = [];
 
-  var nodeDataArray = []
+	var linkDataArray = [];
 
-  var linkDataArray = []
+	const expressionTree = math.parse(expression);
 
-  const expressionTree = math.parse(expression);
+	var inputNum = 0;
 
+	var isFirst = true;
 
+	var keyID = 0;
 
-  var inputNum = 0;
+	var outputNode = new NodeData("output", "o");
 
-  var isFirst = true;
+	nodeDataArray.push(outputNode);
 
-  var keyID = 0;
+	var preOrderTraversal = [];
 
-  var outputNode = new NodeData("output", "o")
+	//when just 1 symbol is passed...need to generate without espresso
 
-  nodeDataArray.push(outputNode)
+	expressionTree.traverse(function (node) {
+		preOrderTraversal.push(node);
+	});
 
-  var preOrderTraversal = []
+	var operandStack = [];
+	// operatorStack = []
 
-  //when just 1 symbol is passed...need to generate without espresso
+	console.log(preOrderTraversal.length);
 
-  expressionTree.traverse(function (node) {
-    preOrderTraversal.push(node)
-  })
+	preOrderTraversal.reverse();
 
-  operandStack = []
-  // operatorStack = []
+	for (let i = 0; i < preOrderTraversal.length; i++) {
+		var node = preOrderTraversal[i];
+		console.log();
+		switch (node.type) {
+			case "OperatorNode":
+				console.log(node.type, node.op);
 
-  console.log(preOrderTraversal.length);
+				var nodeKey = ++keyID;
 
-  preOrderTraversal.reverse();
+				var nodeData = new NodeData(node.op, nodeKey);
 
-  for(let i = 0; i < preOrderTraversal.length; i++){
-    var node = preOrderTraversal[i];
-    console.log()
-    switch (node.type) {
-      case 'OperatorNode':
-        console.log(node.type, node.op)
+				console.log(node.op);
+				if (node.op == "and" || node.op == "or") {
+					var input1 = operandStack.pop();
+					var input2 = operandStack.pop();
+					//reversed on purpose
 
-        nodeKey = ++keyID
+					var link1 = new LinkData(input1.key, nodeKey, "in1");
+					var link2 = new LinkData(input2.key, nodeKey, "in2");
 
-        var nodeData = new NodeData(node.op, nodeKey);
+					linkDataArray.push(link1, link2);
+				} else if (node.op == "not") {
+					var input = operandStack.pop();
 
-        console.log(node.op)
-        if (node.op == "and" || node.op == "or"){
-          console.log('dafuq')
+					var link = new LinkData(input.key, nodeKey);
 
-          var input1 = operandStack.pop()
-          var input2 = operandStack.pop()
-          //reversed on purpose
+					linkDataArray.push(link);
+				}
 
-          var link1 = new LinkData(input1.key, nodeKey, "in1")
-          var link2 = new LinkData(input2.key, nodeKey, "in2")
+				nodeDataArray.push(nodeData);
 
-          linkDataArray.push(link1, link2)
+				if (i == preOrderTraversal.length - 1) {
+					var finalLink = new LinkData(nodeKey, outputNode.key);
+					linkDataArray.push(finalLink);
+				}
 
-          
-        }else if (node.op == "not"){
-          var input = operandStack.pop()
+				operandStack.push(nodeData);
 
-          var link = new LinkData(input.key, nodeKey)
+				break;
+			case "SymbolNode":
+				console.log(node.type, node.name);
 
-          linkDataArray.push(link)
+				var nodeData = new NodeData("input", node.name);
 
-        }
+				var alreadyExists = false;
 
-        nodeDataArray.push(nodeData)
+				nodeDataArray.forEach((existingNode) => {
+					if (existingNode.key == node.name) {
+						alreadyExists = true;
+						return;
+					}
+				});
 
-        if (i == preOrderTraversal.length-1){
-          var finalLink = new LinkData(nodeKey, outputNode.key);
-          linkDataArray.push(finalLink)
-        }
+				if (!alreadyExists) {
+					nodeDataArray.push(nodeData);
+				}
 
-        operandStack.push(nodeData)
+				if (i == preOrderTraversal.length - 1) {
+					var finalLink = new LinkData(node.name, outputNode.key);
+					linkDataArray.push(finalLink);
+				}
 
-        break
-      case 'SymbolNode':
-        console.log(node.type, node.name);
+				operandStack.push(nodeData);
 
-        
+				break;
+			default:
+				console.log(node.type);
+		}
+	}
 
-        var nodeData = new NodeData("input", node.name);
+	circuitModel.nodeDataArray = nodeDataArray.reverse();
+	circuitModel.linkDataArray = linkDataArray;
 
-        var alreadyExists = false;
+	var circuitJsonStr = JSON.stringify(circuitModel);
 
-        nodeDataArray.forEach((existingNode) => {
-          if (existingNode.key == node.name){
-            alreadyExists = true;
-            return
-          }
-        })
+	document.getElementById("mySavedModel").setHTML(circuitJsonStr);
 
-        if(!alreadyExists){
-          nodeDataArray.push(nodeData)
-        }
+	load();
 
-        if (i == preOrderTraversal.length-1){
-          var finalLink = new LinkData(node.name, outputNode.key);
-          linkDataArray.push(finalLink)
-        }
-
-        operandStack.push(nodeData);
-
-        break
-      default:
-        console.log(node.type)
-    }
-  }
-
-  // if (node.op == "and" || "or"){
-  //   inputNum = 2;
-  // }else if (node.op == "not"){
-  //   inputNum = 1;
-  // }else{
-  //   console.log("UNSUPORTED OPERATOR")
-  //   return
-  // }
-
-  // nodeDataArray.push(new nodeData(node.op, ++keyID))
-
-  // if (isFirst){
-    
-  //   linkDataArray.push(new linkData(keyID, "o"))
-  //   isFirst = false;
-  // }
-
-  // if (isFirst){
-  //   nodeDataArray.push(new nodeData("input", node.name))
-  //   linkDataArray.push(new linkData(keyID, "o"))
-  //   isFirst = false;
-  // }
-
-  // nodeDataArray.push(new nodeData("input", "a"))
-  // nodeDataArray.push(new nodeData("output", "o1"))
-
-  // linkDataArray.push(new linkData("a", "o1"))
-
-  
-
-  circuitModel.nodeDataArray = nodeDataArray.reverse();
-  circuitModel.linkDataArray = linkDataArray;
-
-  var circuitJsonStr = JSON.stringify(circuitModel)
-
-  document.getElementById("mySavedModel").innerHTML = circuitJsonStr;
-
-  load()
-
-  arrange()
-
-
+	arrange();
 }
 
+function submitCircuit() {
+	save();
+
+	var circuitModel = JSON.parse(
+		document.getElementById("mySavedModel").innerHTML
+	);
+
+	// const node1 = new math.SymbolNode('a')
+	// const node2 = new math.SymbolNode('b')
+	// const node3 = new math.SymbolNode('a')
+	// const node4 = new math.OperatorNode('and', 'and', [node1, node2])
+	// console.log(node4.toString())
+
+	console.log(circuitModel.nodeDataArray);
+
+	var outputKeys = [];
+
+	var nodeMap = new Map();
+
+	var inputVarMap = new Map();
+
+	var keyIndex = 0;
+
+	circuitModel.nodeDataArray.forEach((nodeData) => {
+		switch (nodeData.category) {
+			case "output":
+				nodeMap.set(nodeData.key, nodeData.category);
+				outputKeys.push(nodeData.key);
+				break;
+			case "input":
+				var key = nodeData.key;
+				if (typeof key != "string") {
+					inputVarMap.set(nodeData.key, inputVarNameGenerator(keyIndex));
+					keyIndex++;
+				} else {
+					inputVarMap.set(nodeData.key, nodeData.key);
+				}
+				nodeMap.set(nodeData.key, nodeData.category);
+				break;
+			case "and":
+			case "or":
+			case "not":
+				nodeMap.set(nodeData.key, nodeData.category);
+				break;
+			default:
+				console.log("gate not supported!"); //GIVE VISIBLE ERROR AND RETURN
+		}
+	});
+
+	if (outputKeys.length > 1) {
+		//ONLY 1 OUTPUT SUPPORTED AND RETURN
+	} else if (outputKeys.length < 1) {
+		//PLEASE ADD AN OUTPUT AND RETURN
+	}
+
+	var outputKey = outputKeys[0];
+
+	var linkDataArray = circuitModel.linkDataArray;
+
+	var end = linkDataArray.filter(({ to }) => {
+		return to == outputKey;
+	});
+
+	console.log("END:" + end);
+
+	console.log(nodeMap);
+
+	var lastNode = end[0];
+
+	var tree = "";
+
+	try {
+		tree = iterateLinkData(nodeMap, inputVarMap, linkDataArray, lastNode.from);
+	} catch (err) {
+		alert(err.message);
+	}
+
+	console.log(tree.toString());
+}
+
+// const node1 = new math.SymbolNode('a')
+// const node2 = new math.SymbolNode('b')
+// const node3 = new math.SymbolNode('a')
+// const node4 = new math.OperatorNode('and', 'and', [node1, node2])
+// console.log(node4.toString())
+
+//varnames currently depend on order in which nodes were place. Set temp varnames and change in final expression?
+
+//GIVE ERROR FOR CYCLES
+function iterateLinkData(nodeMap, inputVarMap, linkDataArray, key) {
+	var toLinks = linkDataArray.filter(({ to }) => {
+		return to == key;
+	});
+
+	var type = nodeMap.get(key);
+
+	console.log(type);
+
+	switch (type) {
+		case "input":
+			return new math.SymbolNode(inputVarMap.get(key));
+			break;
+		case "and":
+		case "or":
+			//CHECK THAT toLinks HAS 2 RETURN ERROR OTHERWISE
+			var child1 = iterateLinkData(
+				nodeMap,
+				inputVarMap,
+				linkDataArray,
+				toLinks[0].from
+			);
+			var child2 = iterateLinkData(
+				nodeMap,
+				inputVarMap,
+				linkDataArray,
+				toLinks[1].from
+			);
+			return new math.OperatorNode(type, type, [child1, child2]);
+			break;
+		case "not":
+			//CHECK THAT toLinks HAS 2 RETURN ERROR OTHERWISE
+			var child = iterateLinkData(
+				nodeMap,
+				inputVarMap,
+				linkDataArray,
+				toLinks[0].from
+			);
+			return new math.OperatorNode(type, type, [child]);
+			break;
+		default: //GIVE VISIBLE ERROR AND RETURN
+			console.log("gate not supported!");
+			console.log(type);
+	}
+}
+
+function inputVarNameGenerator(i) {
+	const abc = "abcdefghijklmnopqrstuvwxyz";
+	return abc[i];
+}
+
+function minimise() {
+	// let sop = new QuineMcCluskey("abc", [3,6,7]);
+	// let pos = new QuineMcCluskey("abc", [0,1,2,4,5], [], true);
+	// let sop = new QuineMcCluskey("abcd", [1,3,7,11,15], [0,2,5], true);
+	// let sop = new QuineMcCluskey("abcd", [4,5,6,9,11,12,13,14], [0,1,3,7]);
+	let sop = new QuineMcCluskey("abcd", [0], [], false);
+
+	// console.log(sop.getFunction())
+	console.log(sop.getFunction());
+	// console.log(pos.getFunction())
+}
