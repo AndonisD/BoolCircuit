@@ -4,19 +4,20 @@
 	<head>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.4.4/math.min.js"></script>
 		<script src="https://unpkg.com/gojs@2.2.18/release/go.js"></script>
-		<script src="./espresso.js"></script>
 		<script type="module" src="./script.js"></script>
 		<link rel="stylesheet" href="style.css" />
 	</head>
 
-	<body>
+	<body bgcolor="#313338">
 		<div class="flex-container-hor">
 			<div id="allSampleContent" class="p-4 w-full">
 				Circuit Diagram:
 				<script src="https://unpkg.com/gojs@2.2.18/extensions/Figures.js"></script>
 				<script id="code">
-					var red = "orangered"; // 0 or false
-					var green = "forestgreen"; // 1 or true
+					// var red = "orangered"; // 0 or false
+					// var green = "forestgreen"; // 1 or true
+					var red = '#FF504A';
+					var green = "#45BD4F";
 
 					function init() {
 						// Since 2.2 you can also author concise templates with method chaining instead of GraphObject.make
@@ -31,6 +32,8 @@
 								"undoManager.isEnabled": true,
 							}
 						);
+
+						
 
 						// when the document is modified, add a "*" to the title and enable the "Save" button
 						myDiagram.addDiagramListener("Modified", (e) => {
@@ -98,7 +101,7 @@
 							return {
 								name: "NODESHAPE",
 								fill: "lightgray",
-								stroke: "darkslategray",
+								stroke: "#2B2D31",
 								desiredSize: new go.Size(40, 40),
 								strokeWidth: 2,
 							};
@@ -154,7 +157,11 @@
 							go.Node,
 							"Spot",
 							nodeStyle(),
-							$(go.Shape, "Circle", shapeStyle(), { fill: red }), // override the default fill (from shapeStyle()) to be red
+							$(go.Shape, "Circle", shapeStyle(), { fill: red }),
+							$(go.TextBlock, 
+								{ margin: 8, stroke: 'white', font: 'bold 20px courier new'},
+								new go.Binding("text", "key")
+							),
 							$(
 								go.Shape,
 								"Rectangle",
@@ -177,7 +184,7 @@
 							go.Node,
 							"Spot",
 							nodeStyle(),
-							$(go.Shape, "Rectangle", shapeStyle(), { fill: green }), // override the default fill (from shapeStyle()) to be green
+							$(go.Shape, "Rectangle", shapeStyle(), { fill: red }), // override the default fill (from shapeStyle()) to be green
 							$(
 								go.Shape,
 								"Rectangle",
@@ -362,8 +369,8 @@
 						palette.nodeTemplateMap = myDiagram.nodeTemplateMap;
 
 						palette.model.nodeDataArray = [
-							{ category: "input" },
-							{ category: "output" },
+							{ key: "", category: "input"},
+							{ category: "output"},
 							{ category: "and" },
 							{ category: "or" },
 							{ category: "xor" },
@@ -372,6 +379,12 @@
 							{ category: "nor" },
 							{ category: "xnor" },
 						];
+
+						myDiagram.addDiagramListener('ExternalObjectsDropped', function(e) {
+							e.subject.each(function (node) {
+								e.diagram.model.setKeyForNodeData(node.data, keyGenerator(node.data.category));
+							});
+						});
 
 						// load the initial diagram
 						load();
@@ -386,6 +399,27 @@
 							updateStates();
 							loop();
 						}, 250);
+					}
+
+					function keyGenerator(category) {
+						console.log(category)
+						var nodes = myDiagram.nodes;
+						var key = ''
+						if(category === 'input'){
+							const abc = "abcdefghijklmnopqrstuvwxyz";
+							let unusedKeys = abc.split("")
+							nodes.each((node) => {
+							if (node.category === "input") {
+								unusedKeys = unusedKeys.filter((letter) => letter !== node.key)
+							}});
+							key = unusedKeys.shift();
+						}
+						else{
+							var i = -1;
+							while (myDiagram.model.findNodeDataForKey(i) !== null) i -= 1;
+							key = i;
+						}
+						return key;
 					}
 
 					// update the value and appearance of each node according to its type and input values
@@ -504,7 +538,6 @@
 					// save a model to and load a model from JSON text, displayed below the Diagram
 					function save() {
 						document.getElementById("mySavedModel").setHTML(myDiagram.model.toJson()); //MODIFIED
-						console.log(myDiagram.model)
 						myDiagram.isModified = false;
 					}
 					function load() {
@@ -535,7 +568,7 @@
 								width: 100px;
 								height: 500px;
 								margin-right: 2px;
-								background-color: whitesmoke;
+								background-color: #E5E6E9;
 								border: 1px solid black;
 								position: relative;
 								-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
@@ -547,6 +580,7 @@
 								width="147"
 								height="747"
 								style="
+									fillStyle:#E5E6E9;
 									position: absolute;
 									top: 0px;
 									left: 0px;
@@ -573,13 +607,14 @@
 							</div>
 						</div>
 						<div id="myDiagramDiv" " style=" width: 500px; height: 500px;
-						border: 1px solid black; position: relative;
+						border: 1px solid black; position: relative; background-color: #E5E6E9;
 						-webkit-tap-highlight-color: rgba(255, 255, 255, 0); cursor: auto;">
 						<canvas
 							tabindex="0"
 							width="1402"
 							height="747"
 							style="
+								fillStyle:#E5E6E9;
 								position: relative;
 								top: 0px;
 								left: 0px;

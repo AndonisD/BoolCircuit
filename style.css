@@ -1,10 +1,17 @@
+body {
+	color: #e5e6e9;
+	font-family: "Gill Sans", sans-serif;
+	font-weight: bold;
+}
+
 table {
 	border-collapse: collapse;
+	border-color: #85898f;
 }
 
 th,
 td {
-	border: 1px solid black;
+	border: 2px solid #85898f;
 	text-align: center;
 	padding: 2px 5px;
 }
@@ -36,9 +43,10 @@ td {
 	padding-left: 5px;
 	padding-right: 5px;
 	display: inline-block;
+	border-color: #85898f;
 }
 
-#expression_input:empty::before {
+/* #expression_input:empty::before {
 	content: "a and (not b or c)";
 	color: gray;
 	display: inline-block;
@@ -60,7 +68,7 @@ td {
 	content: "1,4";
 	color: gray;
 	display: inline-block;
-}
+} */
 
 .submit_button {
 	width: 60px;
@@ -68,6 +76,6 @@ td {
 }
 
 .termColumn {
-	color: gray;
+	color: #b5bac1;
 	border-width: 0px;
 }

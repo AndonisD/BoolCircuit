@@ -17,32 +17,101 @@ document
 // document.getElementById("minimise_button").addEventListener("click", minimise);
 
 function submitExpression() {
-	var expr = document.getElementById("expression_input").innerHTML;
-	generateTruthTable(expr);
-	generateCircuit(expr);
+	var expression = document.getElementById("expression_input").innerHTML;
+	generateTruthTableFromExpression(expression);
+	generateCircuit(expression);
 }
 
-function submitMinterms() {}
+function submitMinterms() {
+	var varNames = document.getElementById("vars_input").innerHTML.split(",");
+	var minTerms = document.getElementById("minterms_input").innerHTML.split(",");
+	var dontCares = document
+		.getElementById("dontcare_input")
+		.innerHTML.split(",");
 
-function generateTruthTable(expression) {
-	var varNodes = math.parse(expression).filter((node) => node.isSymbolNode);
+	var expression = generateExpressionFromMinterms(minTerms, varNames);
 
-	var vars = [...new Set(varNodes.map((item) => item.name))];
+	document.getElementById("expression_input").innerHTML = expression;
 
-	const parser = math.parser();
+	generateTruthTable(varNames, minTerms, dontCares);
+
+	generateCircuit(expression);
+}
+
+function extractMinterms(expression) {}
+
+function generateTruthTable(varNames, minTerms, dontCares) {
+	var numVars = varNames.length;
+
+	var totalNumTerms = Math.pow(2, numVars);
 
 	var table = "<table>";
 
 	table += "<thead><tr>";
+	//column above the term numbers
+	table += "<th class='termColumn'></th>";
+	//columns for each var
+	varNames.forEach((v) => {
+		table += "<th>";
+		table += v;
+		table += "</th>";
+	});
+	//column for output
+	table += "<th>";
+	table += "output";
+	table += "</th>";
 
-	table += "<th class='termColumn'></th>"; //column above the term numbers
+	table += "</tr></thead>";
 
+	for (var term = 0; term < totalNumTerms; term++) {
+		//truth value comb in binary
+		var bits = getBits(term, numVars).split("");
+
+		table += "<tr>";
+		//term number
+		table += "<td class='termColumn'>";
+		table += term.toString();
+		table += "</td>";
+		//var truth values
+		for (const bit of bits) {
+			table += "<td>";
+			table += bit;
+			table += "</td>";
+		}
+		//function output
+		table += "<td>";
+		table += minTerms.includes(term.toString())
+			? "1"
+			: dontCares.includes(term.toString())
+			? "x"
+			: "0";
+		table += "</td>";
+
+		table += "</tr>";
+	}
+
+	table += "</table>";
+
+	document.getElementById("table").innerHTML = table;
+}
+
+function generateTruthTableFromExpression(expression) {
+	var varNodes = math.parse(expression).filter((node) => node.isSymbolNode);
+
+	var vars = [...new Set(varNodes.map((item) => item.name))];
+
+	var table = "<table>";
+
+	table += "<thead><tr>";
+	//column above the term numbers
+	table += "<th class='termColumn'></th>";
+	//columns for each var
 	vars.forEach((v) => {
 		table += "<th>";
 		table += v;
 		table += "</th>";
 	});
-
+	//column for output
 	table += "<th>";
 	table += "output";
 	table += "</th>";
@@ -56,7 +125,7 @@ function generateTruthTable(expression) {
 	var truthConditions = [];
 
 	var termCount = 0;
-
+	//for each row
 	for (var i = 0; i < Math.pow(2, numVars); i++) {
 		var binary = i.toString(2);
 		binary = "0".repeat(numVars - binary.length) + binary;
@@ -105,121 +174,45 @@ function generateTruthTable(expression) {
 	document.getElementById("table").innerHTML = table;
 }
 
-function feedToEspresso(truthConditions, numVars) {
-	var espressoTable = [];
-
-	for (var i = 0; i < truthConditions.length; i++) {
-		var assignmentRow = [];
-
-		var varCounter = 0;
-
-		for (const [variable, value] of Object.entries(truthConditions[i])) {
-			// console.log(varCounter, variable, value)
-
-			//convert var positions (0,1,2...) into signed binary string
-			//append truth value (0/1) to the string
-			var bin = varCounter.toString(2) + value;
-			//convert the resulting string to int
-			var int = parseInt(bin, 2);
-
-			assignmentRow.push(int);
-
-			// console.log(Math.pow(2, varCounter) + value) /
-
-			varCounter++;
-		}
-
-		espressoTable.push(assignmentRow);
-	}
-
-	const dcSet = [];
-
-	return window.espresso(espressoTable, dcSet);
+function getBits(value, numVars) {
+	let s = (value >>> 0).toString(2);
+	for (let i = s.length; i < numVars; i++) s = "0" + s;
+	return s;
 }
 
-function generateMinimisedExpression(binaryMinTerms, varNames) {
-	// const numOR = binaryMinTerms.length-1
+function interleave(arr, thing) {
+	return [].concat(...arr.map((n) => [n, thing])).slice(0, -1);
+}
 
-	// const numAND = binaryMinTerms.reduce((sum, arrayItem) => arrayItem.length > 1 ? sum + 1 : sum)
+function generateExpressionFromMinterms(minTerms, varNames) {
+	console.log(minTerms);
+	var stringMinterms = [];
 
-	//^ INCORRECT becuase
+	for (var i = 0; i < minTerms.length; i++) {
+		var minTerm = minTerms[i];
+		var bin = getBits(minTerm, varNames.length);
+		console.log(bin);
+		var stringMinterm = [];
 
-	var output = [];
-
-	for (var i = binaryMinTerms.length - 1; i >= 0; i--) {
-		output.push(
-			binaryMinTerms[i].reduce(function (obj, variable, index) {
-				//var = 10
-				var bin = "0" + variable.toString(2);
-				var binVarIndex = bin.substr(0, bin.length - 1);
-				var truthValue = bin.slice(-1);
-
-				var varIndex = parseInt(binVarIndex, 2);
-
-				var varName = varNames[varIndex];
-
-				obj[varName] = parseInt(truthValue);
-
-				return obj;
-			}, {})
-		);
+		for (var j = 0; j < varNames.length; j++) {
+			var varName = varNames[j];
+			var varString = "";
+			var varValue = bin.charAt(j) == "1";
+			varValue ? (varString = varName) : (varString = "not " + varName);
+			stringMinterm.push(varString);
+		}
+		stringMinterms.push(stringMinterm);
 	}
 
-	// var minExpression = "";
-
-	var arrayStrings = [];
-
-	arrayStrings.push();
-
-	output.forEach((minTerm) => {
-		var stringMinTerm = [];
-
-		Object.keys(minTerm).forEach((varName) => {
-			var value = minTerm[varName];
-			console.log(value);
-			var varValue = "";
-			value ? (varValue = varName) : (varValue = "not " + varName);
-
-			stringMinTerm.push(varValue);
-		});
-
-		arrayStrings.push(stringMinTerm);
-	});
-
-	console.log(arrayStrings);
-
-	const interleave = (arr, thing) =>
-		[].concat(...arr.map((n) => [n, thing])).slice(0, -1);
-
 	var andClauses = [];
-	var stringTest = arrayStrings.forEach((mintermArray) => {
-		var arrayAndClause = interleave(mintermArray, "and");
-		andClauses.push(arrayAndClause.join(" "));
+
+	stringMinterms.forEach((minTerm) => {
+		andClauses.push(interleave(minTerm, "and").join(" "));
 	});
 
-	var stringExpression = interleave(andClauses, "or");
+	var stringExpression = interleave(andClauses, "or").join(" ");
 
-	stringExpression = stringExpression.join(" ");
-
-	document.getElementById("minCond").innerHTML = stringExpression;
-
-	generateCircuit(stringExpression);
-
-	var defaultCircuitModel = {
-		class: "GraphLinksModel",
-		linkFromPortIdProperty: "fromPort",
-		linkToPortIdProperty: "toPort",
-		nodeDataArray: [],
-		linkDataArray: [],
-	};
-
-	// defaulCircuitObj.nodeDataArray = nodeDataArray;
-
-	// var circuitJsonStr = JSON.stringify(defaulCircuitObj)
-
-	// document.getElementById("mySavedModel").innerHTML = circuitJsonStr;
-
-	// load()
+	return stringExpression;
 }
 
 function NodeData(category, key) {
@@ -458,7 +451,7 @@ function iterateLinkData(nodeMap, inputVarMap, linkDataArray, key) {
 
 	switch (type) {
 		case "input":
-			return new math.SymbolNode(inputVarMap.get(key));
+			return new math.SymbolNode(key);
 			break;
 		case "and":
 		case "or":
