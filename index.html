@@ -9,6 +9,9 @@
 	</head>
 
 	<body bgcolor="#313338">
+		<div class="top-bar">
+			<img src="https://fontmeme.com/permalink/230319/27e5f82ef3f0ce79408c8f21449e0e9d.png" style="margin-left: auto; margin-right: auto;" alt="">
+		</div>	
 		<div class="flex-container-hor">
 			<div id="allSampleContent" class="p-4 w-full">
 				Circuit Diagram:
@@ -34,7 +37,6 @@
 						);
 
 						
-
 						// when the document is modified, add a "*" to the title and enable the "Save" button
 						myDiagram.addDiagramListener("Modified", (e) => {
 							var button = document.getElementById("saveModel");
@@ -91,7 +93,7 @@
 									selectionAdorned: false,
 									shadowOffset: new go.Point(0, 0),
 									shadowBlur: 15,
-									shadowColor: "blue",
+									shadowColor: "#14BDEB",
 									toolTip: sharedToolTip,
 								},
 							];
@@ -402,7 +404,6 @@
 					}
 
 					function keyGenerator(category) {
-						console.log(category)
 						var nodes = myDiagram.nodes;
 						var key = ''
 						if(category === 'input'){
@@ -566,7 +567,7 @@
 							id="palette"
 							style="
 								width: 100px;
-								height: 500px;
+								height: 480px;
 								margin-right: 2px;
 								background-color: #E5E6E9;
 								border: 1px solid black;
@@ -606,7 +607,7 @@
 								<div style="position: absolute; width: 1px; height: 1px"></div>
 							</div>
 						</div>
-						<div id="myDiagramDiv" " style=" width: 500px; height: 500px;
+						<div id="myDiagramDiv" " style=" width: 500px; height: 480px;
 						border: 1px solid black; position: relative; background-color: #E5E6E9;
 						-webkit-tap-highlight-color: rgba(255, 255, 255, 0); cursor: auto;">
 						<canvas
@@ -643,10 +644,10 @@
 				</div>
 				<div style="width: 600px">
 					<div>
-						<button id="saveModel" onclick="save()">Save</button>
-						<button onclick="load()">Load</button>
-						<button onclick="arrange()">Arrange</button>
-						<button id="submit_circuit">Submit</button>
+						<button class="submit_button" id="saveModel" onclick="save()">Save</button>
+						<button class="submit_button" onclick="load()">Load</button>
+						<button class="submit_button" onclick="arrange()">Arrange</button>
+						<button class="submit_button" id="submit_circuit">Submit</button>
 						
 					</div>
 					Diagram Model saved in JSON format:
@@ -671,7 +672,7 @@
 					></span>
 					<input class="submit_button" type="button" id="submit_expression" value="Submit" />
 				</div>
-				<div class="flex-container-hor">
+				<div class="table-container">
 					<div class="flex-container-vert">
 						
 						Truth Table:
@@ -699,6 +700,30 @@
 							></span>
 						</div>
 						<input class="submit_button" type="button" id="submit_table" value="Submit" />
+						<br>
+						<br>
+						Minimised Expressions:
+						<div class="flex-container-vert">
+							DNF:
+							<div class="minimised_field">
+								<span
+									class="input"
+									id="min_DNF"
+									role="textbox"
+								></span>
+								<input class="go_button" type="button" id="go_DNF" value=">" />
+							</div>
+							
+							CNF:
+							<div class="minimised_field">
+								<span
+									class="input"
+									id="min_CNF"
+									role="textbox"
+								></span>
+								<input class="go_button" type="button" id="go_CNF" value=">" />
+							</div>
+						</div>
 					</div>
 					<div id="table"></div>
 				</div>

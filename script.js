@@ -1,3 +1,4 @@
+import Minterm from "./minterm.js";
 import QuineMcCluskey from "./quinemccluskey.js";
 
 window.onload = (event) => {};
@@ -14,20 +15,57 @@ document
 	.getElementById("submit_table")
 	.addEventListener("click", submitMinterms);
 
-// document.getElementById("minimise_button").addEventListener("click", minimise);
+document.getElementById("go_DNF").addEventListener("click", () => {
+	useMinExpression("DNF");
+});
+
+document.getElementById("go_CNF").addEventListener("click", () => {
+	useMinExpression("CNF");
+});
+
+function submitCircuit() {
+	let expression = parseCircuit();
+	let { vars, minTerms } = breakDownExpression(expression);
+	let dontCares = [];
+	document.getElementById("expression_input").innerHTML = expression;
+	generateTruthTable(vars, minTerms, dontCares);
+	minimiseExpression(vars, minTerms, dontCares);
+}
+
+function useMinExpression(type) {
+	let isDNF = type === "DNF";
+	let expression = document.getElementById(
+		isDNF ? "min_DNF" : "min_CNF"
+	).innerHTML;
+	let { vars, minTerms } = breakDownExpression(expression);
+	let dontCares = [];
+	generateCircuit(expression);
+	// generateTruthTable(vars, minTerms, dontCares);
+}
 
 function submitExpression() {
 	var expression = document.getElementById("expression_input").innerHTML;
-	generateTruthTableFromExpression(expression);
+	let { vars, minTerms } = breakDownExpression(expression);
+	let dontCares = [];
+	generateTruthTable(vars, minTerms, dontCares);
 	generateCircuit(expression);
+	minimiseExpression(vars, minTerms, dontCares);
 }
 
 function submitMinterms() {
 	var varNames = document.getElementById("vars_input").innerHTML.split(",");
-	var minTerms = document.getElementById("minterms_input").innerHTML.split(",");
+	var minTerms = document
+		.getElementById("minterms_input")
+		.innerHTML.split(",")
+		.map((str) => {
+			return parseInt(str);
+		});
 	var dontCares = document
 		.getElementById("dontcare_input")
-		.innerHTML.split(",");
+		.innerHTML.split(",")
+		.map((str) => {
+			return parseInt(str);
+		});
 
 	var expression = generateExpressionFromMinterms(minTerms, varNames);
 
@@ -38,9 +76,71 @@ function submitMinterms() {
 	generateCircuit(expression);
 }
 
-function extractMinterms(expression) {}
+function minimiseExpression(vars, minTerms, dontCares) {
+	let sop = new QuineMcCluskey(vars, minTerms, dontCares, false);
+
+	let maxTerms = [];
+
+	let numVars = vars.length;
+
+	let totalNumTerms = Math.pow(2, numVars);
+
+	for (let i = 0; i < totalNumTerms; i++) {
+		if (!minTerms.includes(i)) {
+			maxTerms.push(i);
+		}
+	}
+
+	let reversedDCs = [];
+
+	reversedDCs.push(
+		dontCares.map((term) => {
+			return totalNumTerms - term;
+		})
+	);
+
+	let pos = new QuineMcCluskey(vars, maxTerms, reversedDCs, true);
+
+	let dnf = sop.getFunction();
+	let cnf = pos.getFunction();
+
+	document.getElementById("min_DNF").innerHTML = dnf;
+	document.getElementById("min_CNF").innerHTML = cnf;
+}
+
+function breakDownExpression(expression) {
+	var varNodes = math.parse(expression).filter((node) => node.isSymbolNode);
+
+	let vars = [...new Set(varNodes.map((item) => item.name))];
+
+	// vars = vars.sort();
+
+	var numVars = vars.length;
+
+	var totalNumTerms = Math.pow(2, numVars);
+
+	var minTerms = [];
+
+	for (var term = 0; term < totalNumTerms; term++) {
+		var bits = getBits(term, numVars);
+
+		let truthValueComb = vars.reduce(function (obj, variable, index) {
+			obj[variable] = +bits.charAt(index);
+			return obj;
+		}, {});
+
+		var evaluation = +math.evaluate(expression, truthValueComb);
+
+		if (evaluation == 1) {
+			minTerms.push(term);
+		}
+	}
+
+	return { vars, minTerms };
+}
 
 function generateTruthTable(varNames, minTerms, dontCares) {
+	// varNames = varNames.sort();
 	var numVars = varNames.length;
 
 	var totalNumTerms = Math.pow(2, numVars);
@@ -49,7 +149,7 @@ function generateTruthTable(varNames, minTerms, dontCares) {
 
 	table += "<thead><tr>";
 	//column above the term numbers
-	table += "<th class='termColumn'></th>";
+	table += "<th class='term-column'></th>";
 	//columns for each var
 	varNames.forEach((v) => {
 		table += "<th>";
@@ -69,7 +169,7 @@ function generateTruthTable(varNames, minTerms, dontCares) {
 
 		table += "<tr>";
 		//term number
-		table += "<td class='termColumn'>";
+		table += "<td class='term-column'>";
 		table += term.toString();
 		table += "</td>";
 		//var truth values
@@ -79,12 +179,12 @@ function generateTruthTable(varNames, minTerms, dontCares) {
 			table += "</td>";
 		}
 		//function output
-		table += "<td>";
-		table += minTerms.includes(term.toString())
-			? "1"
-			: dontCares.includes(term.toString())
-			? "x"
-			: "0";
+		// table += "<td>";
+		table += minTerms.includes(term)
+			? "<td class='output-true'> 1"
+			: dontCares.includes(term)
+			? "<td> x"
+			: "<td class='output-false'>0";
 		table += "</td>";
 
 		table += "</tr>";
@@ -104,7 +204,7 @@ function generateTruthTableFromExpression(expression) {
 
 	table += "<thead><tr>";
 	//column above the term numbers
-	table += "<th class='termColumn'></th>";
+	table += "<th class='term-column'></th>";
 	//columns for each var
 	vars.forEach((v) => {
 		table += "<th>";
@@ -185,7 +285,6 @@ function interleave(arr, thing) {
 }
 
 function generateExpressionFromMinterms(minTerms, varNames) {
-	console.log(minTerms);
 	var stringMinterms = [];
 
 	for (var i = 0; i < minTerms.length; i++) {
@@ -271,16 +370,13 @@ function generateCircuit(expression) {
 
 	for (let i = 0; i < preOrderTraversal.length; i++) {
 		var node = preOrderTraversal[i];
-		console.log();
+
 		switch (node.type) {
 			case "OperatorNode":
-				console.log(node.type, node.op);
-
 				var nodeKey = ++keyID;
 
 				var nodeData = new NodeData(node.op, nodeKey);
 
-				console.log(node.op);
 				if (node.op == "and" || node.op == "or") {
 					var input1 = operandStack.pop();
 					var input2 = operandStack.pop();
@@ -309,8 +405,6 @@ function generateCircuit(expression) {
 
 				break;
 			case "SymbolNode":
-				console.log(node.type, node.name);
-
 				var nodeData = new NodeData("input", node.name);
 
 				var alreadyExists = false;
@@ -351,7 +445,7 @@ function generateCircuit(expression) {
 	arrange();
 }
 
-function submitCircuit() {
+function parseCircuit() {
 	save();
 
 	var circuitModel = JSON.parse(
@@ -428,7 +522,7 @@ function submitCircuit() {
 		alert(err.message);
 	}
 
-	console.log(tree.toString());
+	return tree.toString();
 }
 
 // const node1 = new math.SymbolNode('a')
@@ -471,13 +565,13 @@ function iterateLinkData(nodeMap, inputVarMap, linkDataArray, key) {
 			return new math.OperatorNode(type, type, [child1, child2]);
 			break;
 		case "not":
-			//CHECK THAT toLinks HAS 2 RETURN ERROR OTHERWISE
 			var child = iterateLinkData(
 				nodeMap,
 				inputVarMap,
 				linkDataArray,
 				toLinks[0].from
 			);
+
 			return new math.OperatorNode(type, type, [child]);
 			break;
 		default: //GIVE VISIBLE ERROR AND RETURN
@@ -489,16 +583,4 @@ function iterateLinkData(nodeMap, inputVarMap, linkDataArray, key) {
 function inputVarNameGenerator(i) {
 	const abc = "abcdefghijklmnopqrstuvwxyz";
 	return abc[i];
-}
-
-function minimise() {
-	// let sop = new QuineMcCluskey("abc", [3,6,7]);
-	// let pos = new QuineMcCluskey("abc", [0,1,2,4,5], [], true);
-	// let sop = new QuineMcCluskey("abcd", [1,3,7,11,15], [0,2,5], true);
-	// let sop = new QuineMcCluskey("abcd", [4,5,6,9,11,12,13,14], [0,1,3,7]);
-	let sop = new QuineMcCluskey("abcd", [0], [], false);
-
-	// console.log(sop.getFunction())
-	console.log(sop.getFunction());
-	// console.log(pos.getFunction())
 }

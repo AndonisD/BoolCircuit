@@ -1,12 +1,15 @@
 body {
 	color: #e5e6e9;
-	font-family: "Gill Sans", sans-serif;
+	/* font-family: "Gill Sans", sans-serif; */
+	font-family: "Courier New";
 	font-weight: bold;
 }
 
 table {
 	border-collapse: collapse;
 	border-color: #85898f;
+	font-family: "Courier New";
+	font-weight: bold;
 }
 
 th,
@@ -15,6 +18,21 @@ td {
 	text-align: center;
 	padding: 2px 5px;
 }
+
+.term-column {
+	color: #b5bac1;
+	border-width: 0px;
+}
+
+.output-true {
+	background: #45bd4f;
+	/* color: #85898f; */
+}
+
+.output-false {
+	background: #ff504a;
+}
+
 .flex-container-hor {
 	display: flex;
 	/* align-content: flex-start; */
@@ -22,6 +40,13 @@ td {
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: space-evenly;
+}
+
+.table-container {
+	display: flex;
+	align-content: flex-start;
+	flex-flow: row wrap;
+	justify-content: space-between;
 }
 
 .flex-container-vert {
@@ -44,6 +69,62 @@ td {
 	padding-right: 5px;
 	display: inline-block;
 	border-color: #85898f;
+	/* font-family: "Courier New"; */
+}
+
+.submit_button {
+	width: 70px;
+	height: 20px;
+	background: transparent;
+	border: 2px solid #e5e6e9;
+	outline: none;
+	border-radius: 4px;
+	cursor: pointer;
+	color: #e5e6e9;
+	font-family: "Courier New";
+	font-weight: bold;
+	transition: 0.3s;
+}
+
+.go_button {
+	width: 25px;
+	height: 25px;
+	background: transparent;
+	border: 2px solid #e5e6e9;
+	outline: none;
+	border-radius: 4px;
+	cursor: pointer;
+	color: #e5e6e9;
+	font-family: "Courier New";
+	font-weight: bold;
+	transition: 0.3s;
+}
+
+.submit_button:hover {
+	background: #e5e6e9;
+	color: #85898f;
+}
+
+.go_button:hover {
+	background: #e5e6e9;
+	color: #85898f;
+}
+
+.minimised_field {
+	display: flex;
+	margin: 0px;
+	align-content: center;
+	justify-content: space-between;
+}
+
+.top-bar {
+	display: flex;
+	width: 100%;
+	justify-content: space-around;
+}
+
+.input:empty {
+	height: 20px;
 }
 
 /* #expression_input:empty::before {
@@ -69,13 +150,3 @@ td {
 	color: gray;
 	display: inline-block;
 } */
-
-.submit_button {
-	width: 60px;
-	height: 20px;
-}
-
-.termColumn {
-	color: #b5bac1;
-	border-width: 0px;
-}
