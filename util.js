@@ -15,6 +15,10 @@ export function getBits(value, numVars) {
 	return s;
 }
 
+export function interleave(arr, thing) {
+	return [].concat(...arr.map((n) => [n, thing])).slice(0, -1);
+}
+
 /**
  * Returns whether or not a value is in an array
  *
