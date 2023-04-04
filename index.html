@@ -140,13 +140,7 @@
 							// don't bother with binding GraphObject.visible if there's no predicate
 							visiblePredicate ? new go.Binding("visible", "", (o, e) => o.diagram ? visiblePredicate(o, e) : false).ofObject() : {});
 						}
-						
-						//CUSTOM
-						const nodeMenu =  // context menu for each Node
-							$("ContextMenu",
-							makeButton("Add left port",
-								(e, obj) => addPort())
-							);
+					
 
 						function addPort(){
 							alert("adding port");
@@ -380,6 +374,7 @@
 							{ category: "xnor" },
 						];
 
+						// listen for new nodes dropped and set custom keys
 						myDiagram.addDiagramListener('ExternalObjectsDropped', function(e) {
 							e.subject.each(function (node) {
 								e.diagram.model.setKeyForNodeData(node.data, keyGenerator(node.data.category));
@@ -401,20 +396,21 @@
 						}, 250);
 					}
 
+					// generate and return custom key for node dropped onto myDiagram
 					function keyGenerator(category) {
-						var nodes = myDiagram.nodes;
-						var key = ''
+						const nodes = myDiagram.nodes;
+						let key = '';
 						if(category === 'input'){
 							const abc = "abcdefghijklmnopqrstuvwxyz";
-							let unusedKeys = abc.split("")
+							let unusedKeys = abc.split("") //array containing all possible var names
 							nodes.each((node) => {
 							if (node.category === "input") {
-								unusedKeys = unusedKeys.filter((letter) => letter !== node.key)
+								unusedKeys = unusedKeys.filter((letter) => letter !== node.key) //filter out used keys
 							}});
-							key = unusedKeys.shift();
+							key = unusedKeys.shift(); //return first element
 						}
 						else{
-							var i = -1;
+							let i = -1;
 							while (myDiagram.model.findNodeDataForKey(i) !== null) i -= 1;
 							key = i;
 						}
@@ -545,17 +541,14 @@
 						);
 					}
 
-					
-					//CUSTOM
-
+					//temporarily applies the TreeLayout
 					async function arrange() {
-						
 							myDiagram.layout = go.GraphObject.make(go.TreeLayout);
-							myDiagram.isModified = false;
+							myDiagram.isModified = false; //enables saving even if not modified
 							await new Promise(resolve => setTimeout(resolve, 1000));
 							myDiagram.layout = go.GraphObject.make(go.Layout);
-						
 					}
+
 					window.addEventListener("DOMContentLoaded", init);
 				</script>
 
