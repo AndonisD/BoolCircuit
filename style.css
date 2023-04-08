@@ -115,13 +115,23 @@ td {
 } */
 
 .input {
-	width: 200px;
+	width: 250px;
 	border: solid;
 	padding-left: 5px;
 	padding-right: 5px;
 	display: inline-block;
 	border-color: #85898f;
 	/* font-family: "Courier New"; */
+	font-weight: normal;
+}
+.right {
+	margin-left: auto;
+}
+
+.info_box {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 10px;
 }
 
 .submit_button {
@@ -136,6 +146,21 @@ td {
 	font-family: "Courier New";
 	font-weight: bold;
 	transition: 0.3s;
+}
+
+.divider {
+	width: 100%;
+}
+
+.submit_label {
+	display: inline-block;
+	width: 65px;
+	height: 15px;
+	text-align: center;
+	font-size: small;
+	vertical-align: middle;
+	padding: 0px;
+	/* margin-top: 5px; */
 }
 
 .go_button {
@@ -166,7 +191,7 @@ td {
 	display: flex;
 	margin: 0px;
 	align-content: center;
-	justify-content: space-between;
+	justify-content: flex-start;
 }
 
 .input:empty {
@@ -191,6 +216,7 @@ td {
 	font-size: 13px;
 	left: 50%;
 	top: 100%;
+	font-weight: normal;
 
 	white-space: pre-line;
 
@@ -224,6 +250,19 @@ td {
 	top: 100%;
 }
 
+.tooltiptext.left {
+	left: -210px;
+}
+
+.example_text {
+	/* align-self: center; */
+	text-align: center;
+}
+
+input[type="file"] {
+	display: none;
+}
+
 .tooltip:hover .tooltiptext {
 	visibility: visible;
 }
@@ -235,7 +274,31 @@ td {
 }
 
 .customTooltip .introjs-tooltip-title {
-	color: #45bd4f;
+	/* color: #45bd4f; */
+	color: black;
+}
+
+.error_title {
+	display: inline-block;
+	font-weight: bold;
+}
+
+.error_container {
+	margin: 10px;
+	width: 300px;
+	background-color: #ff504a;
+	color: #fff;
+	text-align: left;
+	border-radius: 6px;
+	padding: 5px;
+	font-size: 13px;
+	left: 50%;
+	font-weight: normal;
+}
+
+.function_label {
+	margin-top: 5px;
+	font-weight: normal;
 }
 
 /* #expression_input:empty::before {
@@ -255,9 +318,9 @@ td {
 	color: gray;
 	display: inline-block;
 }
-
+*/
 #dontcare_input:empty::before {
-	content: "1,4";
+	content: "optional";
 	color: gray;
 	display: inline-block;
-} */
+}

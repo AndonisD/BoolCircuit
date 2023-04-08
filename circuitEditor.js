@@ -530,6 +530,55 @@ function load() {
 		document.getElementById("mySavedModel").value
 	);
 }
+function download(content, fileName, contentType) {
+	var a = document.createElement("a");
+	var file = new Blob([content], { type: contentType });
+	a.href = URL.createObjectURL(file);
+	a.download = fileName;
+	a.click();
+	URL.revokeObjectURL(a.href);
+}
+// download(jsonData, 'json.txt', 'text/plain');
+
+function saveJson() {
+	download(myDiagram.model.toJson(), "circuit_model.txt", "text/plain");
+}
+function loadJson() {
+	fetch("test.json");
+}
+
+document.getElementById("file-upload").onchange = (e) => {
+	// getting a hold of the file reference
+	var file = e.target.files[0];
+
+	// setting up the reader
+	var reader = new FileReader();
+	reader.readAsText(file, "UTF-8");
+
+	reader.onload = (readerEvent) => {
+		var content = readerEvent.target.result;
+		circuitModel = JSON.parse(content);
+
+		document
+			.getElementById("mySavedModel")
+			.setHTML(JSON.stringify(circuitModel));
+		myDiagram.isModified = false;
+		console.log(content);
+		load();
+	};
+};
+
+function showError(msg = null) {
+	const errText = document.getElementById("error-message");
+	const title = "<div class='error_title'>ERROR:</div><br>";
+	if (msg) {
+		errText.innerHTML = title + msg;
+		errText.hidden = false;
+	} else {
+		errText.hidden = true;
+	}
+}
+showError();
 
 //temporarily applies the TreeLayout
 async function arrange() {

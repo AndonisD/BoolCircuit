@@ -38,8 +38,16 @@ function submitCircuit() {
 }
 
 function submitExpression() {
+	showError();
 	const expression = document.getElementById("expression_input").innerHTML;
-	let { vars, minTerms } = breakDownExpression(expression);
+	let vars, minTerms;
+	try {
+		({ vars, minTerms } = breakDownExpression(expression));
+	} catch (error) {
+		showError(error);
+		return;
+	}
+
 	let dontCares = [];
 
 	updateTruthTable(vars, minTerms, dontCares);

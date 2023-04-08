@@ -5,6 +5,15 @@ import { getBits, interleave } from "./util.js";
  */
 export function breakDownExpression(expression) {
 	let varNodes = math.parse(expression).filter((node) => node.isSymbolNode);
+	console.log(varNodes);
+
+	if (
+		!varNodes.every((varName) => {
+			return varName.name.length === 1;
+		})
+	) {
+		throw "Please only use single character inputs!";
+	}
 
 	let vars = [...new Set(varNodes.map((item) => item.name))];
 

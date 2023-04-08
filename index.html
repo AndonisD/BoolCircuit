@@ -125,21 +125,26 @@
 						</div>
 					</div>
 				</div>
-				<div style="width: 600px">
-					<div class="margin">
-						<button class="submit_button" id="saveModel" onclick="save()">Save</button>
-						<button class="submit_button" onclick="load()">Load</button>
-						<button class="submit_button" onclick="arrange()">Arrange</button>
-						<button class="submit_button" id="submit_circuit">Submit</button>
-						<div class="tooltip">
-							<i class="fas fa-info-circle fa-sm"></i>
-							<span class="tooltiptext top">To submit your circuit, it must have:
-								- at least 1 input
-								- only AND, OR, NOT gates
-								- exactly 1 output
-							</span>
+				<div style=" width: 600px">
+					<div class="margin" style="display: flex; justify-content: space-between;">
+						<div>
+							<button class="submit_button" id="saveModel" onclick="saveJson()">Save</button>
+							<label for="file-upload" class="submit_button submit_label">Load</label>
+						</div>
+						<div>
+							<button class="submit_button" onclick="arrange()">Arrange</button>
+							<button class="submit_button" id="submit_circuit">Submit</button>
+							<div class="tooltip">
+								<i class="fas fa-info-circle fa-sm"></i>
+								<span class="tooltiptext top">To submit your circuit, it must have:
+									- at least 1 input
+									- only AND, OR, NOT gates
+									- exactly 1 output
+								</span>
+							</div>
 						</div>
 					</div>
+					<input id="file-upload" type="file"/>
 					<!-- Diagram Model saved in JSON format: -->
 					<textarea hidden id="mySavedModel" style="width: 100%; height: 200px">
 { "class": "GraphLinksModel",
@@ -156,8 +161,10 @@
 					<div class="margin">
 						<div class="tooltip">
 							<i class="fas fa-info-circle fa-sm"></i>
-							<span class="tooltiptext">Enter a boolean expression. 
-								e.g. a and (not b or c)</span>
+							<span class="tooltiptext">Enter a  valid boolean expression. e.g.
+
+								a and (not b or c)
+							</span>
 						</div>
 						Boolean Expression:
 						<span
@@ -173,48 +180,43 @@
 					<div class="flex-container-vert" style="padding: 0px;">
 						<div class="border function_container">
 						<div class="margin">
-						Boolean Function:
-						<br>
-						<br>
+						<div class="info_box">
+							Boolean Function
+							<div class="tooltip">
+								<i class="fas fa-info-circle fa-sm"></i>
+								<span class="tooltiptext">Enter comma-separated lists. e.g.
+									
+										a,b,c
+										3,6,7
+										1,4		
+								</span>
+							</div>
+						</div>
 						<div class="flex-container-vert">
-							<div>
-								<div class="tooltip">
-									<i class="fas fa-info-circle fa-sm"></i>
-									<span class="tooltiptext">Enter variables names separated by commas 
-										e.g. a,b,c</span>
-								</div>
+							<div class="function_label">
 							Variable names:
 							</div>
 							<span
-								class="input"
+								class="input right"
 								id="vars_input"
 								role="textbox"
 								contenteditable
 							></span>
-							<div>
-								<div class="tooltip">
-									<i class="fas fa-info-circle fa-sm"></i>
-									<span class="tooltiptext">Enter minterms separated by commas 
-										e.g. 3,6,7</span>
-								</div>
+							<div class="function_label">
+
 							Minterms:
 							</div>
 							<span
-								class="input"
+								class="input right"
 								id="minterms_input"
 								role="textbox"
 								contenteditable
 							></span>
-							<div>
-								<div class="tooltip">
-									<i class="fas fa-info-circle fa-sm"></i>
-									<span class="tooltiptext">Enter don't care terms separated by commas 
-										e.g. 1,4</span>
-								</div>
-							Don't care terms:
+							<div class="function_label">
+								Don't care terms:
 							</div>
 							<span
-								class="input"
+								class="input right"
 								id="dontcare_input"
 								role="textbox"
 								contenteditable
@@ -227,15 +229,17 @@
 			
 						<div class="border min_container">
 						<div class="margin">
-						<div>
-						<div class="tooltip">
-							<i class="fas fa-info-circle fa-sm"></i>
-							<span class="tooltiptext">The minimised expressions will appear here. Press on the arrows to check them out!</span>
-						</div>
-						Minimised Expressions:
+						<div class="info_box">
+							Minimised Expressions
+							<div class="tooltip">
+								<i class="fas fa-info-circle fa-sm min_info"></i>
+								<span class="tooltiptext">The minimised expressions will appear here. Press on the arrows to check them out!</span>
+							</div>
 						</div>
 						<div class="flex-container-vert">
-							DNF:
+							<div class="function_label">
+								DNF:
+							</div>
 							<div class="minimised_field">
 								<span
 									class="input"
@@ -244,7 +248,9 @@
 								></span>
 								<input class="go_button" type="button" id="go_DNF" value=">" />
 							</div>
-							CNF:
+							<div class="function_label">
+								CNF:
+							</div>
 							<div class="minimised_field">
 								<span
 									class="input"
@@ -256,11 +262,14 @@
 						</div>
 					</div>
 					</div>
+					<div class="error_container" id="error-message">
+						This is an error message
+					</div>
 					</div>
 					<div class="border table_container"style="margin-right: auto; min-width: 245px;">
 						<div class="margin">
 							<div class="flex-container-vert" style="">
-								Truth table:
+								Truth table
 								<div id="table" class="margin"></div>
 							</div>
 						</div>
@@ -288,34 +297,44 @@
 				disableInteraction: false,
 				tooltipClass: 'customTooltip',
 				steps: [{
-						title: 'Welcome',
-						intro: 'Weolcome to BoolSim - a lightweight combinational logic circuit visualiser'
+						title: "Welcome to  <img style='height: 30px; left: 100%; margin-top:5px' src='https://fontmeme.com/permalink/230407/714842a4c8050a8c984484ae7621f3e4.png' alt='pixel-fonts' border='0'>",
+						intro: "Lightweight combinational logic circuit visualiser"
 					},
 					{
 						intro: 'There are 3 ways for you to input and interact with boolean functions...'
 					},
 					{
+						title: 'Circuits',
 						element: document.querySelector('.circuit_container'),
 						intro: 'This is the circuit editor. You can build your logic circuits here.'
 					},
 					{
+						title: 'Boolean Expressions',
 						element: document.querySelector('.expression_container'),
-						intro: 'Or you can input a boolean expression.'
+						intro: 'Or you can input a boolean expression'
 					},
 					{
+						title: 'Boolean Functions',
 						element: document.querySelector('.function_container'),
-						intro: 'Or define a boolean function directly.'
+						intro: 'Or define a boolean function directly'
 					},
 					{
+						title: 'Truth Tables',
 						element: document.querySelector('.table_container'),
-						intro: 'This is where the truth table will appear.'
+						intro: 'This is where the truth table will appear'
 					},
 					{
+						title: 'Minimisation',
 						element: document.querySelector('.min_container'),
 						intro: 'You can also view the minimised forms of your functions!'
 					},
 					{
-						intro: 'Have fun exploring the world of combinational logic!'
+						element: document.querySelector('.min_info'),
+						intro: 'Hover over these for more info'
+					},
+					{
+						title: "<img style='height: 30px; left: 100%;' src='https://fontmeme.com/permalink/230407/714842a4c8050a8c984484ae7621f3e4.png' alt='pixel-fonts' border='0'>",
+						intro: "Have fun exploring the world of combinational logic!"
 					},
 				]
 			}).start();
