@@ -1,13 +1,10 @@
-import { generateCircuit, parseCircuit } from "./circuitController.js";
-import { getBits, interleave } from "./util.js";
+import { generateCircuit, parseCircuit } from "./modules/circuitController.js";
 import {
 	breakDownExpression,
-	minimiseExpression,
-} from "./expressionController.js";
-import {
-	generateTruthTable,
 	generateExpressionFromMinterms,
-} from "./truthTableController.js";
+} from "./modules/expressionController.js";
+import { generateTruthTable } from "./modules/truthTableController.js";
+import { minimiseFunction } from "./modules/minimisationController.js";
 
 document
 	.getElementById("submit_circuit")
@@ -33,48 +30,73 @@ function submitCircuit() {
 	let expression = parseCircuit();
 	let { vars, minTerms } = breakDownExpression(expression);
 	let dontCares = [];
-	document.getElementById("expression_input").innerHTML = expression;
-	document.getElementById("vars_input").innerHTML = vars;
-	document.getElementById("minterms_input").innerHTML = minTerms;
-	generateTruthTable(vars, minTerms, dontCares);
-	minimiseExpression(vars, minTerms, dontCares);
+
+	updateExpression(expression);
+	updateMinterms(vars, minTerms);
+	updateTruthTable(vars, minTerms, dontCares);
+	updateMinimisedFunctions(vars, minTerms, dontCares);
 }
 
 function submitExpression() {
-	var expression = document.getElementById("expression_input").innerHTML;
+	const expression = document.getElementById("expression_input").innerHTML;
 	let { vars, minTerms } = breakDownExpression(expression);
 	let dontCares = [];
-	document.getElementById("vars_input").innerHTML = vars;
-	document.getElementById("minterms_input").innerHTML = minTerms;
-	generateTruthTable(vars, minTerms, dontCares);
+
+	updateTruthTable(vars, minTerms, dontCares);
 	generateCircuit(expression);
-	minimiseExpression(vars, minTerms, dontCares);
+	updateMinterms(vars, minTerms);
+	updateMinimisedFunctions(vars, minTerms, dontCares);
 }
 
 function submitMinterms() {
-	var vars = document.getElementById("vars_input").innerHTML.split(",");
-	var minTerms = document
+	const vars = document.getElementById("vars_input").innerHTML.split(",");
+	const minTerms = document
 		.getElementById("minterms_input")
 		.innerHTML.split(",")
 		.map((str) => {
 			return parseInt(str);
 		});
-	var dontCares = document
+	const dontCares = document
 		.getElementById("dontcare_input")
 		.innerHTML.split(",")
 		.map((str) => {
 			return parseInt(str);
 		});
+	const expression = generateExpressionFromMinterms(minTerms, vars);
 
-	var expression = generateExpressionFromMinterms(minTerms, vars);
-
-	document.getElementById("expression_input").innerHTML = expression;
-
-	generateTruthTable(vars, minTerms, dontCares);
-
+	updateExpression(expression);
 	generateCircuit(expression);
+	updateTruthTable(vars, minTerms, dontCares);
+	updateMinimisedFunctions(vars, minTerms, dontCares);
+}
 
-	minimiseExpression(vars, minTerms, dontCares);
+function updateMinimisedFunctions(vars, minTerms, dontCares) {
+	let dnf = "";
+	let cnf = "";
+
+	({ dnf, cnf } = minimiseFunction(vars, minTerms, dontCares));
+
+	document.getElementById("min_DNF").innerHTML = dnf;
+	document.getElementById("min_CNF").innerHTML = cnf;
+}
+
+function updateMinterms(vars, minTerms) {
+	document.getElementById("vars_input").innerHTML = vars;
+	document.getElementById("minterms_input").innerHTML = minTerms;
+}
+
+function updateTruthTable(vars, minTerms, dontCares) {
+	const htmlTable = generateTruthTable(vars, minTerms, dontCares);
+	document.getElementById("table").innerHTML = htmlTable;
+}
+
+function updateExpression(expression) {
+	document.getElementById("expression_input").innerHTML = expression;
+}
+
+function generateUpdateExpression(minTerms, vars) {
+	const expression = generateExpressionFromMinterms(minTerms, vars);
+	document.getElementById("expression_input").innerHTML = expression;
 }
 
 function useMinExpression(type) {

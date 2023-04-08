@@ -4,557 +4,45 @@
 	<head>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.4.4/math.min.js"></script>
 		<script src="https://unpkg.com/gojs@2.2.18/release/go.js"></script>
+		<link href="https://unpkg.com/intro.js/minified/introjs.min.css" rel="stylesheet"> 
+		<script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
 		<script type="module" src="./mediator.js"></script>
-		<script type="module" src="circuitController.js"></script>
+		<script type="module" src="./modules/circuitController.js"></script>
 		<link rel="stylesheet" href="style.css" />
+		<script src="https://kit.fontawesome.com/a1b3d7504f.js" crossorigin="anonymous"></script>
+		
 	</head>
 
+	
 	<body bgcolor="#313338">
+		<header>
+			<div class="top_bar" style="border-bottom: solid #E5E6E9;">
+				<div class="logo_container">
+					<img style="height: 30px; left: 100%;" src="https://fontmeme.com/permalink/230407/714842a4c8050a8c984484ae7621f3e4.png" alt="pixel-fonts" border="0">
+				</div>
+				<div class="top_container">
+					<div class="icon_container info_button">
+						<i class="fa-solid fa-circle-info fa-2xl" id="info_button" style="color: #ffffff;"></i>
+					</div>
+					<a href="https://github.com/AndonisD/BoolCircuit" style="text-decoration: none;">
+						<div class="icon_container">
+							<i class="fa-brands fa-github fa-2xl" style="color: #ffffff;"></i>
+						</div>
+					</a>
+				</div>
+				
+				
+			</div>
+		</header>
+		
 		<div class="flex-container-hor">
-			<div id="allSampleContent" class="p-4 w-full">
-				Circuit Diagram:
-				<script src="https://unpkg.com/gojs@2.2.18/extensions/Figures.js"></script>
-				<script id="code">
-					// var red = "orangered"; // 0 or false
-					// var green = "forestgreen"; // 1 or true
-					var red = '#FF504A';
-					var green = "#45BD4F";
-
-					function init() {
-						// Since 2.2 you can also author concise templates with method chaining instead of GraphObject.make
-						// For details, see https://gojs.net/latest/intro/buildingObjects.html
-						const $ = go.GraphObject.make; // for conciseness in defining templates
-
-						myDiagram = $(
-							go.Diagram,
-							"myDiagramDiv", // create a new Diagram in the HTML DIV element "myDiagramDiv"
-							{
-								"draggingTool.isGridSnapEnabled": true, // dragged nodes will snap to a grid of 10x10 cells
-								"undoManager.isEnabled": true,
-							}
-						);
-
-						
-						// when the document is modified, add a "*" to the title and enable the "Save" button
-						myDiagram.addDiagramListener("Modified", (e) => {
-							var button = document.getElementById("saveModel");
-							if (button) button.disabled = !myDiagram.isModified;
-							var idx = document.title.indexOf("*");
-							if (myDiagram.isModified) {
-								if (idx < 0) document.title += "*";
-							} else {
-								if (idx >= 0) document.title = document.title.slice(0, idx);
-							}
-						});
-
-						var palette = new go.Palette("palette"); // create a new Palette in the HTML DIV element "palette"
-
-						// creates relinkable Links that will avoid crossing Nodes when possible and will jump over other Links in their paths
-						myDiagram.linkTemplate = $(
-							go.Link,
-							{
-								routing: go.Link.AvoidsNodes,
-								curve: go.Link.JumpOver,
-								corner: 4,
-								reshapable: true,
-								resegmentable: true,
-								relinkableFrom: true,
-								relinkableTo: true,
-								selectionAdorned: false, // Links are not adorned when selected so that their color remains visible.
-								shadowOffset: new go.Point(0, 0),
-								shadowBlur: 5,
-								shadowColor: "blue",
-							},
-							new go.Binding("isShadowed", "isSelected").ofObject(),
-							$(go.Shape, { name: "SHAPE", strokeWidth: 2, stroke: red })
-						);
-
-						// node template helpers
-						var sharedToolTip = $(
-							"ToolTip",
-							{ "Border.figure": "RoundedRectangle" },
-							$(
-								go.TextBlock,
-								{ margin: 2 },
-								new go.Binding("text", "", (d) => d.category)
-							)
-						);
-
-						// define some common property settings
-						function nodeStyle() {
-							return [
-								new go.Binding("location", "loc", go.Point.parse).makeTwoWay(
-									go.Point.stringify
-								),
-								new go.Binding("isShadowed", "isSelected").ofObject(),
-								{
-									selectionAdorned: false,
-									shadowOffset: new go.Point(0, 0),
-									shadowBlur: 15,
-									shadowColor: "#14BDEB",
-									toolTip: sharedToolTip,
-								},
-							];
-						}
-
-						function shapeStyle() {
-							return {
-								name: "NODESHAPE",
-								fill: "lightgray",
-								stroke: "#2B2D31",
-								desiredSize: new go.Size(40, 40),
-								strokeWidth: 2,
-							};
-						}
-
-						function portStyle(input) {
-							return {
-								desiredSize: new go.Size(6, 6),
-								fill: "black",
-								fromSpot: go.Spot.Right,
-								fromLinkable: !input,
-								toSpot: go.Spot.Left,
-								toLinkable: input,
-								toMaxLinks: 1,
-								cursor: "pointer",
-							};
-						}
-						//CUSTOM
-						function dynamicInputPortStyle() {
-							return {
-								desiredSize: new go.Size(6, 24),
-								fill: "black",
-								fromSpot: go.Spot.Right,
-								fromLinkable: false,
-								toSpot: go.Spot.LeftSide,
-								toLinkable: true,
-								toMaxLinks: 6,
-								cursor: "pointer",
-							};
-						}
-
-						function makeButton(text, action, visiblePredicate) {
-							return $("ContextMenuButton",
-							$(go.TextBlock, text),
-							{ click: action },
-							// don't bother with binding GraphObject.visible if there's no predicate
-							visiblePredicate ? new go.Binding("visible", "", (o, e) => o.diagram ? visiblePredicate(o, e) : false).ofObject() : {});
-						}
-					
-
-						function addPort(){
-							alert("adding port");
-						}
-
-						// define templates for each type of node
-						var inputTemplate = $(
-							go.Node,
-							"Spot",
-							nodeStyle(),
-							$(go.Shape, "Circle", shapeStyle(), { fill: red }),
-							$(go.TextBlock, 
-								{ margin: 8, stroke: 'white', font: 'bold 20px courier new'},
-								new go.Binding("text", "key")
-							),
-							$(
-								go.Shape,
-								"Rectangle",
-								portStyle(false), // the only port
-								{ portId: "", alignment: new go.Spot(1, 0.5) }
-							),
-							{
-								// if double-clicked, an input node will change its value, represented by the color.
-								doubleClick: (e, obj) => {
-									e.diagram.startTransaction("Toggle Input");
-									var shp = obj.findObject("NODESHAPE");
-									shp.fill = shp.fill === green ? red : green;
-									updateStates();
-									e.diagram.commitTransaction("Toggle Input");
-								},
-							}
-						);
-
-						var outputTemplate = $(
-							go.Node,
-							"Spot",
-							nodeStyle(),
-							$(go.Shape, "Rectangle", shapeStyle(), { fill: red }), // override the default fill (from shapeStyle()) to be green
-							$(
-								go.Shape,
-								"Rectangle",
-								portStyle(true), // the only port
-								{ portId: "", alignment: new go.Spot(0, 0.5) }
-							)
-						);
-
-						var andTemplate = $(
-							go.Node,
-							"Spot",
-							nodeStyle(),
-							$(go.Shape, "AndGate", shapeStyle()),
-							$(go.Shape, "Rectangle", portStyle(true), {
-								portId: "in1",
-								alignment: new go.Spot(0, 0.3),
-							}),
-							$(go.Shape, "Rectangle", portStyle(true), {
-								portId: "in2",
-								alignment: new go.Spot(0, 0.7),
-							}),
-							$(go.Shape, "Rectangle", portStyle(false), {
-								portId: "out",
-								alignment: new go.Spot(1, 0.5),
-							})
-						);
-
-						//CUSTOM
-						// var andTemplate = $(
-						// 	go.Node,
-						// 	"Spot",
-						// 	nodeStyle(),
-						// 	$(go.Shape, "AndGate", shapeStyle()),
-						// 	$(go.Shape, "Rectangle", dynamicInputPortStyle(), {
-						// 		portId: "in",
-						// 		alignment: new go.Spot(0, 0.5),
-						// 	}),
-						// 	$(go.Shape, "Rectangle", portStyle(false), {
-						// 		portId: "out",
-						// 		alignment: new go.Spot(1, 0.5),
-						// 	})
-						// );
-
-						var orTemplate = $(
-							go.Node,
-							"Spot",
-							nodeStyle(),
-							$(go.Shape, "OrGate", shapeStyle()),
-							$(go.Shape, "Rectangle", portStyle(true), {
-								portId: "in1",
-								alignment: new go.Spot(0.16, 0.3),
-							}),
-							$(go.Shape, "Rectangle", portStyle(true), {
-								portId: "in2",
-								alignment: new go.Spot(0.16, 0.7),
-							}),
-							$(go.Shape, "Rectangle", portStyle(false), {
-								portId: "out",
-								alignment: new go.Spot(1, 0.5),
-							})
-						);
-
-						//CUSTOM
-						// var orTemplate = $(
-						// 	go.Node,
-						// 	"Spot",
-						// 	nodeStyle(),
-						// 	$(go.Shape, "OrGate", shapeStyle()),
-						// 	$(go.Shape, "Rectangle", dynamicInputPortStyle(), {
-						// 		portId: "in",
-						// 		alignment: new go.Spot(0.16, 0.5),
-						// 	}),
-						// 	$(go.Shape, "Rectangle", portStyle(false), {
-						// 		portId: "out",
-						// 		alignment: new go.Spot(1, 0.5),
-						// 	})
-						// );
-
-						var xorTemplate = $(
-							go.Node,
-							"Spot",
-							nodeStyle(),
-							$(go.Shape, "XorGate", shapeStyle()),
-							$(go.Shape, "Rectangle", portStyle(true), {
-								portId: "in1",
-								alignment: new go.Spot(0.26, 0.3),
-							}),
-							$(go.Shape, "Rectangle", portStyle(true), {
-								portId: "in2",
-								alignment: new go.Spot(0.26, 0.7),
-							}),
-							$(go.Shape, "Rectangle", portStyle(false), {
-								portId: "out",
-								alignment: new go.Spot(1, 0.5),
-							})
-						);
-
-						var norTemplate = $(
-							go.Node,
-							"Spot",
-							nodeStyle(),
-							$(go.Shape, "NorGate", shapeStyle()),
-							$(go.Shape, "Rectangle", portStyle(true), {
-								portId: "in1",
-								alignment: new go.Spot(0.16, 0.3),
-							}),
-							$(go.Shape, "Rectangle", portStyle(true), {
-								portId: "in2",
-								alignment: new go.Spot(0.16, 0.7),
-							}),
-							$(go.Shape, "Rectangle", portStyle(false), {
-								portId: "out",
-								alignment: new go.Spot(1, 0.5),
-							})
-						);
-
-						var xnorTemplate = $(
-							go.Node,
-							"Spot",
-							nodeStyle(),
-							$(go.Shape, "XnorGate", shapeStyle()),
-							$(go.Shape, "Rectangle", portStyle(true), {
-								portId: "in1",
-								alignment: new go.Spot(0.26, 0.3),
-							}),
-							$(go.Shape, "Rectangle", portStyle(true), {
-								portId: "in2",
-								alignment: new go.Spot(0.26, 0.7),
-							}),
-							$(go.Shape, "Rectangle", portStyle(false), {
-								portId: "out",
-								alignment: new go.Spot(1, 0.5),
-							})
-						);
-
-						var nandTemplate = $(
-							go.Node,
-							"Spot",
-							nodeStyle(),
-							$(go.Shape, "NandGate", shapeStyle()),
-							$(go.Shape, "Rectangle", portStyle(true), {
-								portId: "in1",
-								alignment: new go.Spot(0, 0.3),
-							}),
-							$(go.Shape, "Rectangle", portStyle(true), {
-								portId: "in2",
-								alignment: new go.Spot(0, 0.7),
-							}),
-							$(go.Shape, "Rectangle", portStyle(false), {
-								portId: "out",
-								alignment: new go.Spot(1, 0.5),
-							})
-						);
-
-						var notTemplate = $(
-							go.Node,
-							"Spot",
-							nodeStyle(),
-							$(go.Shape, "Inverter", shapeStyle()),
-							$(go.Shape, "Rectangle", portStyle(true), {
-								portId: "in",
-								alignment: new go.Spot(0, 0.5),
-							}),
-							$(go.Shape, "Rectangle", portStyle(false), {
-								portId: "out",
-								alignment: new go.Spot(1, 0.5),
-							})
-						);
-
-						// add the templates created above to myDiagram and palette
-						myDiagram.nodeTemplateMap.add("input", inputTemplate);
-						myDiagram.nodeTemplateMap.add("output", outputTemplate);
-						myDiagram.nodeTemplateMap.add("and", andTemplate);
-						myDiagram.nodeTemplateMap.add("or", orTemplate);
-						myDiagram.nodeTemplateMap.add("xor", xorTemplate);
-						myDiagram.nodeTemplateMap.add("not", notTemplate);
-						myDiagram.nodeTemplateMap.add("nand", nandTemplate);
-						myDiagram.nodeTemplateMap.add("nor", norTemplate);
-						myDiagram.nodeTemplateMap.add("xnor", xnorTemplate);
-
-						// share the template map with the Palette
-						palette.nodeTemplateMap = myDiagram.nodeTemplateMap;
-
-						palette.model.nodeDataArray = [
-							{ key: "", category: "input"},
-							{ category: "output"},
-							{ category: "and" },
-							{ category: "or" },
-							{ category: "xor" },
-							{ category: "not" },
-							{ category: "nand" },
-							{ category: "nor" },
-							{ category: "xnor" },
-						];
-
-						// listen for new nodes dropped and set custom keys
-						myDiagram.addDiagramListener('ExternalObjectsDropped', function(e) {
-							e.subject.each(function (node) {
-								e.diagram.model.setKeyForNodeData(node.data, keyGenerator(node.data.category));
-							});
-						});
-
-						// load the initial diagram
-						load();
-
-						// continually update the diagram
-						loop();
-					}
-
-					// update the diagram every 250 milliseconds
-					function loop() {
-						setTimeout(() => {
-							updateStates();
-							loop();
-						}, 250);
-					}
-
-					// generate and return custom key for node dropped onto myDiagram
-					function keyGenerator(category) {
-						const nodes = myDiagram.nodes;
-						let key = '';
-						if(category === 'input'){
-							const abc = "abcdefghijklmnopqrstuvwxyz";
-							let unusedKeys = abc.split("") //array containing all possible var names
-							nodes.each((node) => {
-							if (node.category === "input") {
-								unusedKeys = unusedKeys.filter((letter) => letter !== node.key) //filter out used keys
-							}});
-							key = unusedKeys.shift(); //return first element
-						}
-						else{
-							let i = -1;
-							while (myDiagram.model.findNodeDataForKey(i) !== null) i -= 1;
-							key = i;
-						}
-						return key;
-					}
-
-					// update the value and appearance of each node according to its type and input values
-					function updateStates() {
-						var oldskip = myDiagram.skipsUndoManager;
-						myDiagram.skipsUndoManager = true;
-						// do all "input" nodes first
-						myDiagram.nodes.each((node) => {
-							if (node.category === "input") {
-								doInput(node);
-							}
-						});
-						// now we can do all other kinds of nodes
-						myDiagram.nodes.each((node) => {
-							switch (node.category) {
-								case "and":
-									doAnd(node);
-									break;
-								case "or":
-									doOr(node);
-									break;
-								case "xor":
-									doXor(node);
-									break;
-								case "not":
-									doNot(node);
-									break;
-								case "nand":
-									doNand(node);
-									break;
-								case "nor":
-									doNor(node);
-									break;
-								case "xnor":
-									doXnor(node);
-									break;
-								case "output":
-									doOutput(node);
-									break;
-								case "input":
-									break; // doInput already called, above
-							}
-						});
-						myDiagram.skipsUndoManager = oldskip;
-					}
-
-					// helper predicate
-					function linkIsTrue(link) {
-						// assume the given Link has a Shape named "SHAPE"
-						return link.findObject("SHAPE").stroke === green;
-					}
-
-					// helper function for propagating results
-					function setOutputLinks(node, color) {
-						node
-							.findLinksOutOf()
-							.each((link) => (link.findObject("SHAPE").stroke = color));
-					}
-
-					// update nodes by the specific function for its type
-					// determine the color of links coming out of this node based on those coming in and node type
-
-					function doInput(node) {
-						// the output is just the node's Shape.fill
-						setOutputLinks(node, node.findObject("NODESHAPE").fill);
-					}
-
-					function doAnd(node) {
-						var color = node.findLinksInto().all(linkIsTrue) ? green : red;
-						setOutputLinks(node, color);
-					}
-					function doNand(node) {
-						var color = !node.findLinksInto().all(linkIsTrue) ? green : red;
-						setOutputLinks(node, color);
-					}
-					function doNot(node) {
-						var color = !node.findLinksInto().all(linkIsTrue) ? green : red;
-						setOutputLinks(node, color);
-					}
-
-					function doOr(node) {
-						var color = node.findLinksInto().any(linkIsTrue) ? green : red;
-						setOutputLinks(node, color);
-					}
-					function doNor(node) {
-						var color = !node.findLinksInto().any(linkIsTrue) ? green : red;
-						setOutputLinks(node, color);
-					}
-
-					function doXor(node) {
-						var truecount = 0;
-						node.findLinksInto().each((link) => {
-							if (linkIsTrue(link)) truecount++;
-						});
-						var color = truecount % 2 !== 0 ? green : red;
-						setOutputLinks(node, color);
-					}
-					function doXnor(node) {
-						var truecount = 0;
-						node.findLinksInto().each((link) => {
-							if (linkIsTrue(link)) truecount++;
-						});
-						var color = truecount % 2 === 0 ? green : red;
-						setOutputLinks(node, color);
-					}
-
-					function doOutput(node) {
-						// assume there is just one input link
-						// we just need to update the node's Shape.fill
-						node.linksConnected.each((link) => {
-							node.findObject("NODESHAPE").fill =
-								link.findObject("SHAPE").stroke;
-						});
-					}
-
-					// save a model to and load a model from JSON text, displayed below the Diagram
-					function save() {
-						document.getElementById("mySavedModel").setHTML(myDiagram.model.toJson()); //MODIFIED
-						myDiagram.isModified = false;
-					}
-					function load() {
-						myDiagram.model = go.Model.fromJson(
-							document.getElementById("mySavedModel").value
-						);
-					}
-
-					//temporarily applies the TreeLayout
-					async function arrange() {
-							myDiagram.layout = go.GraphObject.make(go.TreeLayout);
-							myDiagram.isModified = false; //enables saving even if not modified
-							await new Promise(resolve => setTimeout(resolve, 1000));
-							myDiagram.layout = go.GraphObject.make(go.Layout);
-					}
-
-					window.addEventListener("DOMContentLoaded", init);
-				</script>
-
+			<!-- <br> -->
+			<div id="allSampleContent" class="p-4 w-full circuit_container">
 				<div id="sample">
-					<div style="width: 100%; display: flex; justify-content: flex-start">
+					<br>
+					<div style="width: 100%; display: flex; justify-content: flex-start; ">
 						<div
+							class="pallete_container"
 							id="palette"
 							style="
 								width: 100px;
@@ -565,6 +53,7 @@
 								position: relative;
 								-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 								cursor: auto;
+								border-radius: 10px;
 							"
 						>
 							<canvas
@@ -598,13 +87,15 @@
 								<div style="position: absolute; width: 1px; height: 1px"></div>
 							</div>
 						</div>
-						<div id="myDiagramDiv" " style=" width: 500px; height: 480px;
+						<div class="circuit_canvas" id="myDiagramDiv" " style=" width: 500px; height: 480px;
 						border: 1px solid black; position: relative; background-color: #E5E6E9;
-						-webkit-tap-highlight-color: rgba(255, 255, 255, 0); cursor: auto;">
+						-webkit-tap-highlight-color: rgba(255, 255, 255, 0); cursor: auto; border-radius: 10px;">
 						<canvas
+							class="circuit_canvas"
 							tabindex="0"
 							width="1402"
 							height="747"
+							data-intro='Hello step one!'
 							style="
 								fillStyle:#E5E6E9;
 								position: relative;
@@ -616,6 +107,7 @@
 								width: 498px;
 								height: 498px;
 								cursor: auto;
+								
 							"
 							>This text is displayed if your browser does not support the
 							Canvas HTML element.</canvas
@@ -634,12 +126,19 @@
 					</div>
 				</div>
 				<div style="width: 600px">
-					<div>
+					<div class="margin">
 						<button class="submit_button" id="saveModel" onclick="save()">Save</button>
 						<button class="submit_button" onclick="load()">Load</button>
 						<button class="submit_button" onclick="arrange()">Arrange</button>
 						<button class="submit_button" id="submit_circuit">Submit</button>
-						
+						<div class="tooltip">
+							<i class="fas fa-info-circle fa-sm"></i>
+							<span class="tooltiptext top">To submit your circuit, it must have:
+								- at least 1 input
+								- only AND, OR, NOT gates
+								- exactly 1 output
+							</span>
+						</div>
 					</div>
 					<!-- Diagram Model saved in JSON format: -->
 					<textarea hidden id="mySavedModel" style="width: 100%; height: 200px">
@@ -653,36 +152,67 @@
 			</div>
 			</div>
 			<div class="flex-container-vert">
-				<div>
-					Boolean Expression:
-					<span
-						class="input"
-						id="expression_input"
-						role="textbox"
-						contenteditable
-					></span>
-					<input class="submit_button" type="button" id="submit_expression" value="Submit" />
+				<div class = "border expression_container">
+					<div class="margin">
+						<div class="tooltip">
+							<i class="fas fa-info-circle fa-sm"></i>
+							<span class="tooltiptext">Enter a boolean expression. 
+								e.g. a and (not b or c)</span>
+						</div>
+						Boolean Expression:
+						<span
+							class="input"
+							id="expression_input"
+							role="textbox"
+							contenteditable
+						></span>
+						<input class="submit_button" type="button" id="submit_expression" value="Submit" />
+					</div>
 				</div>
-				<div class="table-container">
-					<div class="flex-container-vert">
-						
-						Truth Table:
+				<div class="table-container ">
+					<div class="flex-container-vert" style="padding: 0px;">
+						<div class="border function_container">
+						<div class="margin">
+						Boolean Function:
+						<br>
+						<br>
 						<div class="flex-container-vert">
+							<div>
+								<div class="tooltip">
+									<i class="fas fa-info-circle fa-sm"></i>
+									<span class="tooltiptext">Enter variables names separated by commas 
+										e.g. a,b,c</span>
+								</div>
 							Variable names:
+							</div>
 							<span
 								class="input"
 								id="vars_input"
 								role="textbox"
 								contenteditable
 							></span>
+							<div>
+								<div class="tooltip">
+									<i class="fas fa-info-circle fa-sm"></i>
+									<span class="tooltiptext">Enter minterms separated by commas 
+										e.g. 3,6,7</span>
+								</div>
 							Minterms:
+							</div>
 							<span
 								class="input"
 								id="minterms_input"
 								role="textbox"
 								contenteditable
 							></span>
+							<div>
+								<div class="tooltip">
+									<i class="fas fa-info-circle fa-sm"></i>
+									<span class="tooltiptext">Enter don't care terms separated by commas 
+										e.g. 1,4</span>
+								</div>
 							Don't care terms:
+							</div>
 							<span
 								class="input"
 								id="dontcare_input"
@@ -690,10 +220,20 @@
 								contenteditable
 							></span>
 						</div>
+						<br>
 						<input class="submit_button" type="button" id="submit_table" value="Submit" />
-						<br>
-						<br>
+					</div>
+				</div>
+			
+						<div class="border min_container">
+						<div class="margin">
+						<div>
+						<div class="tooltip">
+							<i class="fas fa-info-circle fa-sm"></i>
+							<span class="tooltiptext">The minimised expressions will appear here. Press on the arrows to check them out!</span>
+						</div>
 						Minimised Expressions:
+						</div>
 						<div class="flex-container-vert">
 							DNF:
 							<div class="minimised_field">
@@ -704,7 +244,6 @@
 								></span>
 								<input class="go_button" type="button" id="go_DNF" value=">" />
 							</div>
-							
 							CNF:
 							<div class="minimised_field">
 								<span
@@ -716,12 +255,93 @@
 							</div>
 						</div>
 					</div>
-					<div id="table"></div>
+					</div>
+					</div>
+					<div class="border table_container"style="margin-right: auto; min-width: 245px;">
+						<div class="margin">
+							<div class="flex-container-vert" style="">
+								Truth table:
+								<div id="table" class="margin"></div>
+							</div>
+						</div>
+					</div>
+					
 				</div>
 			</div>
 		</div>
 
 		<!-- <input id="input" type="text" name="fname" style="width: 200px" /><br /> -->
 	</body>
-	
+	<script src="https://unpkg.com/gojs@2.2.18/extensions/Figures.js"></script>
+	<script src="circuitEditor.js"></script>
+	<script>
+		
+		
+		document.getElementById("info_button").addEventListener("click", () => {
+			const expression = 'a and b or b and c or (not b or c)'
+			document.getElementById("expression_input").innerHTML = expression;
+			document.getElementById("submit_expression").click();
+
+			introJs().setOptions({
+				showProgress: true,
+				showBullets: false,
+				disableInteraction: false,
+				tooltipClass: 'customTooltip',
+				steps: [{
+						title: 'Welcome',
+						intro: 'Weolcome to BoolSim - a lightweight combinational logic circuit visualiser'
+					},
+					{
+						intro: 'There are 3 ways for you to input and interact with boolean functions...'
+					},
+					{
+						element: document.querySelector('.circuit_container'),
+						intro: 'This is the circuit editor. You can build your logic circuits here.'
+					},
+					{
+						element: document.querySelector('.expression_container'),
+						intro: 'Or you can input a boolean expression.'
+					},
+					{
+						element: document.querySelector('.function_container'),
+						intro: 'Or define a boolean function directly.'
+					},
+					{
+						element: document.querySelector('.table_container'),
+						intro: 'This is where the truth table will appear.'
+					},
+					{
+						element: document.querySelector('.min_container'),
+						intro: 'You can also view the minimised forms of your functions!'
+					},
+					{
+						intro: 'Have fun exploring the world of combinational logic!'
+					},
+				]
+			}).start();
+
+			// {
+			// 			element: document.querySelector('.pallete_container'),
+			// 			intro: "These are the components you'll need to build a circuit. <br> Hover over a component if you're unsure of what it is."
+			// 		},
+			// 		{
+			// 			element: document.querySelector('.circuit_canvas'),
+			// 			intro: "This is the canvas where you can build your circuits."
+			// 		},
+			// 		{
+			// 			element: document.querySelector('.circuit_canvas'),
+			// 			intro: "Once you've dragged the components here, you can start wiring them! Drag from one component to the other to make a wire."
+			// 		},
+			// 		{
+			// 			element: document.querySelector('.circuit_canvas'),
+			// 			intro: "Once you have a complete circuit with with inputs and outputs, double-tap on the input nodes and watch your circuit come to life!"
+			// 		},
+			// 		{
+			// 			element: document.querySelector('.circuit_canvas'),
+			// 			intro: "Once you have a complete circuit with with inputs and outputs, double-tap on the input nodes and watch you circuit come to life!"
+			// 		},
+			
+		});
+		
+	</script>
 </html>

@@ -3,6 +3,58 @@ body {
 	/* font-family: "Gill Sans", sans-serif; */
 	font-family: "Courier New";
 	font-weight: bold;
+	margin: 0px;
+	padding: 0px;
+}
+
+.top_bar {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+	height: 50px;
+	background-color: #2a2a2a;
+	margin-bottom: 5px;
+}
+
+.border {
+	border: 2px solid #e5e6e9;
+	border-radius: 6px;
+	margin: 10px;
+	/* box-shadow: 0 -15px 0 #f7f7f7; */
+}
+
+.margin {
+	margin: 10px;
+}
+
+.info_button {
+	cursor: pointer;
+}
+
+.icon_container {
+	display: flex;
+	margin: auto;
+	align-items: center;
+	vertical-align: middle;
+}
+
+.top_container {
+	margin-top: auto;
+	margin-bottom: auto;
+	margin-right: 50px;
+	display: flex;
+	justify-content: space-between;
+	width: 100px;
+}
+
+.logo_container {
+	display: flex;
+	margin-top: auto;
+	margin-bottom: auto;
+	margin-left: 50px;
+	justify-content: left;
+	align-items: start;
+	vertical-align: middle;
 }
 
 table {
@@ -44,7 +96,7 @@ td {
 
 .table-container {
 	display: flex;
-	align-content: flex-start;
+	align-content: start;
 	flex-flow: row wrap;
 	justify-content: space-between;
 }
@@ -58,9 +110,9 @@ td {
 	justify-content: flex-start;
 }
 
-.flex-container-vert > div {
+/* .flex-container-vert > div {
 	margin: 10px;
-}
+} */
 
 .input {
 	width: 200px;
@@ -117,14 +169,73 @@ td {
 	justify-content: space-between;
 }
 
-.top-bar {
-	display: flex;
-	width: 100%;
-	justify-content: space-around;
-}
-
 .input:empty {
 	height: 20px;
+}
+
+.tooltip {
+	position: relative;
+	display: inline-block;
+	/* left: 50%; */
+}
+
+.tooltip .tooltiptext {
+	visibility: hidden;
+	width: 210px;
+	background-color: #45bd4f;
+	/* border: solid 2px white; */
+	color: #fff;
+	text-align: left;
+	border-radius: 6px;
+	padding: 5px;
+	font-size: 13px;
+	left: 50%;
+	top: 100%;
+
+	white-space: pre-line;
+
+	/* Position the tooltip */
+	position: absolute;
+	z-index: 1;
+}
+
+.tooltip .tooltiptext {
+	visibility: hidden;
+	width: 210px;
+	background-color: #45bd4f;
+	color: #fff;
+	text-align: left;
+	border-radius: 6px;
+	padding: 5px;
+	font-size: 13px;
+	left: 50%;
+
+	white-space: pre-line;
+
+	position: absolute;
+	/* z-index: 1; */
+}
+
+.tooltiptext.top {
+	top: -450%;
+}
+
+.tooltiptext.bottom {
+	top: 100%;
+}
+
+.tooltip:hover .tooltiptext {
+	visibility: visible;
+}
+
+.customTooltip * {
+	color: #4a4a4a;
+	font-size: 18px;
+	font-weight: normal;
+}
+
+.customTooltip .introjs-tooltip-title {
+	color: #45bd4f;
 }
 
 /* #expression_input:empty::before {
