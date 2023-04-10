@@ -38,6 +38,8 @@ export function generateCircuit(expression) {
 		})
 		.reverse();
 
+	console.log(preOrderTraversal);
+
 	for (let i = 0; i < preOrderTraversal.length; i++) {
 		var node = preOrderTraversal[i];
 

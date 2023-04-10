@@ -387,10 +387,13 @@ function loop() {
 	}, 250);
 }
 
-// generate and return custom key for node dropped onto myDiagram
+/**
+ * Returns custom key for node dropped onto myDiagram depending on its category
+ * @param {string} category - The category of the node
+ */
 function keyGenerator(category) {
 	const nodes = myDiagram.nodes;
-	let key = "";
+	let key;
 	if (category === "input") {
 		const abc = "abcdefghijklmnopqrstuvwxyz";
 		let unusedKeys = abc.split(""); //array containing all possible var names

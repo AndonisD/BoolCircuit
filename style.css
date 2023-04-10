@@ -7,6 +7,22 @@ body {
 	padding: 0px;
 }
 
+.truth_table {
+	display: flex;
+	margin: auto;
+	vertical-align: middle;
+	margin-top: 10px;
+}
+
+.left-margin {
+	float: right;
+	margin-bottom: 10px;
+}
+
+#expression_input {
+	width: 325px;
+}
+
 .top_bar {
 	display: flex;
 	width: 100%;
@@ -54,7 +70,8 @@ body {
 	margin-left: 50px;
 	justify-content: left;
 	align-items: start;
-	vertical-align: middle;
+	vertical-align: bottom;
+	text-align: end;
 }
 
 table {
@@ -268,14 +285,16 @@ input[type="file"] {
 }
 
 .customTooltip * {
-	color: #4a4a4a;
+	color: black;
 	font-size: 18px;
 	font-weight: normal;
+	font-family: "Courier New", Courier, monospace;
 }
 
 .customTooltip .introjs-tooltip-title {
 	/* color: #45bd4f; */
 	color: black;
+	font-weight: bold;
 }
 
 .error_title {

@@ -5,7 +5,7 @@ export function generateTruthTable(varNames, minTerms, dontCares) {
 
 	var totalNumTerms = Math.pow(2, numVars);
 
-	var table = "<table>";
+	var table = "<table id='truth_table'>";
 
 	table += "<thead><tr>";
 	//column above the term numbers
