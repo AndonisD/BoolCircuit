@@ -1,10 +1,27 @@
 body {
 	color: #e5e6e9;
-	/* font-family: "Gill Sans", sans-serif; */
 	font-family: "Courier New";
 	font-weight: bold;
 	margin: 0px;
 	padding: 0px;
+}
+
+table {
+	border-collapse: collapse;
+	border-color: #85898f;
+	font-family: "Courier New";
+	font-weight: bold;
+}
+
+th,
+td {
+	border: 2px solid #85898f;
+	text-align: center;
+	padding: 2px 5px;
+}
+
+input[type="file"] {
+	display: none;
 }
 
 .truth_table {
@@ -36,7 +53,6 @@ body {
 	border: 2px solid #e5e6e9;
 	border-radius: 6px;
 	margin: 10px;
-	/* box-shadow: 0 -15px 0 #f7f7f7; */
 }
 
 .margin {
@@ -74,20 +90,6 @@ body {
 	text-align: end;
 }
 
-table {
-	border-collapse: collapse;
-	border-color: #85898f;
-	font-family: "Courier New";
-	font-weight: bold;
-}
-
-th,
-td {
-	border: 2px solid #85898f;
-	text-align: center;
-	padding: 2px 5px;
-}
-
 .term-column {
 	color: #b5bac1;
 	border-width: 0px;
@@ -120,16 +122,10 @@ td {
 
 .flex-container-vert {
 	display: flex;
-	/* align-content: flex-start; */
-	/* flex-flow: row nowrap; */
 	flex-direction: column;
 	flex-wrap: wrap;
 	justify-content: flex-start;
 }
-
-/* .flex-container-vert > div {
-	margin: 10px;
-} */
 
 .input {
 	width: 250px;
@@ -138,7 +134,6 @@ td {
 	padding-right: 5px;
 	display: inline-block;
 	border-color: #85898f;
-	/* font-family: "Courier New"; */
 	font-weight: normal;
 }
 .right {
@@ -177,7 +172,6 @@ td {
 	font-size: small;
 	vertical-align: middle;
 	padding: 0px;
-	/* margin-top: 5px; */
 }
 
 .go_button {
@@ -218,14 +212,12 @@ td {
 .tooltip {
 	position: relative;
 	display: inline-block;
-	/* left: 50%; */
 }
 
 .tooltip .tooltiptext {
 	visibility: hidden;
 	width: 210px;
 	background-color: #45bd4f;
-	/* border: solid 2px white; */
 	color: #fff;
 	text-align: left;
 	border-radius: 6px;
@@ -237,7 +229,6 @@ td {
 
 	white-space: pre-line;
 
-	/* Position the tooltip */
 	position: absolute;
 	z-index: 1;
 }
@@ -272,12 +263,7 @@ td {
 }
 
 .example_text {
-	/* align-self: center; */
 	text-align: center;
-}
-
-input[type="file"] {
-	display: none;
 }
 
 .tooltip:hover .tooltiptext {
@@ -292,7 +278,6 @@ input[type="file"] {
 }
 
 .customTooltip .introjs-tooltip-title {
-	/* color: #45bd4f; */
 	color: black;
 	font-weight: bold;
 }
@@ -320,24 +305,6 @@ input[type="file"] {
 	font-weight: normal;
 }
 
-/* #expression_input:empty::before {
-	content: "a and (not b or c)";
-	color: gray;
-	display: inline-block;
-}
-
-#vars_input:empty::before {
-	content: "a,b,c";
-	color: gray;
-	display: inline-block;
-}
-
-#minterms_input:empty::before {
-	content: "3,6,7";
-	color: gray;
-	display: inline-block;
-}
-*/
 #dontcare_input:empty::before {
 	content: "optional";
 	color: gray;

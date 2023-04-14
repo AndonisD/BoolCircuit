@@ -178,7 +178,13 @@
 <a name='L113'></a><a href='#L113'>113</a>
 <a name='L114'></a><a href='#L114'>114</a>
 <a name='L115'></a><a href='#L115'>115</a>
-<a name='L116'></a><a href='#L116'>116</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -201,7 +207,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -213,9 +218,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">134x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">40x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -256,14 +263,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">153x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">153x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">158x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -273,7 +283,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">153x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">496x</span>
 <span class="cline-any cline-yes">246x</span>
@@ -293,129 +302,135 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">60x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
  * A class to hold information about a minterm when using the Quine-McCluskey Algorithm
+ *
+ * @author Jonah Pierce
+ * https://www.npmjs.com/package/quine-mccluskey-js?activeTab=explore
  */
 export default class Minterm {
+	/**
+	 * Creates a new minterm object
+	 */
+	constructor(termsCovered, binValue) {
+		this.termsCovered = termsCovered.sort();
+		this.binValue = binValue;
+		this.used = false;
 &nbsp;
-    /**
-     * Creates a new minterm object
-     */
-    constructor(termsCovered, binValue) {
+		this.termsCovered.sort();
+	}
 &nbsp;
-        this.termsCovered = termsCovered.sort();
-        this.binValue = binValue;
-        this.used = false;
+	/**
+	 * Returns a String representation of the Minterm
+	 */
+<span class="fstat-no" title="function not covered" >	to</span>String() {
+		let values = <span class="cstat-no" title="statement not covered" >this.termsCovered.join(", ");</span>
+<span class="cstat-no" title="statement not covered" >		return `m(${values}) = ${this.binValue}`;</span>
+	}
 &nbsp;
-        this.termsCovered.sort();
-    }
+	/**
+	 * Determines if this Minterm object is equal to another object
+	 */
+	equals(minterm) {
+		<span class="missing-if-branch" title="if path not taken" >I</span>if (!(minterm instanceof Minterm)) {
+<span class="cstat-no" title="statement not covered" >			return false;</span>
+		}
 &nbsp;
-    /**
-     * Returns a String representation of the Minterm
-     */
-<span class="fstat-no" title="function not covered" >    to</span>String() {
-        let values = <span class="cstat-no" title="statement not covered" >this.termsCovered.join(", ");</span>
-<span class="cstat-no" title="statement not covered" >        return `m(${values}) = ${this.binValue}`;</span>
-    }
+		return (
+			this.binValue == minterm.binValue &amp;&amp;
+			this.termsCovered.length == minterm.termsCovered.length &amp;&amp;
+			this.termsCovered.every(function (u, i) {
+				return u === minterm.termsCovered[i];
+			})
+		);
+	}
 &nbsp;
-    /**
-     * Determines if this Minterm object is equal to another object
-     */
-    equals(minterm) {
+	/**
+	 * Returns the values in this Minterm
+	 */
+<span class="fstat-no" title="function not covered" >	ge</span>tValues() {
+<span class="cstat-no" title="statement not covered" >		return this.termsCovered;</span>
+	}
 &nbsp;
-        <span class="missing-if-branch" title="if path not taken" >I</span>if (!(minterm instanceof Minterm)) {
-<span class="cstat-no" title="statement not covered" >            return false;</span>
-        }
+	/**
+	 * Returns the binary value of this Minterm
+	 */
+<span class="fstat-no" title="function not covered" >	ge</span>tValue() {
+<span class="cstat-no" title="statement not covered" >		return this.binValue;</span>
+	}
 &nbsp;
-        return (
-            this.binValue == minterm.binValue &amp;&amp;
-            this.termsCovered.length == minterm.termsCovered.length &amp;&amp;
-            this.termsCovered.every(function(u,i) {return u === minterm.termsCovered[i]})
-        );
-    }
+	/**
+	 * Returns whether or not this Minterm has been used
+	 */
+	isUsed() {
+		return this.used;
+	}
 &nbsp;
-    /**
-     * Returns the values in this Minterm
-     */
-<span class="fstat-no" title="function not covered" >    ge</span>tValues() {
-<span class="cstat-no" title="statement not covered" >        return this.termsCovered;</span>
-    }
+	/**
+	 * Labels this Minterm as "used"
+	 */
+	use() {
+		this.used = true;
+	}
 &nbsp;
-    /**
-     * Returns the binary value of this Minterm
-     */
-<span class="fstat-no" title="function not covered" >    ge</span>tValue() {
-<span class="cstat-no" title="statement not covered" >        return this.binValue;</span>
-    }
+<span class="fstat-no" title="function not covered" >	co</span>versTerm(term) {
+<span class="cstat-no" title="statement not covered" >		return this.termsCovered.includes(term);</span>
+	}
 &nbsp;
-    /**
-     * Returns whether or not this Minterm has been used
-     */
-    isUsed() {
-        return this.used;
-    }
+	/**
+	 * Combines 2 Minterms together if they can be combined
+	 */
+	combine(minterm) {
+		// Check if this value is this same; If so, do nothing
+		<span class="missing-if-branch" title="if path not taken" >I</span>if (this.binValue == minterm.binValue) {
+<span class="cstat-no" title="statement not covered" >			return null;</span>
+		}
 &nbsp;
-    /**
-     * Labels this Minterm as "used"
-     */
-    use() {
-        this.used = true;
-    }
+		// Check if the values are the same; If so, do nothing
+		<span class="missing-if-branch" title="if path not taken" >I</span>if (
+			this.termsCovered.length == minterm.termsCovered.length &amp;&amp;
+			this.termsCovered.every(function (u, i) {
+				return u === minterm.termsCovered[i];
+			})
+		) {
+<span class="cstat-no" title="statement not covered" >			return null;</span>
+		}
 &nbsp;
-<span class="fstat-no" title="function not covered" >    co</span>versTerm(term){
-<span class="cstat-no" title="statement not covered" >        return this.termsCovered.includes(term)</span>
-    }
-    
-    /**
-     * Combines 2 Minterms together if they can be combined
-     */
-    combine(minterm) {
-        
-        // Check if this value is this same; If so, do nothing
-        <span class="missing-if-branch" title="if path not taken" >I</span>if (this.binValue == minterm.binValue) {
-<span class="cstat-no" title="statement not covered" >            return null;</span>
-        }
-        
-        // Check if the values are the same; If so, do nothing
-        <span class="missing-if-branch" title="if path not taken" >I</span>if (this.termsCovered.length == minterm.termsCovered.length &amp;&amp;
-            this.termsCovered.every(function(u,i) {return u === minterm.termsCovered[i]})) {
-<span class="cstat-no" title="statement not covered" >            return null;</span>
-        }
-        
-        // Keep track of the difference between the minterms
-        let diff = 0;
-        let result = "";
+		// Keep track of the difference between the minterms
+		let diff = 0;
+		let result = "";
 &nbsp;
-        // Iterate through the bits in this Minterm's value
-        for (const i in this.binValue) {
+		// Iterate through the bits in this Minterm's value
+		for (const i in this.binValue) {
+			// Check if the current bit value differs from the minterm's bit value
+			if (this.binValue.charAt(i) != minterm.binValue.charAt(i)) {
+				diff += 1;
+				result += "-";
+			}
 &nbsp;
-            // Check if the current bit value differs from the minterm's bit value
-            if (this.binValue.charAt(i) != minterm.binValue.charAt(i)) {
-                diff += 1;
-                result += "-";
-            }
+			// There is no difference
+			else {
+				result += this.binValue.charAt(i);
+			}
 &nbsp;
-            // There is no difference
-            else {
-                result += this.binValue.charAt(i);
-            }
+			// The difference has exceeded 1
+			if (diff &gt; 1) {
+				return null;
+			}
+		}
 &nbsp;
-            // The difference has exceeded 1
-            if (diff &gt; 1) {
-                return null;
-            }
-        }
-&nbsp;
-        return new Minterm(this.termsCovered.concat(minterm.termsCovered), result);
-    }
-}</pre></td></tr></table></pre>
+		return new Minterm(this.termsCovered.concat(minterm.termsCovered), result);
+	}
+}
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-04-06T18:55:24.104Z
+                at 2023-04-12T15:19:03.376Z
             </div>
         <script src="prettify.js"></script>
         <script>

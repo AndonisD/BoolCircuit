@@ -1,116 +1,120 @@
 /**
  * A class to hold information about a minterm when using the Quine-McCluskey Algorithm
+ *
+ * @author Jonah Pierce
+ * https://www.npmjs.com/package/quine-mccluskey-js?activeTab=explore
  */
 export default class Minterm {
+	/**
+	 * Creates a new minterm object
+	 */
+	constructor(termsCovered, binValue) {
+		this.termsCovered = termsCovered.sort();
+		this.binValue = binValue;
+		this.used = false;
 
-    /**
-     * Creates a new minterm object
-     */
-    constructor(termsCovered, binValue) {
+		this.termsCovered.sort();
+	}
 
-        this.termsCovered = termsCovered.sort();
-        this.binValue = binValue;
-        this.used = false;
+	/**
+	 * Returns a String representation of the Minterm
+	 */
+	toString() {
+		let values = this.termsCovered.join(", ");
+		return `m(${values}) = ${this.binValue}`;
+	}
 
-        this.termsCovered.sort();
-    }
+	/**
+	 * Determines if this Minterm object is equal to another object
+	 */
+	equals(minterm) {
+		if (!(minterm instanceof Minterm)) {
+			return false;
+		}
 
-    /**
-     * Returns a String representation of the Minterm
-     */
-    toString() {
-        let values = this.termsCovered.join(", ");
-        return `m(${values}) = ${this.binValue}`;
-    }
+		return (
+			this.binValue == minterm.binValue &&
+			this.termsCovered.length == minterm.termsCovered.length &&
+			this.termsCovered.every(function (u, i) {
+				return u === minterm.termsCovered[i];
+			})
+		);
+	}
 
-    /**
-     * Determines if this Minterm object is equal to another object
-     */
-    equals(minterm) {
+	/**
+	 * Returns the values in this Minterm
+	 */
+	getValues() {
+		return this.termsCovered;
+	}
 
-        if (!(minterm instanceof Minterm)) {
-            return false;
-        }
+	/**
+	 * Returns the binary value of this Minterm
+	 */
+	getValue() {
+		return this.binValue;
+	}
 
-        return (
-            this.binValue == minterm.binValue &&
-            this.termsCovered.length == minterm.termsCovered.length &&
-            this.termsCovered.every(function(u,i) {return u === minterm.termsCovered[i]})
-        );
-    }
+	/**
+	 * Returns whether or not this Minterm has been used
+	 */
+	isUsed() {
+		return this.used;
+	}
 
-    /**
-     * Returns the values in this Minterm
-     */
-    getValues() {
-        return this.termsCovered;
-    }
+	/**
+	 * Labels this Minterm as "used"
+	 */
+	use() {
+		this.used = true;
+	}
 
-    /**
-     * Returns the binary value of this Minterm
-     */
-    getValue() {
-        return this.binValue;
-    }
+	coversTerm(term) {
+		return this.termsCovered.includes(term);
+	}
 
-    /**
-     * Returns whether or not this Minterm has been used
-     */
-    isUsed() {
-        return this.used;
-    }
+	/**
+	 * Combines 2 Minterms together if they can be combined
+	 */
+	combine(minterm) {
+		// Check if this value is this same; If so, do nothing
+		if (this.binValue == minterm.binValue) {
+			return null;
+		}
 
-    /**
-     * Labels this Minterm as "used"
-     */
-    use() {
-        this.used = true;
-    }
+		// Check if the values are the same; If so, do nothing
+		if (
+			this.termsCovered.length == minterm.termsCovered.length &&
+			this.termsCovered.every(function (u, i) {
+				return u === minterm.termsCovered[i];
+			})
+		) {
+			return null;
+		}
 
-    coversTerm(term){
-        return this.termsCovered.includes(term)
-    }
-    
-    /**
-     * Combines 2 Minterms together if they can be combined
-     */
-    combine(minterm) {
-        
-        // Check if this value is this same; If so, do nothing
-        if (this.binValue == minterm.binValue) {
-            return null;
-        }
-        
-        // Check if the values are the same; If so, do nothing
-        if (this.termsCovered.length == minterm.termsCovered.length &&
-            this.termsCovered.every(function(u,i) {return u === minterm.termsCovered[i]})) {
-            return null;
-        }
-        
-        // Keep track of the difference between the minterms
-        let diff = 0;
-        let result = "";
+		// Keep track of the difference between the minterms
+		let diff = 0;
+		let result = "";
 
-        // Iterate through the bits in this Minterm's value
-        for (const i in this.binValue) {
+		// Iterate through the bits in this Minterm's value
+		for (const i in this.binValue) {
+			// Check if the current bit value differs from the minterm's bit value
+			if (this.binValue.charAt(i) != minterm.binValue.charAt(i)) {
+				diff += 1;
+				result += "-";
+			}
 
-            // Check if the current bit value differs from the minterm's bit value
-            if (this.binValue.charAt(i) != minterm.binValue.charAt(i)) {
-                diff += 1;
-                result += "-";
-            }
+			// There is no difference
+			else {
+				result += this.binValue.charAt(i);
+			}
 
-            // There is no difference
-            else {
-                result += this.binValue.charAt(i);
-            }
+			// The difference has exceeded 1
+			if (diff > 1) {
+				return null;
+			}
+		}
 
-            // The difference has exceeded 1
-            if (diff > 1) {
-                return null;
-            }
-        }
-
-        return new Minterm(this.termsCovered.concat(minterm.termsCovered), result);
-    }
+		return new Minterm(this.termsCovered.concat(minterm.termsCovered), result);
+	}
 }

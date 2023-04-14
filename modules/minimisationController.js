@@ -28,6 +28,9 @@ export function minimiseFunction(vars, minTerms, dontCares) {
 	return { dnf, cnf };
 }
 
+/**
+ * Returns maxterms and reversed DCs
+ */
 function extractMaxTerms(vars, minTerms, dontCares) {
 	let maxTerms = [];
 
@@ -54,6 +57,9 @@ function extractMaxTerms(vars, minTerms, dontCares) {
 
 /**
  * Generates and returns an SOP or POS function
+ *
+ * @author Jonah Pierce
+ * https://www.npmjs.com/package/quine-mccluskey-js?activeTab=explore
  */
 function getFunction(primeImplicants, variables, isMaxterm = false) {
 	// Check if there are no prime implicants; Always False

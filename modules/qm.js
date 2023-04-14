@@ -55,6 +55,9 @@ export function getEssentialPrimeImplicants(vars, terms, dontCares) {
 
 /**
  * Returns an array of all the prime implicants for an expression
+ *
+ * @author Jonah Pierce
+ * https://www.npmjs.com/package/quine-mccluskey-js?activeTab=explore
  */
 export function getPrimeImplicants(groups) {
 	// If there is only 1 group, return all the minterms in it

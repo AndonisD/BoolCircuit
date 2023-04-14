@@ -2,6 +2,17 @@
 
 <html>
 	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, height=device-height,user-scalable=yes, initial-scale=1.0" />
+
+		<title>BoolMin</title>
+
+		<meta name="apple-mobile-web-app-status-bar" content="#aa7700">
+  		<meta name="theme-color" content="#313338">
+ 
+		<link rel="manifest" href="manifest.json">
+
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.4.4/math.min.js"></script>
 		<script src="https://unpkg.com/gojs@2.2.18/release/go.js"></script>
 		<link href="https://unpkg.com/intro.js/minified/introjs.min.css" rel="stylesheet"> 
@@ -12,7 +23,6 @@
 		<script src="https://kit.fontawesome.com/a1b3d7504f.js" crossorigin="anonymous"></script>
 		
 	</head>
-
 	
 	<body bgcolor="#313338">
 		<header>
@@ -24,17 +34,13 @@
 					</div>
 				</div>
 				<div class="top_container">
-					<div class="icon_container info_button">
-						<i class="fa-solid fa-circle-info fa-2xl" id="info_button" style="color: #ffffff;"></i>
+					<div class="icon_container info_button" id="info_button">
+						Help
 					</div>
-					<a href="https://github.com/AndonisD/BoolCircuit" style="text-decoration: none;">
-						<div class="icon_container">
+						<a class="icon_container" href="https://github.com/AndonisD/BoolCircuit" style="text-decoration: none;">
 							<i class="fa-brands fa-github fa-2xl" style="color: #ffffff;"></i>
-						</div>
-					</a>
+						</a>
 				</div>
-				
-				
 			</div>
 		</header>
 		
@@ -266,7 +272,7 @@
 					</div>
 					</div>
 					<div class="error_container" id="error-message">
-						This is an error message
+						Error message
 					</div>
 					</div>
 					<div class="border table_container"style="margin-right: auto; min-width: 245px;">
@@ -287,83 +293,22 @@
 	<script src="https://unpkg.com/gojs@2.2.18/extensions/Figures.js"></script>
 	<script src="circuitEditor.js"></script>
 	<script>
-		
-		
-		document.getElementById("info_button").addEventListener("click", () => {
-			const expression = 'a and b or b and c or (not b or c)'
-			document.getElementById("expression_input").innerHTML = expression;
-			document.getElementById("submit_expression").click();
-
-			introJs().setOptions({
-				showProgress: true,
-				showBullets: false,
-				disableInteraction: false,
-				tooltipClass: 'customTooltip',
-				steps: [{
-						title: "Welcome to  <img style='height: 30px; left: 100%; margin-top:5px' src='https://fontmeme.com/permalink/230408/b0698910e76c71bb85eae67c9fcecdc2.png' alt='pixel-fonts' border='0'>",
-						intro: "Lightweight combinational logic circuit visualiser"
-					},
-					{
-						intro: 'There are 3 ways for you to input and interact with boolean functions...'
-					},
-					{
-						title: 'Circuits',
-						element: document.querySelector('.circuit_container'),
-						intro: 'This is the circuit editor. You can build your logic circuits here.'
-					},
-					{
-						title: 'Boolean Expressions',
-						element: document.querySelector('.expression_container'),
-						intro: 'Or you can input a boolean expression'
-					},
-					{
-						title: 'Boolean Functions',
-						element: document.querySelector('.function_container'),
-						intro: 'Or define a boolean function directly'
-					},
-					{
-						title: 'Truth Tables',
-						element: document.querySelector('.table_container'),
-						intro: 'This is where the truth table will appear'
-					},
-					{
-						title: 'Minimisation',
-						element: document.querySelector('.min_container'),
-						intro: 'You can also view the minimised forms of your functions!'
-					},
-					{
-						element: document.querySelector('.min_info'),
-						intro: 'Hover over these for more info'
-					},
-					{
-						title: "<img style='height: 30px; left: 100%;' src='https://fontmeme.com/permalink/230407/714842a4c8050a8c984484ae7621f3e4.png' alt='pixel-fonts' border='0'>",
-						intro: "Have fun exploring the world of combinational logic!"
-					},
-				]
-			}).start();
-
-			// {
-			// 			element: document.querySelector('.pallete_container'),
-			// 			intro: "These are the components you'll need to build a circuit. <br> Hover over a component if you're unsure of what it is."
-			// 		},
-			// 		{
-			// 			element: document.querySelector('.circuit_canvas'),
-			// 			intro: "This is the canvas where you can build your circuits."
-			// 		},
-			// 		{
-			// 			element: document.querySelector('.circuit_canvas'),
-			// 			intro: "Once you've dragged the components here, you can start wiring them! Drag from one component to the other to make a wire."
-			// 		},
-			// 		{
-			// 			element: document.querySelector('.circuit_canvas'),
-			// 			intro: "Once you have a complete circuit with with inputs and outputs, double-tap on the input nodes and watch your circuit come to life!"
-			// 		},
-			// 		{
-			// 			element: document.querySelector('.circuit_canvas'),
-			// 			intro: "Once you have a complete circuit with with inputs and outputs, double-tap on the input nodes and watch you circuit come to life!"
-			// 		},
-			
+		window.addEventListener('load', () => {
+		  registerSW();
 		});
-		
-	</script>
+	 
+		// Register the Service Worker
+		async function registerSW() {
+		  if ('serviceWorker' in navigator) {
+			try {
+			  await navigator
+					.serviceWorker
+					.register('serviceworker.js');
+			}
+			catch (e) {
+			  console.log('SW registration failed');
+			}
+		  }
+		}
+	 </script>
 </html>

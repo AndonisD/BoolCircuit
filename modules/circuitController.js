@@ -13,10 +13,6 @@ export function generateCircuit(expression) {
 
 	const expressionTree = math.parse(expression);
 
-	var inputNum = 0;
-
-	var isFirst = true;
-
 	var keyID = 0;
 
 	var outputNode = new NodeData("output", "o");
@@ -43,25 +39,25 @@ export function generateCircuit(expression) {
 	for (let i = 0; i < preOrderTraversal.length; i++) {
 		var node = preOrderTraversal[i];
 
+		let nodeData;
 		switch (node.type) {
 			case "OperatorNode":
-				var nodeKey = ++keyID;
+				const nodeKey = ++keyID;
 
-				var nodeData = new NodeData(node.op, nodeKey);
+				nodeData = new NodeData(node.op, nodeKey);
 
 				if (node.op == "and" || node.op == "or") {
-					var input1 = operandStack.pop();
-					var input2 = operandStack.pop();
-					//reversed on purpose
+					const input1 = operandStack.pop();
+					const input2 = operandStack.pop();
 
-					var link1 = new LinkData(input1.key, nodeKey, "in1");
-					var link2 = new LinkData(input2.key, nodeKey, "in2");
+					const link1 = new LinkData(input1.key, nodeKey, "in1");
+					const link2 = new LinkData(input2.key, nodeKey, "in2");
 
 					linkDataArray.push(link1, link2);
 				} else if (node.op == "not") {
-					var input = operandStack.pop();
+					const input = operandStack.pop();
 
-					var link = new LinkData(input.key, nodeKey);
+					const link = new LinkData(input.key, nodeKey);
 
 					linkDataArray.push(link);
 				}
@@ -77,7 +73,7 @@ export function generateCircuit(expression) {
 
 				break;
 			case "SymbolNode":
-				var nodeData = new NodeData("input", node.name);
+				nodeData = new NodeData("input", node.name);
 
 				var alreadyExists = false;
 
@@ -101,7 +97,7 @@ export function generateCircuit(expression) {
 
 				break;
 			default:
-				console.log(node.type); //THROW ERRE
+				console.log(node.type); //THROW ERR
 		}
 	}
 
@@ -137,6 +133,8 @@ export function parseCircuit() {
 	var circuitModel = JSON.parse(
 		document.getElementById("mySavedModel").innerHTML
 	);
+
+	console.log(circuitModel);
 
 	var outputKeys = [];
 
@@ -205,8 +203,6 @@ function iterateLinkData(nodeMap, inputVarMap, linkDataArray, key) {
 	});
 
 	var type = nodeMap.get(key);
-
-	console.log(type);
 
 	switch (type) {
 		case "input":

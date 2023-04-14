@@ -1,19 +1,19 @@
 import Minterm from "./minterm.js";
 
 /**
- * Converts a value from decimal to binary
- */
-export function decToBin(value) {
-	return (value >>> 0).toString(2);
-}
-
-/**
  * Returns binary string for a term
  */
 export function getBits(value, numVars) {
 	let s = (value >>> 0).toString(2);
 	for (let i = s.length; i < numVars; i++) s = "0" + s;
 	return s;
+}
+
+/**
+ * Converts a value from decimal to binary
+ */
+export function decToBin(value) {
+	return (value >>> 0).toString(2);
 }
 
 /**
@@ -32,9 +32,6 @@ export function interleave(arr, thing) {
 
 /**
  * Returns whether or not a value is in an array
- *
- * @param value The value to look for in an array
- * @param array The array to look for a value in
  */
 export function valueIn(value, array) {
 	for (const compare of array) {

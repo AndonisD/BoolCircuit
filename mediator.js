@@ -27,6 +27,7 @@ document.getElementById("go_CNF").addEventListener("click", () => {
 });
 
 function submitCircuit() {
+	showError();
 	let expression = parseCircuit();
 	let { vars, minTerms } = breakDownExpression(expression);
 	let dontCares = [];
@@ -39,7 +40,9 @@ function submitCircuit() {
 
 function submitExpression() {
 	showError();
-	const expression = document.getElementById("expression_input").innerHTML;
+	const expression = document
+		.getElementById("expression_input")
+		.innerHTML.trim();
 	let vars, minTerms;
 	try {
 		({ vars, minTerms } = breakDownExpression(expression));
@@ -57,6 +60,7 @@ function submitExpression() {
 }
 
 function submitMinterms() {
+	showError();
 	const vars = document.getElementById("vars_input").innerHTML.split(",");
 	const minTerms = document
 		.getElementById("minterms_input")
@@ -70,7 +74,7 @@ function submitMinterms() {
 		.map((str) => {
 			return parseInt(str);
 		});
-	const expression = generateExpressionFromMinterms(minTerms, vars);
+	const expression = generateExpressionFromMinterms(vars, minTerms);
 
 	updateExpression(expression);
 	generateCircuit(expression);
@@ -102,11 +106,6 @@ function updateExpression(expression) {
 	document.getElementById("expression_input").innerHTML = expression;
 }
 
-function generateUpdateExpression(minTerms, vars) {
-	const expression = generateExpressionFromMinterms(minTerms, vars);
-	document.getElementById("expression_input").innerHTML = expression;
-}
-
 function useMinExpression(type) {
 	let isDNF = type === "DNF";
 	let expression = document.getElementById(
@@ -116,3 +115,64 @@ function useMinExpression(type) {
 	let dontCares = [];
 	generateCircuit(expression);
 }
+
+document.getElementById("info_button").addEventListener("click", () => {
+	const expression = "a and b or b and c or (not b or c)";
+	document.getElementById("expression_input").innerHTML = expression;
+	document.getElementById("submit_expression").click();
+
+	introJs()
+		.setOptions({
+			showProgress: true,
+			showBullets: false,
+			disableInteraction: false,
+			tooltipClass: "customTooltip",
+			steps: [
+				{
+					title:
+						"Welcome to  <img style='height: 30px; left: 100%; margin-top:5px' src='https://fontmeme.com/permalink/230408/b0698910e76c71bb85eae67c9fcecdc2.png' alt='pixel-fonts' border='0'>",
+					intro: "Lightweight combinational logic circuit visualiser",
+				},
+				{
+					intro:
+						"There are 3 ways for you to input and interact with boolean functions...",
+				},
+				{
+					title: "Circuits",
+					element: document.querySelector(".circuit_container"),
+					intro:
+						"This is the circuit editor. You can build your logic circuits here.",
+				},
+				{
+					title: "Boolean Expressions",
+					element: document.querySelector(".expression_container"),
+					intro: "Or you can input a boolean expression",
+				},
+				{
+					title: "Boolean Functions",
+					element: document.querySelector(".function_container"),
+					intro: "Or define a boolean function directly",
+				},
+				{
+					title: "Truth Tables",
+					element: document.querySelector(".table_container"),
+					intro: "This is where the truth table will appear",
+				},
+				{
+					title: "Minimisation",
+					element: document.querySelector(".min_container"),
+					intro: "You can also view the minimised forms of your functions!",
+				},
+				{
+					element: document.querySelector(".min_info"),
+					intro: "Hover over these for more info",
+				},
+				{
+					title:
+						"<img style='height: 30px; left: 100%;' src='https://fontmeme.com/permalink/230407/714842a4c8050a8c984484ae7621f3e4.png' alt='pixel-fonts' border='0'>",
+					intro: "Have fun exploring the world of combinational logic!",
+				},
+			],
+		})
+		.start();
+});

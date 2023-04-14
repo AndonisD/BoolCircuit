@@ -1,5 +1,8 @@
 import { getBits } from "./util.js";
 
+/**
+ * Generates an html table representing a boolean function
+ */
 export function generateTruthTable(varNames, minTerms, dontCares) {
 	var numVars = varNames.length;
 
@@ -44,7 +47,7 @@ export function generateTruthTable(varNames, minTerms, dontCares) {
 			? "<td class='output-true'> 1"
 			: dontCares.includes(term)
 			? "<td> x"
-			: "<td class='output-false'>0";
+			: "<td class='output-false'> 0";
 		table += "</td>";
 
 		table += "</tr>";
