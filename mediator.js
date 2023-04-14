@@ -28,7 +28,14 @@ document.getElementById("go_CNF").addEventListener("click", () => {
 
 function submitCircuit() {
 	showError();
-	let expression = parseCircuit();
+	let expression;
+	try {
+		expression = parseCircuit();
+	} catch (error) {
+		showError(error);
+		return;
+	}
+
 	let { vars, minTerms } = breakDownExpression(expression);
 	let dontCares = [];
 
@@ -40,9 +47,7 @@ function submitCircuit() {
 
 function submitExpression() {
 	showError();
-	const expression = document
-		.getElementById("expression_input")
-		.innerHTML.trim();
+	const expression = document.getElementById("expression_input").value.trim();
 	let vars, minTerms;
 	try {
 		({ vars, minTerms } = breakDownExpression(expression));
@@ -61,16 +66,18 @@ function submitExpression() {
 
 function submitMinterms() {
 	showError();
-	const vars = document.getElementById("vars_input").innerHTML.split(",");
+	const vars = document.getElementById("vars_input").value.trim().split(",");
 	const minTerms = document
 		.getElementById("minterms_input")
-		.innerHTML.split(",")
+		.value.trim()
+		.split(",")
 		.map((str) => {
 			return parseInt(str);
 		});
 	const dontCares = document
 		.getElementById("dontcare_input")
-		.innerHTML.split(",")
+		.value.trim()
+		.split(",")
 		.map((str) => {
 			return parseInt(str);
 		});
@@ -93,8 +100,8 @@ function updateMinimisedFunctions(vars, minTerms, dontCares) {
 }
 
 function updateMinterms(vars, minTerms) {
-	document.getElementById("vars_input").innerHTML = vars;
-	document.getElementById("minterms_input").innerHTML = minTerms;
+	document.getElementById("vars_input").value = vars;
+	document.getElementById("minterms_input").value = minTerms;
 }
 
 function updateTruthTable(vars, minTerms, dontCares) {
@@ -103,7 +110,7 @@ function updateTruthTable(vars, minTerms, dontCares) {
 }
 
 function updateExpression(expression) {
-	document.getElementById("expression_input").innerHTML = expression;
+	document.getElementById("expression_input").value = expression;
 }
 
 function useMinExpression(type) {
@@ -116,9 +123,59 @@ function useMinExpression(type) {
 	generateCircuit(expression);
 }
 
+const expression_field = document.getElementById("expression_input");
+
+expression_field.addEventListener("input", (event) => {
+	console.log("YEET");
+	expression_field.value = expression_field.value.replace(/\n/g, "");
+});
+
+document.getElementById("help_button").addEventListener("click", () => {
+	introJs()
+		.setOptions({
+			showProgress: true,
+			showBullets: false,
+			disableInteraction: false,
+			tooltipClass: "customTooltip",
+			steps: [
+				{
+					title: "Circuit editor",
+					element: document.querySelector(".circuit_container"),
+					intro:
+						"This is the circuit editor. You can build your logic circuits here.",
+				},
+				{
+					element: document.querySelector(".pallete_container"),
+					intro:
+						"These are the components you'll need to build a circuit. <br> Hover over a component if you're unsure of what it is.",
+				},
+				{
+					element: document.querySelector(".circuit_canvas"),
+					intro: "This is the canvas where you can build your circuits.",
+				},
+				{
+					element: document.querySelector(".circuit_container"),
+					intro:
+						"Once you've dragged the components here, you can start wiring them! Drag from one component to the other to make a wire.",
+				},
+				{
+					element: document.querySelector(".circuit_container"),
+					intro:
+						"Once you have a complete circuit with with inputs and outputs, double-tap on the input nodes and watch your circuit come to life!",
+				},
+				{
+					element: document.querySelector(".circuit_container"),
+					intro:
+						"Once you have a complete circuit with with inputs and outputs, double-tap on the input nodes and watch you circuit come to life!",
+				},
+			],
+		})
+		.start();
+});
+
 document.getElementById("info_button").addEventListener("click", () => {
 	const expression = "a and b or b and c or (not b or c)";
-	document.getElementById("expression_input").innerHTML = expression;
+	document.getElementById("expression_input").value = expression;
 	document.getElementById("submit_expression").click();
 
 	introJs()

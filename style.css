@@ -128,14 +128,20 @@ input[type="file"] {
 }
 
 .input {
+	display: inline-block;
 	width: 250px;
 	border: solid;
 	padding-left: 5px;
 	padding-right: 5px;
-	display: inline-block;
 	border-color: #85898f;
+	color: white;
+	font-family: "Courier New", Courier, monospace;
+	background: none;
 	font-weight: normal;
+	resize: none;
+	/* white-space: nowrap; */
 }
+
 .right {
 	margin-left: auto;
 }
@@ -151,6 +157,20 @@ input[type="file"] {
 	height: 20px;
 	background: transparent;
 	border: 2px solid #e5e6e9;
+	outline: none;
+	border-radius: 4px;
+	cursor: pointer;
+	color: #e5e6e9;
+	font-family: "Courier New";
+	font-weight: bold;
+	transition: 0.3s;
+}
+
+.help_button {
+	width: 50px;
+	height: 20px;
+	background: transparent;
+	border: 0px;
 	outline: none;
 	border-radius: 4px;
 	cursor: pointer;

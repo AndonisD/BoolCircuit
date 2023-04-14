@@ -134,8 +134,6 @@ export function parseCircuit() {
 		document.getElementById("mySavedModel").innerHTML
 	);
 
-	console.log(circuitModel);
-
 	var outputKeys = [];
 
 	var nodeMap = new Map();
@@ -166,7 +164,7 @@ export function parseCircuit() {
 				nodeMap.set(nodeData.key, nodeData.category);
 				break;
 			default:
-				console.log("gate not supported!"); //GIVE VISIBLE ERROR AND RETURN
+				throw "Gate not supported!";
 		}
 	});
 
@@ -191,7 +189,7 @@ export function parseCircuit() {
 	try {
 		tree = iterateLinkData(nodeMap, inputVarMap, linkDataArray, lastNode.from);
 	} catch (err) {
-		alert(err.message);
+		throw "Please build a valid circuit! Make sure that there are no circular references and that all components are connected.";
 	}
 
 	return tree.toString();
@@ -209,7 +207,6 @@ function iterateLinkData(nodeMap, inputVarMap, linkDataArray, key) {
 			return new math.SymbolNode(key);
 		case "and":
 		case "or":
-			//CHECK THAT toLinks HAS 2 RETURN ERROR OTHERWISE
 			var child1 = iterateLinkData(
 				nodeMap,
 				inputVarMap,
@@ -232,7 +229,7 @@ function iterateLinkData(nodeMap, inputVarMap, linkDataArray, key) {
 			);
 			return new math.OperatorNode(type, type, [child]);
 		default: //GIVE VISIBLE ERROR AND RETURN
-			console.log("gate not supported!");
+			throw "Gate not supported!";
 	}
 }
 

@@ -134,6 +134,7 @@
 							<label for="file-upload" class="submit_button submit_label">Load</label>
 						</div>
 						<div>
+							<button class="help_button" id = "help_button">Help</button>
 							<button class="submit_button" onclick="arrange()">Arrange</button>
 							<button class="submit_button" id="submit_circuit">Submit</button>
 							<div class="tooltip">
@@ -169,12 +170,14 @@
 							</span>
 						</div>
 						Expression:
-						<span
+						<!-- <span
 							class="input"
 							id="expression_input"
 							role="textbox"
 							contenteditable
-						></span>
+						></span> -->
+						<!-- <input type="text" class="input" id="expression_input"> -->
+						<textarea name="" class="input" rows="1" id="expression_input"></textarea>
 						<input class="submit_button" type="button" id="submit_expression" value="Submit" />
 					</div>
 				</div>
@@ -198,31 +201,34 @@
 							<div class="function_label">
 							Variable names:
 							</div>
-							<span
+							<!-- <span
 								class="input right"
 								id="vars_input"
 								role="textbox"
 								contenteditable
-							></span>
+							></span> -->
+							<input type="text" class="input right" id="vars_input">
 							<div class="function_label">
 
 							Minterms:
 							</div>
-							<span
+							<!-- <span
 								class="input right"
 								id="minterms_input"
 								role="textbox"
 								contenteditable
-							></span>
+							></span> -->
+							<input type="text" class="input right" id="minterms_input">
 							<div class="function_label">
 								Don't care terms:
 							</div>
-							<span
+							<!-- <span
 								class="input right"
 								id="dontcare_input"
 								role="textbox"
 								contenteditable
-							></span>
+							></span> -->
+							<input type="text" class="input right" id="dontcare_input">
 						</div>
 						<br>
 						<input class="submit_button left-margin" type="button" id="submit_table" value="Submit" />
