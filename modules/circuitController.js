@@ -106,7 +106,7 @@ export function generateCircuit(expression) {
 
 	var circuitJsonStr = JSON.stringify(circuitModel);
 
-	document.getElementById("mySavedModel").setHTML(circuitJsonStr);
+	document.getElementById("mySavedModel").innerHTML = circuitJsonStr;
 
 	load();
 
