@@ -26,7 +26,6 @@ export function generateCircuit(expression) {
 	});
 
 	var operandStack = [];
-	// operatorStack = []
 
 	preOrderTraversal = preOrderTraversal
 		.filter((node) => {
@@ -169,9 +168,9 @@ export function parseCircuit() {
 	});
 
 	if (outputKeys.length > 1) {
-		//ONLY 1 OUTPUT SUPPORTED AND RETURN
+		throw "Please ensure that you circuit has only 1 ouput";
 	} else if (outputKeys.length < 1) {
-		//PLEASE ADD AN OUTPUT AND RETURN
+		throw "Please add an output node";
 	}
 
 	var outputKey = outputKeys[0];

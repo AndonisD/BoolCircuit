@@ -57,3 +57,68 @@ export function generateTruthTable(varNames, minTerms, dontCares) {
 
 	return table;
 }
+
+/**
+ * Validates the inputs of the boolean function component and returns them in the desired formats
+ */
+export function processFunction(varsInput, minTermsInput, dontCaresInput) {
+	const varList = /^[a-z|A-Z](,[a-z|A-Z])*$/g;
+	const numList = /^[0-9]+(,[0-9]+)*[0-9]*$/g;
+
+	if (!varsInput.match(varList)) throw "Please check the format of variables";
+
+	const vars = varsInput.split(",");
+
+	const maxTerm = Math.pow(2, vars.length) - 1;
+
+	let minTerms = [];
+
+	if (minTermsInput !== "") {
+		if (!minTermsInput.match(numList))
+			throw "Please check the format of minterms";
+
+		minTerms = minTermsInput.split(",").map((str) => {
+			return parseInt(str);
+		});
+
+		let minTermWithinBounds = minTerms.every((term) => {
+			return term >= 0 && term <= maxTerm;
+		});
+
+		let minTermDuplicates = new Set(minTerms).size !== minTerms.length;
+
+		if (!minTermWithinBounds || minTermDuplicates)
+			throw "Please check minterms";
+	}
+
+	let dontCares = [];
+
+	if (dontCaresInput !== "") {
+		if (!dontCaresInput.match(numList))
+			throw "Please check the format of don't care terms";
+
+		dontCares = dontCaresInput.split(",").map((str) => {
+			return parseInt(str);
+		});
+
+		let dontCaresWithinBounds = dontCares.every((term) => {
+			return term >= 0 && term <= maxTerm;
+		});
+
+		let dontCareDuplicates = new Set(dontCares).size !== dontCares.length;
+
+		let combinedArray = minTerms.concat(dontCares);
+
+		//if there are duplicates in the combined array, then minterms and don't cares share values
+		let combinedDuplicates =
+			new Set(combinedArray).size !== combinedArray.length;
+
+		if (!dontCaresWithinBounds || dontCareDuplicates)
+			throw "Please check don't care terms";
+
+		if (combinedDuplicates)
+			throw "Please make sure minterms and don't cares don't share any values";
+	}
+
+	return { vars, minTerms, dontCares };
+}

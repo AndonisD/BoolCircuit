@@ -20,6 +20,14 @@ export function breakDownExpression(expression) {
 
 	if (
 		!varNodes.every((varName) => {
+			return varName.name.match(/^[a-z|A-Z]$/g);
+		})
+	) {
+		throw "Please only use single character inputs!";
+	}
+
+	if (
+		!varNodes.every((varName) => {
 			return varName.name.length === 1;
 		})
 	) {
@@ -34,6 +42,23 @@ export function breakDownExpression(expression) {
 		})
 	) {
 		throw "Please use the correct operators (and, or, not)!";
+	}
+
+	let allNodes = [];
+	expressionTree.traverse(function (node) {
+		allNodes.push(node);
+	});
+
+	if (
+		!allNodes.every((node) => {
+			return (
+				node.type === "ParenthesisNode" ||
+				node.isSymbolNode ||
+				node.isOperatorNode
+			);
+		})
+	) {
+		throw "Please enter a valid expression";
 	}
 
 	let vars = [...new Set(varNodes.map((item) => item.name))];

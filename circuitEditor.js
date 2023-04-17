@@ -12,6 +12,20 @@ function init() {
 		go.Diagram,
 		"myDiagramDiv", // create a new Diagram in the HTML DIV element "myDiagramDiv"
 		{
+			"dragSelectingTool.canStart": function () {
+				if (!this.isEnabled) return false;
+				const diagram = this.diagram;
+				if (!diagram.allowSelect) return false;
+				const e = diagram.lastInput;
+				if (!e.left) return false; // require left button
+				// don't include the following checks when this tool is running modally
+				if (diagram.currentTool !== this) {
+					if (!this.isBeyondDragSize()) return false; // must not be a click
+					// don't start if we're over a selectable part
+					if (diagram.findPartAt(e.documentPoint, true) !== null) return false;
+				}
+				return e.shift; // only when the Shift key is also held down
+			},
 			"draggingTool.isGridSnapEnabled": true, // dragged nodes will snap to a grid of 10x10 cells
 			"undoManager.isEnabled": true,
 		}
@@ -384,7 +398,7 @@ function loop() {
 	setTimeout(() => {
 		updateStates();
 		loop();
-	}, 250);
+	}, 0);
 }
 
 /**

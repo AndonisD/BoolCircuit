@@ -3,7 +3,10 @@ import {
 	breakDownExpression,
 	generateExpressionFromMinterms,
 } from "./modules/expressionController.js";
-import { generateTruthTable } from "./modules/truthTableController.js";
+import {
+	generateTruthTable,
+	processFunction,
+} from "./modules/truthTableController.js";
 import { minimiseFunction } from "./modules/minimisationController.js";
 
 document
@@ -29,64 +32,67 @@ document.getElementById("go_CNF").addEventListener("click", () => {
 function submitCircuit() {
 	showError();
 	let expression;
+	let vars, minTerms;
+	let dontCares = [];
 	try {
 		expression = parseCircuit();
+		({ vars, minTerms } = breakDownExpression(expression));
+		updateExpression(expression);
+		updateMinterms(vars, minTerms);
+		updateTruthTable(vars, minTerms, dontCares);
+		updateMinimisedFunctions(vars, minTerms, dontCares);
 	} catch (error) {
 		showError(error);
 		return;
 	}
-
-	let { vars, minTerms } = breakDownExpression(expression);
-	let dontCares = [];
-
-	updateExpression(expression);
-	updateMinterms(vars, minTerms);
-	updateTruthTable(vars, minTerms, dontCares);
-	updateMinimisedFunctions(vars, minTerms, dontCares);
 }
 
 function submitExpression() {
+	let start = Date.now();
+
 	showError();
 	const expression = document.getElementById("expression_input").value.trim();
 	let vars, minTerms;
+	let dontCares = [];
 	try {
 		({ vars, minTerms } = breakDownExpression(expression));
+		updateTruthTable(vars, minTerms, dontCares);
+		generateCircuit(expression);
+		updateMinterms(vars, minTerms);
+		// updateMinimisedFunctions(vars, minTerms, dontCares);
 	} catch (error) {
 		showError(error);
 		return;
 	}
-
-	let dontCares = [];
-
-	updateTruthTable(vars, minTerms, dontCares);
-	generateCircuit(expression);
-	updateMinterms(vars, minTerms);
-	updateMinimisedFunctions(vars, minTerms, dontCares);
+	let timeTaken = Date.now() - start;
+	console.log("Total time taken : " + timeTaken + " milliseconds");
 }
 
 function submitMinterms() {
 	showError();
-	const vars = document.getElementById("vars_input").value.trim().split(",");
-	const minTerms = document
-		.getElementById("minterms_input")
-		.value.trim()
-		.split(",")
-		.map((str) => {
-			return parseInt(str);
-		});
-	const dontCares = document
-		.getElementById("dontcare_input")
-		.value.trim()
-		.split(",")
-		.map((str) => {
-			return parseInt(str);
-		});
-	const expression = generateExpressionFromMinterms(vars, minTerms);
+	const varsInput = document.getElementById("vars_input").value.trim();
 
-	updateExpression(expression);
-	generateCircuit(expression);
-	updateTruthTable(vars, minTerms, dontCares);
-	updateMinimisedFunctions(vars, minTerms, dontCares);
+	const minTermsInput = document.getElementById("minterms_input").value.trim();
+
+	const dontCaresInput = document.getElementById("dontcare_input").value.trim();
+
+	let vars, minTerms, dontCares;
+
+	try {
+		({ vars, minTerms, dontCares } = processFunction(
+			varsInput,
+			minTermsInput,
+			dontCaresInput
+		));
+		const expression = generateExpressionFromMinterms(vars, minTerms);
+		updateExpression(expression);
+		generateCircuit(expression);
+		updateTruthTable(vars, minTerms, dontCares);
+		updateMinimisedFunctions(vars, minTerms, dontCares);
+	} catch (error) {
+		showError(error);
+		return;
+	}
 }
 
 function updateMinimisedFunctions(vars, minTerms, dontCares) {
@@ -115,18 +121,21 @@ function updateExpression(expression) {
 
 function useMinExpression(type) {
 	let isDNF = type === "DNF";
+	let dontCares = [];
 	let expression = document.getElementById(
 		isDNF ? "min_DNF" : "min_CNF"
 	).innerHTML;
-	let { vars, minTerms } = breakDownExpression(expression);
-	let dontCares = [];
-	generateCircuit(expression);
+	try {
+		generateCircuit(expression);
+	} catch (error) {
+		showError(error);
+		return;
+	}
 }
 
 const expression_field = document.getElementById("expression_input");
 
 expression_field.addEventListener("input", (event) => {
-	console.log("YEET");
 	expression_field.value = expression_field.value.replace(/\n/g, "");
 });
 
@@ -156,17 +165,39 @@ document.getElementById("help_button").addEventListener("click", () => {
 				{
 					element: document.querySelector(".circuit_container"),
 					intro:
-						"Once you've dragged the components here, you can start wiring them! Drag from one component to the other to make a wire.",
+						"Once you've dragged the components here, you can start wiring them up! Drag from one node's port to another to make a wire.",
 				},
 				{
 					element: document.querySelector(".circuit_container"),
 					intro:
-						"Once you have a complete circuit with with inputs and outputs, double-tap on the input nodes and watch your circuit come to life!",
+						"Once you have a complete circuit with inputs and outputs, double-tap on the input nodes and watch your circuit come to life!",
 				},
 				{
 					element: document.querySelector(".circuit_container"),
 					intro:
-						"Once you have a complete circuit with with inputs and outputs, double-tap on the input nodes and watch you circuit come to life!",
+						"Tap on an element to select it, or hold the shift key to drag-select multiple items.",
+				},
+				{
+					element: document.querySelector(".arrange_button"),
+					intro: "Press this button to automatically arrange your circuit!",
+				},
+				{
+					element: document.querySelector(".submit_circuit"),
+					intro:
+						"Press the submit button to view the logical properties of your circuit.",
+				},
+				{
+					element: document.querySelector(".circuit_info"),
+					intro:
+						"Hover over this to find out the necessary conditions to submit the circuit.",
+				},
+				{
+					element: document.querySelector(".save_button"),
+					intro: "You can save the JSON model of your circuit.",
+				},
+				{
+					element: document.querySelector(".submit_label"),
+					intro: "And load it later.",
 				},
 			],
 		})
@@ -199,6 +230,12 @@ document.getElementById("info_button").addEventListener("click", () => {
 					element: document.querySelector(".circuit_container"),
 					intro:
 						"This is the circuit editor. You can build your logic circuits here.",
+				},
+				{
+					title: "Circuits",
+					element: document.querySelector(".help_button"),
+					intro:
+						"Press Help to get more information about using the circuit editor.",
 				},
 				{
 					title: "Boolean Expressions",

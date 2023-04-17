@@ -13,6 +13,9 @@
  
 		<link rel="manifest" href="manifest.json">
 
+		<link rel="stylesheet" href="style.css" />
+		<script src="https://kit.fontawesome.com/a1b3d7504f.js" crossorigin="anonymous"></script>
+
 		
 		
 	</head>
@@ -130,15 +133,15 @@
 				<div style=" width: 600px">
 					<div class="margin" style="display: flex; justify-content: space-between;">
 						<div>
-							<button class="submit_button" id="saveModel" onclick="saveJson()">Save</button>
+							<button class="submit_button save_button" id="saveModel" onclick="saveJson()">Save</button>
 							<label for="file-upload" class="submit_button submit_label">Load</label>
 						</div>
 						<div>
 							<button class="help_button" id = "help_button">Help</button>
-							<button class="submit_button" onclick="arrange()">Arrange</button>
-							<button class="submit_button" id="submit_circuit">Submit</button>
+							<button class="arrange_button submit_button" onclick="arrange()">Arrange</button>
+							<button class="submit_circuit submit_button" id="submit_circuit">Submit</button>
 							<div class="tooltip">
-								<i class="fas fa-info-circle fa-sm"></i>
+								<i class="fas fa-info-circle fa-sm circuit_info"></i>
 								<span class="tooltiptext top">To submit your circuit, it must have:
 									- at least 1 input
 									- only AND, OR, NOT gates
@@ -189,7 +192,7 @@
 							Boolean Function
 							<div class="tooltip">
 								<i class="fas fa-info-circle fa-sm"></i>
-								<span class="tooltiptext">Enter comma-separated lists. e.g.
+								<span class="tooltiptext">Enter comma-separated lists defining a boolean function. e.g.
 									
 										a,b,c
 										3,6,7
@@ -228,7 +231,7 @@
 								role="textbox"
 								contenteditable
 							></span> -->
-							<input type="text" class="input right" id="dontcare_input">
+							<input type="text" class="input right" placeholder="Optional" id="dontcare_input">
 						</div>
 						<br>
 						<input class="submit_button left-margin" type="button" id="submit_table" value="Submit" />
@@ -294,8 +297,6 @@
 	<link href="https://unpkg.com/intro.js/minified/introjs.min.css" rel="stylesheet"> 
 	<script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
 	<script type="module" src="./mediator.js"></script>
-	<link rel="stylesheet" href="style.css" />
-	<script src="https://kit.fontawesome.com/a1b3d7504f.js" crossorigin="anonymous"></script>
 	<script src="https://unpkg.com/gojs@2.2.18/extensions/Figures.js"></script>
 	<script src="circuitEditor.js"></script>
 	<script>

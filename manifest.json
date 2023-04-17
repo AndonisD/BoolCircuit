@@ -1,16 +1,21 @@
 {
-	"name": "PWA Tutorial",
-	"short_name": "PWA",
+	"name": "BoolMin",
+	"short_name": "BM",
 	"start_url": "index.html",
 	"display": "standalone",
 	"background_color": "#5900b3",
 	"theme_color": "black",
 	"scope": ".",
-	"description": "This is a PWA tutorial.",
+	"description": "BoolMin Combinational Logic Simulator",
 	"icons": [
 		{
-			"src": "images/pwa-icon.png",
+			"src": "images/logo512.png",
 			"sizes": "512x512",
+			"type": "image/png"
+		},
+		{
+			"src": "images/logo192.png",
+			"sizes": "192x192",
 			"type": "image/png"
 		}
 	]
