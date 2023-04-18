@@ -48,8 +48,6 @@ function submitCircuit() {
 }
 
 function submitExpression() {
-	let start = Date.now();
-
 	showError();
 	const expression = document.getElementById("expression_input").value.trim();
 	let vars, minTerms;
@@ -64,8 +62,6 @@ function submitExpression() {
 		showError(error);
 		return;
 	}
-	let timeTaken = Date.now() - start;
-	console.log("Total time taken : " + timeTaken + " milliseconds");
 }
 
 function submitMinterms() {
