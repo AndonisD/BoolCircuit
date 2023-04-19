@@ -16,8 +16,6 @@ export function getEssentialPrimeImplicants(vars, terms, dontCares) {
 
 	let primeImplicants = getPrimeImplicants(initialGroups);
 
-	console.log(primeImplicants);
-
 	let piTable = buildPrimeImplicantTable(primeImplicants, terms);
 
 	let essentialPrimeImplicants = initialEssentialPrimeImplicants(piTable);
@@ -26,7 +24,6 @@ export function getEssentialPrimeImplicants(vars, terms, dontCares) {
 	if (Object.keys(piTable).length == 0) {
 		return essentialPrimeImplicants;
 	}
-
 	// if not empty, need to find minimum set of the remaining PI's that cover the rest of the terms
 
 	// get rid of terms covered by EPIs
@@ -51,72 +48,6 @@ export function getEssentialPrimeImplicants(vars, terms, dontCares) {
 	);
 
 	return essentialPrimeImplicants.concat(minPrimeImpSet);
-}
-
-/**
- * Returns an array of all the prime implicants for an expression
- *
- * @author Jonah Pierce
- * https://www.npmjs.com/package/quine-mccluskey-js?activeTab=explore
- */
-export function getPrimeImplicants(groups) {
-	// If there is only 1 group, return all the minterms in it
-	if (groups.length == 1) {
-		return groups[0];
-	}
-
-	// Try comparing the rest
-	else {
-		let unused = [];
-		let comparisons = [...Array(groups.length - 1).keys()];
-		let newGroups = [];
-		for (let i of comparisons) {
-			newGroups.push([]);
-		}
-
-		// Compare each adjacent group
-		for (const compare of comparisons) {
-			let group1 = groups[compare];
-			let group2 = groups[compare + 1];
-
-			// Compare every term in group1 with every term in group2
-			for (const term1 of group1) {
-				for (const term2 of group2) {
-					// Try combining it
-					let term3 = term1.combine(term2);
-
-					// Only add it to the new group if term3 is not null
-					//  term3 will only be null if term1 and term2 could not
-					//  be combined
-					if (term3 !== null) {
-						term1.use();
-						term2.use();
-						if (!valueIn(term3, newGroups[compare])) {
-							newGroups[compare].push(term3);
-						}
-					}
-				}
-			}
-		}
-
-		// Get array of all unused minterms
-		for (const group of groups) {
-			for (const term of group) {
-				if (!term.isUsed() && !valueIn(term, unused)) {
-					unused.push(term);
-				}
-			}
-		}
-
-		// Add recursive call
-		for (const term of getPrimeImplicants(newGroups)) {
-			if (!term.isUsed() && !valueIn(term, unused)) {
-				unused.push(term);
-			}
-		}
-
-		return unused;
-	}
 }
 
 /**
@@ -221,4 +152,71 @@ export function createInitialGroups(variables, allTerms) {
 	}
 
 	return groups;
+}
+
+/**
+ * Returns an array of all the prime implicants for an expression
+ *
+ * Adaptation of an algorithm by:
+ * @author Jonah Pierce
+ * https://www.npmjs.com/package/quine-mccluskey-js?activeTab=explore
+ */
+export function getPrimeImplicants(groups) {
+	// If there is only 1 group, return all the minterms in it
+	if (groups.length == 1) {
+		return groups[0];
+	}
+
+	// Try comparing the rest
+	else {
+		let unused = [];
+		let comparisons = [...Array(groups.length - 1).keys()];
+		let newGroups = [];
+		for (let i of comparisons) {
+			newGroups.push([]);
+		}
+
+		// Compare each adjacent group
+		for (const compare of comparisons) {
+			let group1 = groups[compare];
+			let group2 = groups[compare + 1];
+
+			// Compare every term in group1 with every term in group2
+			for (const term1 of group1) {
+				for (const term2 of group2) {
+					// Try combining it
+					let term3 = term1.combine(term2);
+
+					// Only add it to the new group if term3 is not null
+					//  term3 will only be null if term1 and term2 could not
+					//  be combined
+					if (term3 !== null) {
+						term1.use();
+						term2.use();
+						if (!valueIn(term3, newGroups[compare])) {
+							newGroups[compare].push(term3);
+						}
+					}
+				}
+			}
+		}
+
+		// Get array of all unused minterms
+		for (const group of groups) {
+			for (const term of group) {
+				if (!term.isUsed() && !valueIn(term, unused)) {
+					unused.push(term);
+				}
+			}
+		}
+
+		// Add recursive call
+		for (const term of getPrimeImplicants(newGroups)) {
+			if (!term.isUsed() && !valueIn(term, unused)) {
+				unused.push(term);
+			}
+		}
+
+		return unused;
+	}
 }

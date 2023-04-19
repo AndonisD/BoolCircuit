@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"test": "jest --coverage",
+		"test": "jest",
 		"deploy": "gh-pages -d build"
 	},
 	"repository": {

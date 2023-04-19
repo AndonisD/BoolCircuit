@@ -152,7 +152,7 @@
 					</div>
 					<input id="file-upload" type="file"/>
 					<!-- Diagram Model saved in JSON format: -->
-					<textarea hidden id="mySavedModel" style="width: 100%; height: 200px">
+					<textarea id="mySavedModel" style="width: 100%; height: 200px; visibility: hidden;">
 { "class": "GraphLinksModel",
   "linkFromPortIdProperty": "fromPort",
   "linkToPortIdProperty": "toPort",
@@ -167,7 +167,7 @@
 					<div class="margin">
 						<div class="tooltip">
 							<i class="fas fa-info-circle fa-sm"></i>
-							<span class="tooltiptext">Enter a  valid boolean expression. e.g.
+							<span class="tooltiptext">Enter a  valid boolean expression in the natural language form. e.g.
 
 								a and (not b or c)
 							</span>
@@ -192,7 +192,7 @@
 							Boolean Function
 							<div class="tooltip">
 								<i class="fas fa-info-circle fa-sm"></i>
-								<span class="tooltiptext">Enter comma-separated lists defining a boolean function. e.g.
+								<span class="tooltiptext">Enter comma-separated lists defining a boolean function in the Sum of Minterms form. e.g.
 									
 										a,b,c
 										3,6,7
