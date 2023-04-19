@@ -9,6 +9,14 @@ import {
 } from "./modules/truthTableController.js";
 import { minimiseFunction } from "./modules/minimisationController.js";
 
+window.addEventListener("load", tutorial);
+
+document.getElementById("info_button").addEventListener("click", tutorial);
+
+document
+	.getElementById("help_button")
+	.addEventListener("click", circuitTutorial);
+
 document
 	.getElementById("submit_circuit")
 	.addEventListener("click", submitCircuit);
@@ -57,7 +65,7 @@ function submitExpression() {
 		updateTruthTable(vars, minTerms, dontCares);
 		generateCircuit(expression);
 		updateMinterms(vars, minTerms);
-		// updateMinimisedFunctions(vars, minTerms, dontCares);
+		updateMinimisedFunctions(vars, minTerms, dontCares);
 	} catch (error) {
 		showError(error);
 		return;
@@ -135,7 +143,74 @@ expression_field.addEventListener("input", (event) => {
 	expression_field.value = expression_field.value.replace(/\n/g, "");
 });
 
-document.getElementById("help_button").addEventListener("click", () => {
+function tutorial() {
+	// const expression = "a and b or b and c or (not b or c)";
+	// document.getElementById("expression_input").value = expression;
+	// document.getElementById("submit_expression").click();
+
+	introJs()
+		.setOptions({
+			showProgress: true,
+			showBullets: false,
+			disableInteraction: false,
+			tooltipClass: "customTooltip",
+			steps: [
+				{
+					title:
+						"Welcome to  <img style='height: 30px; left: 100%; margin-top:5px' src='https://fontmeme.com/permalink/230408/b0698910e76c71bb85eae67c9fcecdc2.png' alt='pixel-fonts' border='0'>",
+					intro: "Lightweight combinational logic circuit visualiser",
+				},
+				{
+					intro:
+						"There are 3 ways for you to input and interact with boolean functions...",
+				},
+				{
+					title: "Circuits",
+					element: document.querySelector(".circuit_container"),
+					intro:
+						"This is the circuit editor. You can build your logic circuits here.",
+				},
+				{
+					title: "Circuits",
+					element: document.querySelector(".help_button"),
+					intro:
+						"Press Help to get more information about using the circuit editor.",
+				},
+				{
+					title: "Boolean Expressions",
+					element: document.querySelector(".expression_container"),
+					intro: "Or you can input a boolean expression",
+				},
+				{
+					title: "Boolean Functions",
+					element: document.querySelector(".function_container"),
+					intro: "Or define a boolean function directly",
+				},
+				{
+					title: "Truth Tables",
+					element: document.querySelector(".table_container"),
+					intro: "This is where the truth table will appear",
+				},
+				{
+					title: "Minimisation",
+					element: document.querySelector(".min_container"),
+					intro: "You can also view the minimised forms of your functions!",
+				},
+				{
+					element: document.querySelector(".min_info"),
+					intro: "Hover over these for more info",
+				},
+				{
+					title:
+						"<img style='height: 30px; left: 100%;' src='https://fontmeme.com/permalink/230407/714842a4c8050a8c984484ae7621f3e4.png' alt='pixel-fonts' border='0'>",
+					intro: "Have fun exploring the world of combinational logic!",
+				},
+			],
+		})
+		.start();
+}
+
+function circuitTutorial() {
 	introJs()
 		.setOptions({
 			showProgress: true,
@@ -198,71 +273,4 @@ document.getElementById("help_button").addEventListener("click", () => {
 			],
 		})
 		.start();
-});
-
-document.getElementById("info_button").addEventListener("click", () => {
-	const expression = "a and b or b and c or (not b or c)";
-	document.getElementById("expression_input").value = expression;
-	document.getElementById("submit_expression").click();
-
-	introJs()
-		.setOptions({
-			showProgress: true,
-			showBullets: false,
-			disableInteraction: false,
-			tooltipClass: "customTooltip",
-			steps: [
-				{
-					title:
-						"Welcome to  <img style='height: 30px; left: 100%; margin-top:5px' src='https://fontmeme.com/permalink/230408/b0698910e76c71bb85eae67c9fcecdc2.png' alt='pixel-fonts' border='0'>",
-					intro: "Lightweight combinational logic circuit visualiser",
-				},
-				{
-					intro:
-						"There are 3 ways for you to input and interact with boolean functions...",
-				},
-				{
-					title: "Circuits",
-					element: document.querySelector(".circuit_container"),
-					intro:
-						"This is the circuit editor. You can build your logic circuits here.",
-				},
-				{
-					title: "Circuits",
-					element: document.querySelector(".help_button"),
-					intro:
-						"Press Help to get more information about using the circuit editor.",
-				},
-				{
-					title: "Boolean Expressions",
-					element: document.querySelector(".expression_container"),
-					intro: "Or you can input a boolean expression",
-				},
-				{
-					title: "Boolean Functions",
-					element: document.querySelector(".function_container"),
-					intro: "Or define a boolean function directly",
-				},
-				{
-					title: "Truth Tables",
-					element: document.querySelector(".table_container"),
-					intro: "This is where the truth table will appear",
-				},
-				{
-					title: "Minimisation",
-					element: document.querySelector(".min_container"),
-					intro: "You can also view the minimised forms of your functions!",
-				},
-				{
-					element: document.querySelector(".min_info"),
-					intro: "Hover over these for more info",
-				},
-				{
-					title:
-						"<img style='height: 30px; left: 100%;' src='https://fontmeme.com/permalink/230407/714842a4c8050a8c984484ae7621f3e4.png' alt='pixel-fonts' border='0'>",
-					intro: "Have fun exploring the world of combinational logic!",
-				},
-			],
-		})
-		.start();
-});
+}
