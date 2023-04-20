@@ -177,8 +177,6 @@ describe("Correct initial groups", () => {
 
 		let output = reformatInitGroups(initGroups);
 
-		console.log(output);
-
 		expect(output).toStrictEqual(exercise6.initGroups);
 	});
 	it("exercise 7", () => {
@@ -186,8 +184,6 @@ describe("Correct initial groups", () => {
 		let initGroups = createInitialGroups(exercise7.vars, terms);
 
 		let output = reformatInitGroups(initGroups);
-
-		console.log(output);
 
 		expect(output).toStrictEqual(exercise7.initGroups);
 	});
@@ -252,8 +248,6 @@ describe("Correct determination of prime implicants", () => {
 
 		const output = reformatPrimeImplicants(primeImplicants);
 
-		console.log(output);
-
 		expect(output).toStrictEqual(exercise6.primeImplicants);
 	});
 	it("exercise 7", () => {
@@ -263,8 +257,6 @@ describe("Correct determination of prime implicants", () => {
 		const primeImplicants = getPrimeImplicants(initGroups);
 
 		const output = reformatPrimeImplicants(primeImplicants);
-
-		console.log(output);
 
 		expect(output).toStrictEqual(exercise7.primeImplicants);
 	});

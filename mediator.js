@@ -148,8 +148,6 @@ function tutorial() {
 	// document.getElementById("expression_input").value = expression;
 	// document.getElementById("submit_expression").click();
 
-	document.getElementById("mySavedModel").style.visibility = "visible";
-
 	introJs()
 		.setOptions({
 			showProgress: true,
