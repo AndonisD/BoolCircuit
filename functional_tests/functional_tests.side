@@ -1,0 +1,1434 @@
+{
+  "id": "1fbfc08d-325c-43ff-8bce-27832aa3bb0a",
+  "version": "2.0",
+  "name": "Functional Tests",
+  "url": "https://andonisd.github.io/BoolCircuit",
+  "tests": [{
+    "id": "14898dfd-6d04-426d-8adf-5f076da986ef",
+    "name": "Init tutorial",
+    "commands": [{
+      "id": "b27c148a-4d99-49c1-87b0-0ebbe7bef059",
+      "comment": "",
+      "command": "open",
+      "target": "/BoolCircuit/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "bbf939cc-4e1a-4e9e-a1ea-989ca9949ff7",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "902x672",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3ce15ae8-08a2-4ddd-8e19-6d4b7419d531",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Next",
+      "targets": [
+        ["linkText=Next", "linkText"],
+        ["css=.introjs-nextbutton", "css:finder"],
+        ["xpath=//a[contains(text(),'Next')]", "xpath:link"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Next')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "74c9a256-cb5e-41ab-851a-91758fc28b6e",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Next",
+      "targets": [
+        ["linkText=Next", "linkText"],
+        ["css=.introjs-nextbutton", "css:finder"],
+        ["xpath=//a[contains(text(),'Next')]", "xpath:link"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Next')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "008e6d2c-344a-4c60-b7ef-c4ff9a96ffc0",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Next",
+      "targets": [
+        ["linkText=Next", "linkText"],
+        ["css=.introjs-nextbutton", "css:finder"],
+        ["xpath=//a[contains(text(),'Next')]", "xpath:link"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Next')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2eaf101c-5768-488d-9d7a-03fe731e10f7",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Next",
+      "targets": [
+        ["linkText=Next", "linkText"],
+        ["css=.introjs-nextbutton", "css:finder"],
+        ["xpath=//a[contains(text(),'Next')]", "xpath:link"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Next')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "19b6f453-3f7f-4446-be89-d154e395cf1b",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Next",
+      "targets": [
+        ["linkText=Next", "linkText"],
+        ["css=.introjs-nextbutton", "css:finder"],
+        ["xpath=//a[contains(text(),'Next')]", "xpath:link"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Next')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0cd7c86d-3e06-4c41-9822-90bdc5f44598",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Next",
+      "targets": [
+        ["linkText=Next", "linkText"],
+        ["css=.introjs-nextbutton", "css:finder"],
+        ["xpath=//a[contains(text(),'Next')]", "xpath:link"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Next')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4d3533a6-b418-4813-ab0d-8313338e5ebe",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Next",
+      "targets": [
+        ["linkText=Next", "linkText"],
+        ["css=.introjs-nextbutton", "css:finder"],
+        ["xpath=//a[contains(text(),'Next')]", "xpath:link"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Next')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "070102f6-f70e-4ee8-a701-5351f638b8d6",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Next",
+      "targets": [
+        ["linkText=Next", "linkText"],
+        ["css=.introjs-nextbutton", "css:finder"],
+        ["xpath=//a[contains(text(),'Next')]", "xpath:link"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Next')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9c3d26a1-2a69-4d7f-a75a-5d206d91275f",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Next",
+      "targets": [
+        ["linkText=Next", "linkText"],
+        ["css=.introjs-nextbutton", "css:finder"],
+        ["xpath=//a[contains(text(),'Next')]", "xpath:link"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Next')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c97c5444-578c-42ad-9482-618014777981",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Done",
+      "targets": [
+        ["linkText=Done", "linkText"],
+        ["css=.introjs-nextbutton", "css:finder"],
+        ["xpath=//a[contains(text(),'Done')]", "xpath:link"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Done')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "74883968-b9a1-41d9-8897-d0ad364922f1",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "61495881-5e8e-46ad-8bfc-9dd689c6d928",
+    "name": "Circuit tutorial",
+    "commands": [{
+      "id": "5b32fdd8-02c0-4196-a850-a6dd22396a44",
+      "comment": "",
+      "command": "open",
+      "target": "https://andonisd.github.io/BoolCircuit/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "95f741c3-a7f4-4c05-99ea-03d042bec553",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "902x672",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9a3382f5-e15c-46b1-a462-8db868e91f59",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=×",
+      "targets": [
+        ["linkText=×", "linkText"],
+        ["css=.introjs-skipbutton", "css:finder"],
+        ["xpath=//a[contains(text(),'×')]", "xpath:link"],
+        ["xpath=//div[5]/div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'×')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5388ac3e-bbc4-4592-8ea5-7179d96be464",
+      "comment": "",
+      "command": "click",
+      "target": "id=help_button",
+      "targets": [
+        ["id=help_button", "id"],
+        ["css=#help_button", "css:finder"],
+        ["xpath=//button[@id='help_button']", "xpath:attributes"],
+        ["xpath=//div[@id='sample']/div[2]/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Help')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d23fd2a0-79a1-4516-9c40-68ecf8e6a9c8",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "id=help_button",
+      "targets": [
+        ["id=help_button", "id"],
+        ["css=#help_button", "css:finder"],
+        ["xpath=//button[@id='help_button']", "xpath:attributes"],
+        ["xpath=//div[@id='sample']/div[2]/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Help')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "51d9afef-922f-476a-bbde-bbc4d6f7f23c",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "id=help_button",
+      "targets": [
+        ["id=help_button", "id"],
+        ["css=#help_button", "css:finder"],
+        ["xpath=//button[@id='help_button']", "xpath:attributes"],
+        ["xpath=//div[@id='sample']/div[2]/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Help')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7dbdc7f2-8551-4a6c-a2cd-a4735e580e78",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Next",
+      "targets": [
+        ["linkText=Next", "linkText"],
+        ["css=.introjs-nextbutton", "css:finder"],
+        ["xpath=//a[contains(text(),'Next')]", "xpath:link"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Next')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ad7df748-9347-43e5-920f-546141f927a0",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Next",
+      "targets": [
+        ["linkText=Next", "linkText"],
+        ["css=.introjs-nextbutton", "css:finder"],
+        ["xpath=//a[contains(text(),'Next')]", "xpath:link"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Next')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "09bbaa3a-bbea-41b3-a8c1-03506788eba9",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Next",
+      "targets": [
+        ["linkText=Next", "linkText"],
+        ["css=.introjs-nextbutton", "css:finder"],
+        ["xpath=//a[contains(text(),'Next')]", "xpath:link"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Next')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c2e67439-598c-4f6f-9db9-17688d62c66d",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Next",
+      "targets": [
+        ["linkText=Next", "linkText"],
+        ["css=.introjs-nextbutton", "css:finder"],
+        ["xpath=//a[contains(text(),'Next')]", "xpath:link"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Next')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3b408e89-6515-42be-8cbc-9921e23955a1",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Next",
+      "targets": [
+        ["linkText=Next", "linkText"],
+        ["css=.introjs-nextbutton", "css:finder"],
+        ["xpath=//a[contains(text(),'Next')]", "xpath:link"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Next')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "35548d2d-ab5e-452c-a9dd-942730816de1",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Next",
+      "targets": [
+        ["linkText=Next", "linkText"],
+        ["css=.introjs-nextbutton", "css:finder"],
+        ["xpath=//a[contains(text(),'Next')]", "xpath:link"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Next')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "518e5ca0-742f-46dc-afd0-656687d639ce",
+      "comment": "",
+      "command": "click",
+      "target": "css=.introjs-tooltipbuttons",
+      "targets": [
+        ["css=.introjs-tooltipbuttons", "css:finder"],
+        ["xpath=//div[6]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "23b036ad-66fa-43c7-a96f-071025f0d22d",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Next",
+      "targets": [
+        ["linkText=Next", "linkText"],
+        ["css=.introjs-nextbutton", "css:finder"],
+        ["xpath=//a[contains(text(),'Next')]", "xpath:link"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Next')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2a7383db-a6bc-429f-a4fa-f2c6f33ef331",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Next",
+      "targets": [
+        ["linkText=Next", "linkText"],
+        ["css=.introjs-nextbutton", "css:finder"],
+        ["xpath=//a[contains(text(),'Next')]", "xpath:link"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Next')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9ac95210-417e-483d-8d14-00ea9f01719b",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Next",
+      "targets": [
+        ["linkText=Next", "linkText"],
+        ["css=.introjs-nextbutton", "css:finder"],
+        ["xpath=//a[contains(text(),'Next')]", "xpath:link"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Next')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7364f1e0-be35-466e-ac9a-7c7fa64dd0fb",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Next",
+      "targets": [
+        ["linkText=Next", "linkText"],
+        ["css=.introjs-nextbutton", "css:finder"],
+        ["xpath=//a[contains(text(),'Next')]", "xpath:link"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Next')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5ab1ecdf-72e3-4dc4-ae36-ea87ae1325e4",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Done",
+      "targets": [
+        ["linkText=Done", "linkText"],
+        ["css=.introjs-nextbutton", "css:finder"],
+        ["xpath=//a[contains(text(),'Done')]", "xpath:link"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Done')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "76200b42-84fd-48d8-b23a-482c56acd367",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "f4f1e519-0d1e-4dbd-bc36-79c77e0e7579",
+    "name": "Input expression",
+    "commands": [{
+      "id": "a77bd891-44b5-4115-b6d8-ce4d31745d7e",
+      "comment": "",
+      "command": "open",
+      "target": "https://andonisd.github.io/BoolCircuit/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d2079850-2826-4e4c-b354-e561a68e8d9e",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "902x672",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7d540477-2ac7-4f40-a53b-bc57442dd9ed",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=×",
+      "targets": [
+        ["linkText=×", "linkText"],
+        ["css=.introjs-skipbutton", "css:finder"],
+        ["xpath=//a[contains(text(),'×')]", "xpath:link"],
+        ["xpath=//div[5]/div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'×')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2242fa24-ac30-4fc4-bf77-e8b1609f191d",
+      "comment": "",
+      "command": "click",
+      "target": "id=expression_input",
+      "targets": [
+        ["id=expression_input", "id"],
+        ["css=#expression_input", "css:finder"],
+        ["xpath=//textarea[@id='expression_input']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "27abec7c-a424-43ee-8871-f89dc4ed7c35",
+      "comment": "",
+      "command": "type",
+      "target": "id=expression_input",
+      "targets": [
+        ["id=expression_input", "id"],
+        ["css=#expression_input", "css:finder"],
+        ["xpath=//textarea[@id='expression_input']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/textarea", "xpath:position"]
+      ],
+      "value": "a and b or c"
+    }, {
+      "id": "67478229-2fd8-4400-8fb3-8f9b2c164a04",
+      "comment": "",
+      "command": "click",
+      "target": "id=submit_expression",
+      "targets": [
+        ["id=submit_expression", "id"],
+        ["css=#submit_expression", "css:finder"],
+        ["xpath=//input[@id='submit_expression']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "96e9a07f-41a5-432e-a003-ff95d3de49e9",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "id=submit_expression",
+      "targets": [
+        ["id=submit_expression", "id"],
+        ["css=#submit_expression", "css:finder"],
+        ["xpath=//input[@id='submit_expression']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1b09552c-bb6f-4a35-9922-76dea985e0ea",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "id=submit_expression",
+      "targets": [
+        ["id=submit_expression", "id"],
+        ["css=#submit_expression", "css:finder"],
+        ["xpath=//input[@id='submit_expression']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f7a067d7-8b2a-487b-adca-618928377d42",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "37d1cd0f-6197-4cb9-96ea-caf0e048bfc9",
+    "name": "Input function",
+    "commands": [{
+      "id": "acce6da7-f2cc-4f73-aed9-2e8c316c9601",
+      "comment": "",
+      "command": "open",
+      "target": "https://andonisd.github.io/BoolCircuit/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f47ebcce-5673-4aa0-98ab-4bcfc3cdf994",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "902x672",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a328df66-6383-484c-9a6b-f77d062f0a5d",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=×",
+      "targets": [
+        ["linkText=×", "linkText"],
+        ["css=.introjs-skipbutton", "css:finder"],
+        ["xpath=//a[contains(text(),'×')]", "xpath:link"],
+        ["xpath=//div[5]/div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'×')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "09decbbd-6e1d-4374-a9a0-bec931a53244",
+      "comment": "",
+      "command": "click",
+      "target": "id=vars_input",
+      "targets": [
+        ["id=vars_input", "id"],
+        ["css=#vars_input", "css:finder"],
+        ["xpath=//input[@id='vars_input']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/div/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f456cdfc-156a-41ea-9036-fbc340b68f7a",
+      "comment": "",
+      "command": "type",
+      "target": "id=vars_input",
+      "targets": [
+        ["id=vars_input", "id"],
+        ["css=#vars_input", "css:finder"],
+        ["xpath=//input[@id='vars_input']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/div/div[2]/input", "xpath:position"]
+      ],
+      "value": "a,b,c"
+    }, {
+      "id": "d12b6d9e-7610-4759-94b6-8b8f43e27ac6",
+      "comment": "",
+      "command": "click",
+      "target": "id=minterms_input",
+      "targets": [
+        ["id=minterms_input", "id"],
+        ["css=#minterms_input", "css:finder"],
+        ["xpath=//input[@id='minterms_input']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "06f3197b-cf04-4935-ab71-4fe2474a2089",
+      "comment": "",
+      "command": "type",
+      "target": "id=minterms_input",
+      "targets": [
+        ["id=minterms_input", "id"],
+        ["css=#minterms_input", "css:finder"],
+        ["xpath=//input[@id='minterms_input']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "3,6,7"
+    }, {
+      "id": "43ed71e9-702f-4602-aa4d-20f46552b35d",
+      "comment": "",
+      "command": "click",
+      "target": "id=dontcare_input",
+      "targets": [
+        ["id=dontcare_input", "id"],
+        ["css=#dontcare_input", "css:finder"],
+        ["xpath=//input[@id='dontcare_input']", "xpath:attributes"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "843b4c7c-dc25-4cbd-9f48-7fcd7b0c05a6",
+      "comment": "",
+      "command": "type",
+      "target": "id=dontcare_input",
+      "targets": [
+        ["id=dontcare_input", "id"],
+        ["css=#dontcare_input", "css:finder"],
+        ["xpath=//input[@id='dontcare_input']", "xpath:attributes"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": "1,4"
+    }, {
+      "id": "8cede6ff-c952-4f95-a4fb-1395cab95352",
+      "comment": "",
+      "command": "click",
+      "target": "id=submit_table",
+      "targets": [
+        ["id=submit_table", "id"],
+        ["css=#submit_table", "css:finder"],
+        ["xpath=//input[@id='submit_table']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "058f0fd8-3624-4faa-8510-fccf69fdfa46",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "id=submit_table",
+      "targets": [
+        ["id=submit_table", "id"],
+        ["css=#submit_table", "css:finder"],
+        ["xpath=//input[@id='submit_table']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4971a51c-7349-4e01-941f-8a1c015b4634",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "id=submit_table",
+      "targets": [
+        ["id=submit_table", "id"],
+        ["css=#submit_table", "css:finder"],
+        ["xpath=//input[@id='submit_table']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "02600a17-79d3-4ccc-ab7f-bb2c0a1b026c",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "f4a6998f-34c6-4faa-a047-e99daadcef83",
+    "name": "Construct circuit",
+    "commands": [{
+      "id": "64d1d21b-85b3-4158-bc9b-8ba9116f32fa",
+      "comment": "",
+      "command": "open",
+      "target": "https://andonisd.github.io/BoolCircuit/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a672b6f1-853a-4c2d-9e0c-3d6e444e1d22",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "902x672",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b4cb8cd0-7403-46f4-898e-d9a464c35f02",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=×",
+      "targets": [
+        ["linkText=×", "linkText"],
+        ["css=.introjs-skipbutton", "css:finder"],
+        ["xpath=//a[contains(text(),'×')]", "xpath:link"],
+        ["xpath=//div[5]/div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'×')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d6533e3b-6cce-4cee-b963-035cf600b88f",
+      "comment": "",
+      "command": "click",
+      "target": "css=#sample > div:nth-child(2)",
+      "targets": [
+        ["css=#sample > div:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='sample']/div", "xpath:idRelative"],
+        ["xpath=//div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3b4666eb-48fb-4125-bb18-ee19d9db2756",
+      "comment": "",
+      "command": "click",
+      "target": "css=#sample > div:nth-child(2)",
+      "targets": [
+        ["css=#sample > div:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='sample']/div", "xpath:idRelative"],
+        ["xpath=//div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a52a8033-4506-4119-b773-21b6f1ae86f7",
+      "comment": "",
+      "command": "mouseDownAt",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": "61.666656494140625,199.3333282470703"
+    }, {
+      "id": "ec18653a-a206-47f3-a89e-e2169f523f3b",
+      "comment": "",
+      "command": "mouseMoveAt",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": "61.666656494140625,199.3333282470703"
+    }, {
+      "id": "b84620d5-0724-405c-9bdc-a697be4b5eaa",
+      "comment": "",
+      "command": "mouseUpAt",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": "61.666656494140625,199.3333282470703"
+    }, {
+      "id": "1d61c79b-db9e-4eda-b736-d2ba8f533995",
+      "comment": "",
+      "command": "click",
+      "target": "css=#sample > div:nth-child(2)",
+      "targets": [
+        ["css=#sample > div:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='sample']/div", "xpath:idRelative"],
+        ["xpath=//div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2e0cf282-baab-4f41-a87a-8ebd952243ed",
+      "comment": "",
+      "command": "click",
+      "target": "css=#sample > div:nth-child(2)",
+      "targets": [
+        ["css=#sample > div:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='sample']/div", "xpath:idRelative"],
+        ["xpath=//div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c92fba4d-8efd-4d1d-9e31-5c733b185c2a",
+      "comment": "",
+      "command": "click",
+      "target": "css=#sample > div:nth-child(2)",
+      "targets": [
+        ["css=#sample > div:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='sample']/div", "xpath:idRelative"],
+        ["xpath=//div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a46b945e-f57b-4ee4-9754-9ec2a3fed06d",
+      "comment": "",
+      "command": "mouseDownAt",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": "237.66665649414062,104.33332824707031"
+    }, {
+      "id": "ca23a1f6-73b1-46a0-92f6-08ae73de32b5",
+      "comment": "",
+      "command": "mouseMoveAt",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": "237.66665649414062,104.33332824707031"
+    }, {
+      "id": "661f4ce2-253c-4869-83e8-f881b5660637",
+      "comment": "",
+      "command": "mouseUpAt",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": "237.66665649414062,104.33332824707031"
+    }, {
+      "id": "95417399-9ecf-4256-bcf8-9cfbc3298f66",
+      "comment": "",
+      "command": "click",
+      "target": "css=#sample > div:nth-child(2)",
+      "targets": [
+        ["css=#sample > div:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='sample']/div", "xpath:idRelative"],
+        ["xpath=//div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e559d9b5-694d-4cd8-8783-d9fa0000e2a5",
+      "comment": "",
+      "command": "mouseDownAt",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": "154.66665649414062,132.3333282470703"
+    }, {
+      "id": "446a31c8-0a6f-40ba-bb39-7ab2ed45bdac",
+      "comment": "",
+      "command": "mouseMoveAt",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": "154.66665649414062,132.3333282470703"
+    }, {
+      "id": "17712424-7505-4335-aace-65d2217b075f",
+      "comment": "",
+      "command": "mouseUpAt",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": "154.66665649414062,132.3333282470703"
+    }, {
+      "id": "79ce2c7c-008f-469d-9397-d41c2635b25b",
+      "comment": "",
+      "command": "click",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f3614484-5ecd-4c71-b4b1-0e36fe9e076b",
+      "comment": "",
+      "command": "mouseDownAt",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": "147.66665649414062,164.3333282470703"
+    }, {
+      "id": "a2533d3c-4101-48d4-9e9f-713483e170e8",
+      "comment": "",
+      "command": "mouseMoveAt",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": "147.66665649414062,164.3333282470703"
+    }, {
+      "id": "37d40d1c-d124-4b8b-a753-0d3644e78131",
+      "comment": "",
+      "command": "mouseUpAt",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": "147.66665649414062,164.3333282470703"
+    }, {
+      "id": "c82c3263-f352-4746-a8c9-066c9565ec06",
+      "comment": "",
+      "command": "click",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2c85747f-153a-4af5-ac99-615467d06d0d",
+      "comment": "",
+      "command": "mouseDownAt",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": "160.66665649414062,224.3333282470703"
+    }, {
+      "id": "f778ea71-75d5-4eca-a5fa-0d9a171bfc9e",
+      "comment": "",
+      "command": "mouseMoveAt",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": "160.66665649414062,224.3333282470703"
+    }, {
+      "id": "cf399577-331a-4224-a425-cb9b4f944f83",
+      "comment": "",
+      "command": "mouseUpAt",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": "160.66665649414062,224.3333282470703"
+    }, {
+      "id": "9701d796-5865-41db-a6aa-ca8c62bcfa2e",
+      "comment": "",
+      "command": "click",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "19db7639-0b8b-4e0f-83e5-f0f456f2b801",
+      "comment": "",
+      "command": "mouseDownAt",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": "272.6666564941406,203.3333282470703"
+    }, {
+      "id": "6698cbf2-d2dd-49b2-913a-c52a00e83a7c",
+      "comment": "",
+      "command": "mouseMoveAt",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": "272.6666564941406,203.3333282470703"
+    }, {
+      "id": "5a7d5025-ffdc-4ba2-94cd-09448eed3a5f",
+      "comment": "",
+      "command": "mouseUpAt",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": "272.6666564941406,203.3333282470703"
+    }, {
+      "id": "919fdb93-562e-4684-9a41-2ea3bc06abaa",
+      "comment": "",
+      "command": "click",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "bae2a77f-9c3b-41b1-8ac1-ba1baf76179d",
+      "comment": "",
+      "command": "mouseDownAt",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": "233.66665649414062,183.3333282470703"
+    }, {
+      "id": "5611dbee-5f97-47c7-9b60-b15ee6e758fb",
+      "comment": "",
+      "command": "mouseMoveAt",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": "233.66665649414062,183.3333282470703"
+    }, {
+      "id": "222c5aa6-b35f-4965-9eff-3f766822a18d",
+      "comment": "",
+      "command": "mouseUpAt",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": "233.66665649414062,183.3333282470703"
+    }, {
+      "id": "7445d4d5-bbe7-4df4-b9c7-bb602b4aeb47",
+      "comment": "",
+      "command": "click",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "01c32590-7177-4675-aa1d-8b419d08335a",
+      "comment": "",
+      "command": "mouseDownAt",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": "336.6666564941406,189.3333282470703"
+    }, {
+      "id": "ad41abbb-a1c3-4b0c-9cbe-7b6384d56ec5",
+      "comment": "",
+      "command": "mouseMoveAt",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": "336.6666564941406,189.3333282470703"
+    }, {
+      "id": "144e0107-8a2d-4c4f-ab57-37f5bf422240",
+      "comment": "",
+      "command": "mouseUpAt",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": "336.6666564941406,189.3333282470703"
+    }, {
+      "id": "06a1bbf7-40df-4837-9ecd-aa8d631a3e8e",
+      "comment": "",
+      "command": "click",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0ee35218-fc70-4ede-905b-ccc15ec99a5f",
+      "comment": "",
+      "command": "mouseDownAt",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": "326.6666564941406,189.3333282470703"
+    }, {
+      "id": "a5e91666-9c7d-4559-8bb6-35aa1d1b5d89",
+      "comment": "",
+      "command": "mouseMoveAt",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": "326.6666564941406,189.3333282470703"
+    }, {
+      "id": "04514b08-b7ea-4c7a-a297-f082f725f01a",
+      "comment": "",
+      "command": "mouseUpAt",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": "326.6666564941406,189.3333282470703"
+    }, {
+      "id": "43868fb5-d753-4f0c-9d9d-dbd685f49d00",
+      "comment": "",
+      "command": "click",
+      "target": "css=#myDiagramDiv > canvas",
+      "targets": [
+        ["css=#myDiagramDiv > canvas", "css:finder"],
+        ["xpath=//div[@id='myDiagramDiv']/canvas", "xpath:idRelative"],
+        ["xpath=//div[2]/canvas", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2c858609-c261-44b7-8479-051cca0ec7e7",
+      "comment": "",
+      "command": "click",
+      "target": "css=.arrange_button",
+      "targets": [
+        ["css=.arrange_button", "css:finder"],
+        ["xpath=//button[@onclick='arrange()']", "xpath:attributes"],
+        ["xpath=//div[@id='sample']/div[2]/div/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Arrange')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "b5176f1e-d008-4f1f-820c-ddd2196530ad",
+      "comment": "",
+      "command": "click",
+      "target": "id=submit_circuit",
+      "targets": [
+        ["id=submit_circuit", "id"],
+        ["css=#submit_circuit", "css:finder"],
+        ["xpath=//button[@id='submit_circuit']", "xpath:attributes"],
+        ["xpath=//div[@id='sample']/div[2]/div/div[2]/button[3]", "xpath:idRelative"],
+        ["xpath=//button[3]", "xpath:position"],
+        ["xpath=//button[contains(.,'Submit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4d2ce5c7-8ce2-4ea5-809b-ba82b10fdf79",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "id=submit_circuit",
+      "targets": [
+        ["id=submit_circuit", "id"],
+        ["css=#submit_circuit", "css:finder"],
+        ["xpath=//button[@id='submit_circuit']", "xpath:attributes"],
+        ["xpath=//div[@id='sample']/div[2]/div/div[2]/button[3]", "xpath:idRelative"],
+        ["xpath=//button[3]", "xpath:position"],
+        ["xpath=//button[contains(.,'Submit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "58ac9579-6ce7-45af-a92c-96d4158bb5ae",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "id=submit_circuit",
+      "targets": [
+        ["id=submit_circuit", "id"],
+        ["css=#submit_circuit", "css:finder"],
+        ["xpath=//button[@id='submit_circuit']", "xpath:attributes"],
+        ["xpath=//div[@id='sample']/div[2]/div/div[2]/button[3]", "xpath:idRelative"],
+        ["xpath=//button[3]", "xpath:position"],
+        ["xpath=//button[contains(.,'Submit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "c32ad809-79c2-495a-81e9-fdf418114da0",
+    "name": "Css tooltips",
+    "commands": [{
+      "id": "b9ba042c-a23d-4da9-8a9d-295051760e0e",
+      "comment": "",
+      "command": "open",
+      "target": "https://andonisd.github.io/BoolCircuit/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f1f3af9c-c99b-4210-82de-b494479a3634",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "902x672",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "453a0817-49cd-4f68-9efb-5e344a6b54fb",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=×",
+      "targets": [
+        ["linkText=×", "linkText"],
+        ["css=.introjs-skipbutton", "css:finder"],
+        ["xpath=//a[contains(text(),'×')]", "xpath:link"],
+        ["xpath=//div[5]/div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'×')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "13a565ec-3923-4bf7-95d3-5620d57635e8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.circuit_info",
+      "targets": [
+        ["css=.circuit_info", "css:finder"],
+        ["xpath=//div[@id='sample']/div[2]/div/div[2]/div/i", "xpath:idRelative"],
+        ["xpath=//div/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e6f9dcab-46c6-4075-a5cf-1f7598cd6dd3",
+      "comment": "",
+      "command": "click",
+      "target": "css=.margin > .tooltip > .fas",
+      "targets": [
+        ["css=.margin > .tooltip > .fas", "css:finder"],
+        ["xpath=//body/div/div[2]/div/div/div/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "80408d74-2656-4ae1-8e59-47813961bff8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.function_container .fas",
+      "targets": [
+        ["css=.function_container .fas", "css:finder"],
+        ["xpath=//div[2]/div/div/div/div/div/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "125283a1-d40c-4df4-9acd-f0a7677dfd92",
+      "comment": "",
+      "command": "click",
+      "target": "css=.min_info",
+      "targets": [
+        ["css=.min_info", "css:finder"],
+        ["xpath=//div[2]/div/div[2]/div/div/div/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "46aab61a-f96b-42b0-a24e-0cabe88a476d",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "6bfa30fd-e249-478e-9bfc-7aa0e73a87c4",
+    "name": "Min expressions",
+    "commands": [{
+      "id": "1abb5c39-6611-473c-9be8-c0d14aba9c6e",
+      "comment": "",
+      "command": "open",
+      "target": "https://andonisd.github.io/BoolCircuit/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d6d32296-dad1-499d-9a97-6cbeef75c709",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "902x672",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7300eb9f-ab5d-4ee5-9ec5-be3c69cb6a03",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=×",
+      "targets": [
+        ["linkText=×", "linkText"],
+        ["css=.introjs-skipbutton", "css:finder"],
+        ["xpath=//a[contains(text(),'×')]", "xpath:link"],
+        ["xpath=//div[5]/div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'×')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "fab50487-48e3-464b-b229-52aa3a8eefd8",
+      "comment": "",
+      "command": "click",
+      "target": "id=expression_input",
+      "targets": [
+        ["id=expression_input", "id"],
+        ["css=#expression_input", "css:finder"],
+        ["xpath=//textarea[@id='expression_input']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b415be1e-b4b2-46ed-b9d1-b507a12ef978",
+      "comment": "",
+      "command": "type",
+      "target": "id=expression_input",
+      "targets": [
+        ["id=expression_input", "id"],
+        ["css=#expression_input", "css:finder"],
+        ["xpath=//textarea[@id='expression_input']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/textarea", "xpath:position"]
+      ],
+      "value": "a and b or c"
+    }, {
+      "id": "a09ec1ce-01c6-435b-b5fe-fb58b784dec8",
+      "comment": "",
+      "command": "click",
+      "target": "id=submit_expression",
+      "targets": [
+        ["id=submit_expression", "id"],
+        ["css=#submit_expression", "css:finder"],
+        ["xpath=//input[@id='submit_expression']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "aaf0231d-d2fa-44e4-88b6-885fd185aa76",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "id=submit_expression",
+      "targets": [
+        ["id=submit_expression", "id"],
+        ["css=#submit_expression", "css:finder"],
+        ["xpath=//input[@id='submit_expression']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d810265e-e10e-4f87-9c14-e18dd42ca3f8",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "id=submit_expression",
+      "targets": [
+        ["id=submit_expression", "id"],
+        ["css=#submit_expression", "css:finder"],
+        ["xpath=//input[@id='submit_expression']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fbf8948a-506c-4361-af2c-1b505df01825",
+      "comment": "",
+      "command": "click",
+      "target": "id=go_DNF",
+      "targets": [
+        ["id=go_DNF", "id"],
+        ["css=#go_DNF", "css:finder"],
+        ["xpath=//input[@id='go_DNF']", "xpath:attributes"],
+        ["xpath=//div[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fed0d597-5554-4c99-b761-ab8c076c6ab4",
+      "comment": "",
+      "command": "click",
+      "target": "id=go_CNF",
+      "targets": [
+        ["id=go_CNF", "id"],
+        ["css=#go_CNF", "css:finder"],
+        ["xpath=//input[@id='go_CNF']", "xpath:attributes"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e6fff12f-2656-4944-a8a2-0381ad1706f4",
+      "comment": "",
+      "command": "click",
+      "target": "css=.expression_container > .margin",
+      "targets": [
+        ["css=.expression_container > .margin", "css:finder"],
+        ["xpath=//body/div/div[2]/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8315f67c-09b2-49eb-a15e-a1a5d07cba3f",
+      "comment": "",
+      "command": "type",
+      "target": "id=expression_input",
+      "targets": [
+        ["id=expression_input", "id"],
+        ["css=#expression_input", "css:finder"],
+        ["xpath=//textarea[@id='expression_input']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/textarea", "xpath:position"]
+      ],
+      "value": "a"
+    }, {
+      "id": "88c2edfd-539a-4697-aaff-e58d1b06158a",
+      "comment": "",
+      "command": "click",
+      "target": "id=submit_expression",
+      "targets": [
+        ["id=submit_expression", "id"],
+        ["css=#submit_expression", "css:finder"],
+        ["xpath=//input[@id='submit_expression']", "xpath:attributes"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "46d0c089-e931-430a-887d-2aaf3fdb0fee",
+      "comment": "",
+      "command": "click",
+      "target": "id=go_DNF",
+      "targets": [
+        ["id=go_DNF", "id"],
+        ["css=#go_DNF", "css:finder"],
+        ["xpath=//input[@id='go_DNF']", "xpath:attributes"],
+        ["xpath=//div[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "777abd79-5f74-4b30-9e02-3efb463c695c",
+      "comment": "",
+      "command": "click",
+      "target": "id=go_CNF",
+      "targets": [
+        ["id=go_CNF", "id"],
+        ["css=#go_CNF", "css:finder"],
+        ["xpath=//input[@id='go_CNF']", "xpath:attributes"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e355d860-8e94-43af-947d-4a91c495fc6e",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "1876904c-3c03-496d-a1fe-2add135253ae",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["14898dfd-6d04-426d-8adf-5f076da986ef"]
+  }],
+  "urls": ["https://andonisd.github.io/", "https://andonisd.github.io/BoolCircuit"],
+  "plugins": []
+}

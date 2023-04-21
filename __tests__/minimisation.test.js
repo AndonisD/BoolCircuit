@@ -38,6 +38,7 @@ const exercise1 = {
 	expression:
 		"(not a and not b) or (c and d) or (b and not c and not d) or (not a and not d)",
 };
+
 const exercise2 = {
 	vars: ["a", "b", "c", "d"],
 	terms: [0, 4, 8, 10, 12, 13, 15],
@@ -53,6 +54,7 @@ const exercise2 = {
 	expression:
 		"(a or not d) and (b or not d) and (not b or not c or d) and (a or b)",
 };
+
 const exercise3 = {
 	vars: ["a", "b", "c", "d"],
 	terms: [1, 3, 5, 7, 13, 15],
@@ -61,6 +63,7 @@ const exercise3 = {
 	primeImplicants: ["0--1", "-1-1"],
 	expression: "(not a and d) or (b and d)",
 };
+
 const exercise4 = {
 	vars: ["a", "b", "c", "d"],
 	terms: [0, 8, 10, 12, 13, 15],
@@ -75,6 +78,7 @@ const exercise4 = {
 	primeImplicants: ["1-00", "110-", "11-1", "-0-0", "00--"],
 	expression: "a and (b or not d) and (not b or not c or d)",
 };
+
 const exercise5 = {
 	vars: ["a", "b", "c", "d"],
 	terms: [0, 2, 5, 6, 7, 8, 10, 12, 13, 14, 15],
@@ -90,6 +94,7 @@ const exercise5 = {
 	expression:
 		"(not b and not d) or (b and d) or (c and not d) or (a and not d)",
 };
+
 const exercise6 = {
 	vars: ["a", "b", "c", "d"],
 	terms: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
@@ -115,6 +120,7 @@ const exercise6 = {
 	expression:
 		"(not a and not d) or (not a and c) or (b and not c) or (a and not b)",
 };
+
 const exercise7 = {
 	vars: ["a", "b", "c", "d"],
 	terms: [2, 3, 7, 9, 11, 13],
