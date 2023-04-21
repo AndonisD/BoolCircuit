@@ -1,4 +1,4 @@
-# BoolCircuit (Work in progress!)
+# BoolMin
 
 Prototype can be accessed here: https://andonisd.github.io/BoolCircuit/
 
